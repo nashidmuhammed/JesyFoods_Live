@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+{% extends 'jesyfoods-main/base.html' %}
+{% load static %}
+<html lang="en">
+
+
+    {% block content %}
+
+ <title>Jesy Foods | FAQ</title>
+<body>
+    <!--NavBar-->
+    <section id="header">
+      <div class="header container-fluid">
+        <div class="nav-bar">
+          <div class="brand">
+            <a href="#logo"><img src="{% static 'images/logo.png' %}" alt="logo"></a>
+          </div>
+          <div class="nav-list">
+            <div class="hamburger"><div class="bar"></div></div>
+            <ul>
+              <li><a href="." data-after="Home">Home</a></li>
+              <li><a href="products" data-after="Products">Products</a></li>
+              <li><a class="active"   href="about" data-after="About">About</a></li>
+              <li><a href="#" data-after="Media">Media</a></li>
+              <li><a href="tasty_hub" data-after="Recipe">Recipe</a></li>
+              <li><a href="contact" data-after="Contact">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+<section id="faq" style="margin-top: 150px;">
+    <div class="hd" style="margin-bottom: 50px;">
+        <span>F</span>requently <span>A</span>sked <span>Q</span>uestions
+    </div>
+    <div class="container accordion" id="accordionExample">
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+              <a class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                What is Jesy Foods?
+              </a>
+            </h2>
+          </div>
+      
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+              JESY is the new name of Spices, Manufacturing Mix Masala and Curry powders with natural ingredients
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingTwo">
+            <h2 class="mb-0">
+              <a class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Why Jesy Foods?
+              </a>
+            </h2>
+          </div>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+            <div class="card-body">
+              JESY is direct from nature. Didn't add any preservations or artificial flavors.We bring spices direct from the plantations. Testing by our Quality team. Preparing in our flour mills. Packing with hygenic from our packing section
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingThree">
+            <h2 class="mb-0">
+              <a class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                What is the validity Jesy food product?
+              </a>
+            </h2>
+          </div>
+          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+            <div class="card-body">
+              For best usage before 10 Months
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="heading4">
+            <h2 class="mb-0">
+              <a class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+                What is the difference with other brands?
+              </a>
+            </h2>
+          </div>
+          <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordionExample">
+            <div class="card-body">
+              Quality and Taste!      <br>
+              Try and Feel the diffrence
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center m-5 ">
+          <a href="contact" class="btn btn-std">I have a question!</a>
+      </div>
+</section>
+
+
+
+{% endblock %}
+</body>
+</html>

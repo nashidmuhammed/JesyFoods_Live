@@ -1,0 +1,125 @@
+.side-wrapper .sidebar{
+    background: #013d1c;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 225px;
+    height: 100%;
+    padding: 20px 0;
+    transition: all 0.5s ease;
+    z-index: 999;
+    overflow-x: hidden;
+}
+
+.side-wrapper .sidebar .profile{
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.side-wrapper .sidebar .profile img{
+    display: block;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+
+.side-wrapper .sidebar .profile h3{
+    color: #ffffff;
+    margin: 10px 0 5px;
+}
+
+.side-wrapper .sidebar .profile p{
+    color: rgb(206, 240, 253);
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+
+
+.side-wrapper .sidebar ul li a{
+    display: block;
+    padding: 13px 30px;
+    /* border-bottom: 1px solid #10558d; */
+    color: rgb(241, 237, 237);
+    font-size: 16px;
+    position: relative;
+}
+
+.side-wrapper .sidebar ul li a .icon{
+    color: #dee4ec;
+    width: 30px;
+    display: inline-block;
+}
+
+.side-wrapper .sidebar ul li a:hover,
+.side-wrapper .sidebar ul li a.active{
+    color: #013d1c;
+    background:white;
+    border-right: 2px solid rgb(5, 104, 58);
+}
+
+.side-wrapper .sidebar ul li a:hover .icon,
+.side-wrapper .sidebar ul li a.active .icon{
+    color: #013d1c;
+}
+
+.side-wrapper .sidebar ul li a:hover:before,
+.side-wrapper .sidebar ul li a.active:before{
+    display: block;
+}
+
+.jesy_nav .hamburger a{
+    position: absolute;
+    font-size: 27px;
+    padding: 7px;
+    background-color: #013d1c;
+    color: #fff;
+    left: 223px;
+    top: 0px;
+    z-index: 999;
+    transition: all 0.5s ease;
+}
+
+.jesy_nav .hamburger a:hover{
+    color: #ffa2a2;
+}
+
+
+
+body.active .jesy_nav .hamburger a{
+    left: -223px;
+}
+body.active .side-wrapper .sidebar{
+    left: -225px;
+  }
+  
+  /* body.active .side-wrapper .section{
+    margin-left: 0;
+    width: 100%;
+  } */
+
+
+
+.black_close {
+    overflow-y: hidden;
+    width: calc(100% - 225px);
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.411);
+    position: fixed;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 2rem;
+    color: #013d1c;
+    cursor: pointer;
+    display: none;
+}
+.black_close.active{
+    display: flex;
+}  

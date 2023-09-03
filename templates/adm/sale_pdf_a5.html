@@ -1,0 +1,259 @@
+<html>
+    {% load static %}
+    {% load mathfilters %}
+<head>
+
+    <style>
+        @page {
+            size : a5 portrait;
+            margin: 5mm;
+            width: 200mm;
+            height: 279mm
+             }
+    </style>
+    <style>
+        *{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .right{
+            text-align: right;
+            line-height: -10px;
+        }
+        .border{
+            border: 1px solid #495057;
+            padding-left: 2px;
+            padding-top: 0.3rem;
+            padding-bottom: -0.1rem;
+        }
+        .border-left{
+            border: 1px solid #495057;
+            border-right: 0px;
+            padding: 5px;
+        }
+        .border-right{
+            border: 1px solid #495057;
+            border-left: 0px;
+            padding: 5px;
+        }
+        .border-bt{
+            border: 1px solid #495057;
+            padding-left: 3px;
+            padding-top: 4px;
+            border-bottom: 0;
+            border-top: 0;
+        }
+        .tr{
+            text-align: right;
+        }
+        h1{
+            font-size:1.7rem;
+            }
+        h3{
+            font-size:1.1rem
+            }
+        p{
+            font-size:1rem;
+        }
+    </style>
+    </head>
+    
+    <body>
+        <!-- Content for Static Frame 'header_frame' -->
+        <h2 style="align-items: center;text-align: center;margin-bottom: 1px;">{%if sale.t_type == 'return' %}Credit Note{%else%}Tax Invoice{%endif%}</h2>
+        
+        <table >
+            <tr>
+                <td class="border-left" >
+<!--                    /home/JesyFoods/jesyfoods/jesy/static/images/logo.png-->
+                    <img src="/home/JesyFoods/jesyfoods/jesy/static/images/logo.png" style="width:90px;height:auto;" >
+                </td>
+                <td class="right border-right">
+                    <h1 style="margin-bottom: -8px;">Jesy Foods</h1>
+                    <p style="margin-top: -0.5rem;margin-bottom: -0.5rem;">Kodampuzha, Kozhikode - 673632</p>
+                    <p style="margin-top: -0.5rem;margin-bottom: -0.5rem;">Phone:+91 8137 969 111, Email:info@jesyfoods.com</p>
+                    <p style="margin-top: -0.5rem;margin-bottom: -0.5rem;">www.jesyfoods.com</p>
+                    <p style="margin-top: -0.5rem;padding-bottom: 0rem;">GSTIN : 32MCLPS3184G1Z4 State: 32-Kerala</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="border"><h4>Bill To:</h4></td>
+                <td class="border" style="text-align: right;padding-right: 3px;" rowspan="2">
+                    <h4 style="margin-bottom: -0.3rem;">{%if sale.t_type == 'return' %} Return No:{%else%}Invoice No:{%endif%} {{sale.iid}}</h4>
+                    <h4 style="margin-top: -0.3rem;margin-bottom: 0.7rem;">Date : {{sale.date|date:" d-m-Y" }}</h4>
+                    {%if sale.t_type == 'return' %}
+                    <p style="margin-top: -0.5rem;margin-bottom: -0.7rem;">Invoice No: {{sale.ir_iid}}</p>
+                    <p style="margin-top: -0.3rem;margin-bottom: -0.5rem;">Invoice Date: {{sale.ir_date|date:" d-m-Y"}}</p>
+                    {%endif%}
+                </td>
+            </tr>
+            <tr>
+                <td class="border" >
+                    <h3 style="padding-top: 0.1rem;margin-bottom: -0.4rem;">{{sale.party_name}}</h3>
+                    <p style="margin-top: -0.5rem;margin-bottom: -0.7rem;">{{sale.party_name.address}}</p>
+                    <p style="margin-top: -0.5rem;margin-bottom: -0.7rem;">Contact No: {{sale.party_name.phone}}</p>
+                    {% if sale.party_name.GSTIN != '' %}
+                    <p style="margin-top: -0.5rem;margin-bottom: -0.7rem;">GSTIN No: {{sale.party_name.GSTIN}}</p>
+                    <p style="margin-top: -0.5rem;margin-bottom: 0px;">State: 32-Kerala</p>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+        <table >
+            <tr class="border" style="text-align:center;">
+                <th style="width: 20px;"><p>#</p></th>
+                <th style="width: 130px;text-align:left;"><p>Item Name</p></th>
+                <th style="width: 35px;">HSN Code</th>
+                <th style="width: 45px;">Quantity&nbsp;</th>
+                <th>Price/
+                    Unit</th>
+                <th style="width: 55px;">Taxable amount</th>
+                <th>CGST
+                    (2.5%)</th>
+                <th>SGST
+                    (2.5%)</th>
+                <th>Final Rate</th>
+                <th style="width: 55px;">Amount</th>
+            </tr>
+            {% if itm %}
+            {% for i in itm %}
+            <tr class="border-bt" style="line-height:1.5rem;font-size: 1.05rem;">
+                <td >{{forloop.counter}}</td>
+                <td>{{i.p_name}}</td>
+                <td>{{i.p_name.HSN|stringformat:"04d"}}</td>
+                <td class="tr">{{i.qty|floatformat:2}}&nbsp;{% if i.fqty != 0 %} + {{i.fqty|floatformat:2}}{% endif %}&nbsp;</td>
+                <td class="tr"><img src="/home/JesyFoods/jesyfoods/jesy/static/images/rs.png" style="width:4px;height:auto;">&nbsp;{{i.t_price|floatformat:2}}</td>
+                <td class="tr"><img src="/home/JesyFoods/jesyfoods/jesy/static/images/rs.png" style="width:4px;height:auto;">&nbsp;{{i.t_amount|floatformat:2}}</td>
+                <td class="tr"><img src="/home/JesyFoods/jesyfoods/jesy/static/images/rs.png" style="width:4px;height:auto;">&nbsp;{{i.gst|floatformat:2}}</td>
+                <td class="tr"><img src="/home/JesyFoods/jesyfoods/jesy/static/images/rs.png" style="width:4px;height:auto;">&nbsp;{{i.gst|floatformat:2}}</td>
+                <td class="tr"><img src="/home/JesyFoods/jesyfoods/jesy/static/images/rs.png" style="width:4px;height:auto;">&nbsp;{{i.price|floatformat:2}}</td>
+                <td class="tr"><img src="/home/JesyFoods/jesyfoods/jesy/static/images/rs.png" style="width:4px;height:auto;">&nbsp;{{i.amount|floatformat:2}}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+            {% if gap %}
+            {% for i in gap %}
+            <tr class="border-bt">
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+            <tr class="border">
+                <td>&nbsp;</td>
+                <td><h3>Total</h3></td>
+                <td>&nbsp;</td>
+                <td class="tr"><h3>{{q_total|floatformat:2}}&nbsp;{% if fq_total != 0 %} + {{fq_total|floatformat:2}}{% endif %}&nbsp;</h3></td>
+                <td>&nbsp;</td>
+                <td class="tr"><h3><img src="/home/JesyFoods/jesyfoods/jesy/static/images/rs.png" style="width:5px;height:auto;">&nbsp;{{sale.t_total|floatformat:2|abs}}</h3></td>
+                <td class="tr"><h3><img src="/home/JesyFoods/jesyfoods/jesy/static/images/rs.png" style="width:5px;height:auto;">&nbsp;{{g_total|floatformat:2}}</h3></td>
+                <td class="tr"><h3><img src="/home/JesyFoods/jesyfoods/jesy/static/images/rs.png" style="width:5px;height:auto;">&nbsp;{{g_total|floatformat:2}}</h3></td>
+                <td>&nbsp;</td>
+                <td class="tr"><h3><img src="/home/JesyFoods/jesyfoods/jesy/static/images/rs.png" style="width:5px;height:auto;">&nbsp;{{sale.total|floatformat:2|abs}}</h3></td>
+            </tr>
+        </table>
+        <table>
+            <tr class="border">
+                <td >
+                    <p>Tax Details:</p>
+                </td>
+
+                <td class="tr"><p>2.5%&nbsp;</p></td>
+
+                <td rowspan="2" width="50%">
+
+                    <table style="padding-top:0rem;padding-bottom:-0.1rem;">
+                        <tr>
+                            <td><h3>Amounts:</h3></td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td><p>Round off</p></td>
+                            <td class="tr" ><p><img src="/home/JesyFoods/jesyfoods/jesy/static/images/rs.png" style="width:5px;height:auto;">&nbsp;0</p></td>
+                        </tr>
+                        <tr style="padding-bottom:-0.1rem;">
+                            <td><p>Sub Total</p></td>
+                            <td class="tr" ><p><img src="/home/JesyFoods/jesyfoods/jesy/static/images/rs.png" style="width:5px;height:auto;">&nbsp;{{sale.total|floatformat:2|abs}}</p></td>
+                        </tr>
+                    </table>
+
+                </td>
+
+            </tr>
+            <tr class="border">
+                <td ><p>CGST</p></td>
+                <td class="tr"><p><img src="/home/JesyFoods/jesyfoods/jesy/static/images/rs.png" style="width:5px;height:auto;">&nbsp;{{g_total|floatformat:2}}</p></td>
+            </tr>
+            <tr class="border">
+                <td ><p>SGST</p></td>
+                <td class="tr"><p><img src="/home/JesyFoods/jesyfoods/jesy/static/images/rs.png" style="width:5px;height:auto;">&nbsp;{{g_total|floatformat:2}}</p></td>
+                <td>
+                    <table style="padding-top:0rem;">
+                        <tr>
+                            <td><h3>Total</h3></td>
+                            <td class="tr"><h3><img src="/home/JesyFoods/jesyfoods/jesy/static/images/rs.png" style="width:4px;height:auto;">&nbsp;{{sale.total|floatformat:2|abs}}</h3></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            </table>
+            <table>
+
+            {% if cb is True %}
+            <tr class="border">
+                <td>&nbsp;</td>
+                <td>
+                    <table style="padding-top:0.1rem;">
+                        <tr>
+                            <td><p>Previous Balance</p></td>
+                            <td class="tr"><p><img src="/home/JesyFoods/jesyfoods/jesy/static/images/rs.png" style="width:5px;height:auto;">&nbsp;{{ob|floatformat:2}}</p></td>
+                        </tr>
+                        <tr>
+                            <td><p>Current Balance</p></td>
+                            <td class="tr"><h3><img src="/home/JesyFoods/jesyfoods/jesy/static/images/rs.png" style="width:5px;height:auto;">&nbsp;{{sale.party_name.balance|floatformat:2}}</h3></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            {% endif %}
+
+            <tr style="text-align: center;" class="border">
+                <td >
+                    <h4 style="margin-bottom: -0.9rem;">Invoice Amount In Words</h4>
+                    <p style="margin-top: -0.2rem;">{{words|title}} Rupees only</p>
+                </td>
+                <td>
+                    <h2>&nbsp;</h2>
+                </td>
+            </tr>
+            <tr class="border-bt">
+                <td >
+                    <h4 style="margin-bottom: 0;">Terms and conditions:</h4>
+                    <p style="margin-top: 0rem;margin-bottom: 0px;">Goods will not be Returned without Bill</p>
+                    <h4 style="margin-top: 0rem;margin-bottom: 0rem;">Thank you for doing bussiness with us.</h4>
+                    
+                </td>
+                <td rowspan="2">
+                    <p style="text-align: center;">For Jesy Foods</p>
+                    <br>
+                    <p style="text-align: center;">Authorized Signatory</p>
+
+                </td>
+            </tr>
+                <tr class="border-bt">
+                    <td>&nbsp;</td>
+                </tr>
+                <tr class="border-bt" style="border-bottom:1px solid black;">
+                    <td>&nbsp;</td>
+                </tr>
+
+            </table>
+    </body>
+    </html>

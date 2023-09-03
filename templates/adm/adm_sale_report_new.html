@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    {% block content %}
+<link rel="stylesheet" href="{% static 'css/adm_style.css' %}">
+<title>Sale Report | JesyFoods</title>
+</head>
+<body>
+
+ {% include "adm/base_side_nav.html" %}
+
+
+
+    <section class="home_content">
+
+        <div class="nav_top">
+            <div class="hed">
+                  <a onclick="window.history.back()"   class="back-btn adm"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+              Sales Report
+            </div>           
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+              <a class="nav-link" href="home"><i class="fa fa-home"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fa fa-bell"></i></a>
+            </li>
+            
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i>
+                    <span class="name">{{request.user}}</span>
+               </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="MyAccount"><i class="fa fa-user-circle-o"></i> My Account</a>
+                      <a class="dropdown-item" href="price_list"><i class="fa fa-money" aria-hidden="true"></i> Price List</a>
+                      <a class="dropdown-item" href="https://jesyfoods.com/products"><i class="fa fa-tasks" aria-hidden="true"></i> Products</a>
+                      <a class="dropdown-item" href="settings"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp; Settings</a>
+                      <a style="color: darkgreen;" class="dropdown-item" href="https://jesyfoods.com/"><i class="fa fa-globe" aria-hidden="true"></i> Jesy Foods</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item logout" style="color: red;" href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                      </div>
+              </li>
+          </ul>
+    </div>
+
+    <section class="home_content">
+
+
+<!------------------------------------------------------->
+
+<form id="form" action="sale_report" method="post">{% csrf_token %}
+
+ <section class="sale_rep">
+    <div class="container dt_tab">
+        <!-- <form id="form" action="sale_report_new" method="post">{% csrf_token %} -->
+<!--      <input name="party" value="{{party.party_name}}" hidden>-->
+      <select name="filter" id="filter" class="form-control" aria-label="Default select example" >
+          {% if flt == 'today' %}
+          <option selected>Today</option>
+          {% elif flt == 'date' %}
+          <option selected>Custom</option>
+          {% else %}
+          <option selected>{{flt|title}}</option>
+          {% endif %}
+          <option value="today">Today</option>
+          <option value="yesterday">Yesterday</option>
+          <option value="this_month" >This Month</option>
+          <option value="prev_month">Prev Month</option>
+          <option value="this_year">This Year</option>
+        </select>
+        <!-- </form> -->
+        <!-- <form id="form0" action="sale_report_date" method="post">{% csrf_token %} -->
+<!--          <input name="party" value="{{party.party_name}}" hidden>-->
+        <div class="right">
+          <div class="input-group input-group-sm ">
+            <!-- <input name="sd" type="date" class="form-control date" style="width:45%;" value="{{sd|date:'Y-m-d'}}"> -->
+            <input name="sd" id="sd" type="date" class="form-control date" style="width:45%;" value="{{sd}}">
+              <strong>&nbsp;_&nbsp;</strong>
+            <input name="ed" id="ed" type="date" class="form-control date"  style="width:45%;" value="{{ed}}">
+          </div>
+      </div>
+  <!-- </form> -->
+
+    </div>
+</section>
+
+    <section class="container">
+      <div class="party search">
+        <!-- <form id="form1" action="{% url 'sale_report_new' %}" method="post">{% csrf_token %} -->
+        <div class="input-group mb-3">
+            <input id="search" autocomplete="off" name="search" type="search" class="form-control search" placeholder="Search with party name or invoice No" value="{% if sr != None %}{{sr}}{% endif %}">
+               <div class="input-group-append">
+                <button type="submit" class="btn btn-outline-success pl-3 pr-3">Search <i class="fa fa-search" aria-hidden="true"></i>                </button>
+            </div>
+        </div>
+        <div class="left">
+          <div class="form-check form-check-inline">
+              <input name="all" class="form-check-input" type="checkbox" id="all" value="all" {% if all is True %}checked {% endif %}>
+              <label class="form-check-label" for="all">All</label>
+          </div>
+          <div class="form-check form-check-inline">
+              <input name="retail" class="form-check-input" type="checkbox" id="retail" value="retail" {% if retail is True %}checked {% endif %}>
+              <label class="form-check-label" for="retail">Retail</label>
+          </div>
+          <div class="form-check form-check-inline">
+              <input name="hotel" class="form-check-input" type="checkbox" id="hotel" value="hotel" {% if hotel is True %}checked {% endif %}>
+              <label class="form-check-label" for="hotel">Hotel</label>
+          </div>
+          <div class="form-check form-check-inline">
+              <input name="wholesale" class="form-check-input" type="checkbox" id="wholesale" value="wholesale" {% if wholesale is True %}checked {% endif %}>
+              <label class="form-check-label" for="wholesale">WholeSale</label>
+          </div>
+          <div class="form-check form-check-inline">
+              <input name="distribution" class="form-check-input" type="checkbox" id="distribution" value="distribution" {% if distribution is True %}checked {% endif %}>
+              <label class="form-check-label" for="distribution">Distribution</label>
+          </div>
+          <div class="form-check form-check-inline">
+              <input name="general" class="form-check-input" type="checkbox" id="general" value="general" {% if general is True %}checked {% endif %}>
+              <label class="form-check-label" for="general">General</label>
+          </div>
+      </div>
+        <!-- </form> -->
+    </div>
+        <!-- <form id="form1"  action="{% url 'party_statement' %}" method="post">{% csrf_token %}
+            <select name="s_party" class="form-control" id="s_party" >
+              <option selected>{{party.party_name}}</option>
+                {% if party %}
+                {% for i in party %}
+              <option value="{{i.party_name}}">{{i.party_name}}</option>
+              {% endfor %}
+              {% endif %}
+            </select>
+        </form> -->
+        <table class="table mt-3" id="by_party">
+            <thead>
+              <tr>
+                <th scope="col">Date </th>
+                <th scope="col">Invoice. No </th>
+                <th scope="col">Party </th>
+                <th scope="col">Total</th>
+                <th scope="col">Recieved</th>
+                <th scope="col">Balance</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% if sale %}
+            {% for i in sale %}
+              <tr>
+                <td>{{i.date|date}}</td>
+                <td><a href="{% url 'update_sale' %}?data={{i.id}}">{{i.id_prefix}} {{i.s_id}}</a>
+                <p class="sm-p">{{i.date|date}}</p>
+                </td>
+                <td><a href="{% url 'party_view' %}?data={{i.party_name.id}}"> {{i.party_name}}</a></td>
+                <td>{{i.total}}
+                    <p class="sm-p">Recieved:{{i.received}}</p>
+                </td>
+                <td>{{i.received}}</td>
+                <td>{{i.party_name.balance}}</td>
+                <td><a href="{% url 'update_sale' %}?data={{i.id}}" class="btn btn-primary btn-sm">View / Edit</a></td>
+              </tr>
+            {% endfor %}
+            {% else %}
+            <td>No data to found!</td>
+            {% endif %}
+
+            </tbody>
+          </table>
+    </section>
+  </form>
+        <br><br><br>
+        <section class="bott_but">
+
+    <div class="container fixed-bottom">
+        <div class="info_box">
+             <div class="container ">
+      <table class="table table-info">
+          <tbody>
+            <tr>
+              <th scope="row">No of Txn</th>
+              <td> {{no}}</td>
+              <th scope="row" class="text-right">Total Amount</th>
+              <td class="text-right">&#8377; {{total}}</td>
+            </tr>
+          </tbody>
+      </table>
+  </div>
+
+        </div>
+    </div>
+
+</section>
+
+
+    <div class="plus_btn">
+        <div id="plus_btn_more">
+            <a href="add_expense" class="btn btn_round btn-4">
+                <i class="fa fa-money" aria-hidden="true"></i>
+                <span id="btn-4">Add Expense</span>
+            </a>
+            <a href="add_order" class="btn btn_round btn-3">
+                <i class="fa fa-truck" aria-hidden="true"></i>
+                <span id="btn-3">Add Order</span>
+            </a>
+            <a href="take_payment" class="btn btn_round btn-2">
+                <i class="fa fa-inr" aria-hidden="true"></i>
+                <span id="btn-2">Take Payment</span>
+            </a>
+            <a href="add_sale" class="btn btn_round btn-1">
+                <i class="fa fa-line-chart" aria-hidden="true"></i>
+                <span id="btn-1">Add Sale</span>
+            </a>
+        </div>
+        <button class="btn_round"><i class="fa fa-plus" aria-hidden="true"></i></button>
+    </div>
+
+
+    </section>
+</section>
+
+
+<!-- <script>
+    $(document).ready(function() {
+    console.log("'Ready for battle");
+    $('#s_party').change(function(){
+       $('#form1').submit()
+
+     }); 
+     $('.date').change(function(){
+       console.log('date chnged')        
+       $('#form0').submit()
+   }); 
+   $('#filter').change(function(){
+       console.log('date chnged')        
+       $('#form').submit()
+   });  
+   }) 
+</script> -->
+<script>
+  $(document).ready(function() {
+    $('#all').click(function() {
+      $('.form-check-input').prop('checked', this.checked);
+    });
+    $('.form-check-input').click(function() {
+      if (!this.checked) {
+        $('#all').prop('checked', false);
+      }
+    });
+    
+    $('#filter').change(function() {
+      console.log("CLOOOO")
+      var selectedValue = $(this).val();
+      if (selectedValue === "today") {
+        $('.date').val(new Date().toISOString().slice(0, 10));
+      } else if (selectedValue === "yesterday") {
+        var today = new Date();
+        var yesterday = new Date(today);
+        yesterday.setDate(today.getDate() - 1);
+        var formattedDate = yesterday.toISOString().slice(0, 10);
+        $('.date').val(formattedDate);
+      } else if (selectedValue === "this_month") {
+        var today = new Date();
+        var firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 2);
+        var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        var formattedFirstDay = firstDayOfMonth.toISOString().slice(0, 10);
+        var formattedLastDay = lastDayOfMonth.toISOString().slice(0, 10); 
+        $('#sd').val(formattedFirstDay);
+        $('#ed').val(formattedLastDay);
+      } else if (selectedValue === "prev_month") {
+        var today = new Date();
+        var prevMonthLastDate = new Date(today.getFullYear(), today.getMonth(), 1);
+        var prevMonthFirstDate = new Date(today.getFullYear(), today.getMonth() - 1, 2);
+        var formattedPrevMonthFirstDate = prevMonthFirstDate.toISOString().slice(0, 10);
+        var formattedPrevMonthLastDate = prevMonthLastDate.toISOString().slice(0, 10);
+
+        $('#sd').val(formattedPrevMonthFirstDate);
+        $('#ed').val(formattedPrevMonthLastDate);
+      } 
+      else if (selectedValue === "this_year") {
+        var today = new Date();
+        var thisYear = today.getFullYear(); 
+
+        $('#sd').val(thisYear+"-01-01");
+        $('#ed').val("2023-12-31");
+      } 
+    });
+  }); 
+</script>
+ <script>
+    $('#sales').addClass('active');
+    $('#sale_report').addClass('active');
+ </script>
+<script src="{% static 'js/adm.js' %}"></script>
+{% endblock %}
+
+</body>
+</html>

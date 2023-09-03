@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+{% extends 'jesyfoods-main/base.html' %}
+{% load static %}
+<html lang="en">
+
+
+    {% block content %}
+     <title>Jesy Foods | Tasty Hub</title>
+<body>
+    <!--NavBar-->
+    <section id="header">
+      <div class="header container">
+        <div class="nav-bar">
+          <div class="brand">
+            <a href="#logo"><img src="{% static 'images/logo.png' %}" alt="logo"></a>
+          </div>
+          <div class="nav-list">
+            <div class="hamburger"><div class="bar"></div></div>
+            <ul>
+              <li><a href="." data-after="Home">Home</a></li>
+              <li><a href="products" data-after="Products">Products</a></li>
+              <li><a href="about" data-after="About">About</a></li>
+              <li><a href="#" data-after="Media">Media</a></li>
+              <li><a class="active" href="recipes" data-after="recipes">Recipes</a></li>
+              <li><a href="contact" data-after="Contact">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="sub_top"><a href="#" class="btn btn-std"  data-toggle="modal" data-target="#submit_rec">Submit Recipe</a></div>
+    </section>
+
+    <section>
+        <div class="rec_main">
+          <div class="container">
+          <h1>Simple ingredients prepared in a simple way - that's the best way to take your everyday cooking to a higher level.</h1>
+          <h4>Jose Andres</h4>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Search..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <button class="btn btn-std" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </div>
+          </div>
+          </div>          
+        </div>
+    </section>
+
+    <section id="rec_pop">
+      <div class="hd">
+        Most Popular  <span>Recipes</span>
+        <p>Most peoples are watched or liked Recipes</p>
+     </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-3">
+            <a href="#">
+            <div class="bx">
+              <img src="{% static 'jesyfoods-main/assets/Group 1.png' %}" alt="">
+            </div>
+              <h2>Heading of the recipe</h2></a>              
+              <p><i class="fa fa-user" aria-hidden="true"></i> <a href="#">Author Name</a></p>
+           </div>
+           <div class="col-sm-3">
+            <a href="#">
+            <div class="bx">
+              <img src="{% static 'jesyfoods-main/assets/Group 1.png' %}" alt="">
+            </div>
+              <h2>Heading of the recipe</h2></a>              
+              <p><i class="fa fa-user" aria-hidden="true"></i> <a href="#">Author Name</a></p>
+           </div>
+           <div class="col-sm-3">
+            <a href="#">
+            <div class="bx">
+              <img src="{% static 'jesyfoods-main/assets/Group 1.png' %}" alt="">
+            </div>
+              <h2>Heading of the recipe</h2></a>              
+              <p><i class="fa fa-user" aria-hidden="true"></i> <a href="#">Author Name</a></p>
+           </div>
+           <div class="col-sm-3">
+            <a href="#">
+            <div class="bx">
+              <img src="{% static 'jesyfoods-main/assets/Group 1.png' %}" alt="">
+            </div>
+              <h2>Heading of the recipe</h2></a>              
+              <p class="usr"><i class="fa fa-user" aria-hidden="true"></i> <a href="#">Author Name</a></p>
+           </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="rec_all">
+      <div class="hd">
+        From the <span>Others</span>
+        <p>Explore the tasty recipies...</p>
+     </div>
+     <div class="container">
+      
+       <div class="sidebar">
+         <a class="active" href="">All</a>
+         <a href="">Vegitarian</a>
+         <a href="">Non-Veg</a>
+         <a href="">Drinks</a>
+         <a href="">Snacks</a>
+       </div>
+       <div class="sidebar_sm">
+        <div class="dropdown">
+          <button class="btn btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            All Recipies
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Vegitarian</a>
+            <a class="dropdown-item" href="#">Non-Veg</a>
+            <a class="dropdown-item" href="#">Drinks</a>
+            <a class="dropdown-item" href="#">Snacks</a>
+          </div>
+        </div>
+       </div>
+       <div class="row">
+          <div class="col-sm-4">
+            <a href="recipe_01.html">
+              <div class="bx">
+                <img src="{% static 'jesyfoods-main/assets/Group 1.png' %}" alt="">
+              </div>
+                <h2>Heading of the recipe</h2></a>  
+                <p class="para">A paragraph is a number of sentences grouped together and relating to one topic. Or, a group of related sentences that develop a single point.</p>
+                <div class="review">
+                  <div class="star">
+                    <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  </div> 
+                  <i class="fa fa-heart"></i>
+                </div>           
+                <div class="usr_date">
+                  <p class="usr"><i class="fa fa-user" aria-hidden="true"></i> <a href="author.html">Author Name</a></p>
+                  <p>12-02-2020</p>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+              <a href="#">
+                <div class="bx">
+                  <img src="{% static 'jesyfoods-main/assets/Group 1.png' %}" alt="">
+                </div>
+                  <h2>Heading of the recipe</h2></a>  
+                  <p class="para">A paragraph is a number of sentences grouped together and relating to one topic. Or, a group of related sentences that develop a single point.</p>
+                  <div class="review">
+                    <div class="star">
+                      <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    </div> 
+                    <i class="fa fa-heart"></i>
+                  </div>           
+                  <div class="usr_date">
+                    <p class="usr"><i class="fa fa-user" aria-hidden="true"></i> <a href="#">Author Name</a></p>
+                    <p>12-02-2020</p>
+                  </div>
+              </div>
+
+              <div class="col-sm-4">
+                <a href="#">
+                  <div class="bx">
+                    <img src="{% static 'jesyfoods-main/assets/Group 1.png' %}" alt="">
+                  </div>
+                    <h2>Heading of the recipe</h2></a>  
+                    <p class="para">A paragraph is a number of sentences grouped together and relating to one topic. Or, a group of related sentences that develop a single point.</p>
+                    <div class="review">
+                      <div class="star">
+                        <span class="fa fa-star checked"></span>
+                      <span class="fa fa-star checked"></span>
+                      <span class="fa fa-star checked"></span>
+                      <span class="fa fa-star"></span>
+                      <span class="fa fa-star"></span>
+                      </div> 
+                      <i class="fa fa-heart"></i>
+                    </div>           
+                    <div class="usr_date">
+                      <p class="usr"><i class="fa fa-user" aria-hidden="true"></i> <a href="#">Author Name</a></p>
+                      <p>12-02-2020</p>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                  <a href="#">
+                    <div class="bx">
+                      <img src="{% static 'jesyfoods-main/assets/Group 1.png' %}" alt="">
+                    </div>
+                      <h2>Heading of the recipe</h2></a>  
+                      <p class="para">A paragraph is a number of sentences grouped together and relating to one topic. Or, a group of related sentences that develop a single point.</p>
+                      <div class="review">
+                        <div class="star">
+                          <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        </div> 
+                        <i class="fa fa-heart"></i>
+                      </div>           
+                      <div class="usr_date">
+                        <p class="usr"><i class="fa fa-user" aria-hidden="true"></i> <a href="#">Author Name</a></p>
+                        <p>12-02-2020</p>
+                      </div>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <a href="#">
+                      <div class="bx">
+                        <img src="{% static 'jesyfoods-main/assets/Group 1.png' %}" alt="">
+                      </div>
+                        <h2>Heading of the recipe</h2></a>  
+                        <p class="para">A paragraph is a number of sentences grouped together and relating to one topic. Or, a group of related sentences that develop a single point.</p>
+                        <div class="review">
+                          <div class="star">
+                            <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                          </div> 
+                          <i class="fa fa-heart"></i>
+                        </div>           
+                        <div class="usr_date">
+                          <p class="usr"><i class="fa fa-user" aria-hidden="true"></i> <a href="#">Author Name</a></p>
+                          <p>12-02-2020</p>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                      <a href="#">
+                        <div class="bx">
+                          <img src="{% static 'jesyfoods-main/assets/Group 1.png' %}" alt="">
+                        </div>
+                          <h2>Heading of the recipe</h2></a>  
+                          <p class="para">A paragraph is a number of sentences grouped together and relating to one topic. Or, a group of related sentences that develop a single point.</p>
+                          <div class="review">
+                            <div class="star">
+                              <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            </div> 
+                            <i class="fa fa-heart"></i>
+                          </div>           
+                          <div class="usr_date">
+                            <p class="usr"><i class="fa fa-user" aria-hidden="true"></i> <a href="#">Author Name</a></p>
+                            <p>12-02-2020</p>
+                          </div>
+                      </div>
+
+        
+
+         <div class="numb">
+           <a href="" id="disabled">Prev</a>
+           <a class="active" href="">1</a>
+           <a href="">2</a>
+           <a href="">3</a>
+           <a href="">Next</a>
+         </div>
+       </div>
+     </div>
+    </section>
+
+    <section id="follow">
+      <div class="container-fluid">
+        <h1>Follow Us</h1>
+        <a href="http://" class="btn btn-std in"><i class="fa fa-instagram"> </i> Follow on instagram</a>
+        <a href="http://" class="btn btn-std tw"><i class="fa fa-twitter"> </i> Follow on Twitter</a>
+        <a href="http://" class="btn btn-std fc"><i class="fa fa-facebook"> </i> Like on Facebook</a>
+        <a href="http://" class="btn btn-std wh"><i class="fa fa-whatsapp"> </i> Chat on WhatsApp</a>
+        <a href="http://" class="btn btn-std yo"><i class="fa fa-youtube"> </i> Subscribe on YouTube</a>
+      </div>
+    </section>
+
+<section>
+  <div class="loader-bodyy" style="opacity: 0.9;z-index: 9998;">
+    <div class="loader-content">
+      <img src="{% static 'images/logo.png' %}" alt="">
+      <h1 style="font-family: Georgia, 'Times New Roman', Times, serif;font-weight: 600;">Tasty Hub</h1>
+      
+      <h1 style="font-size: 20px;font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Available Soon...</h1>
+      <div class="loading-dots">
+        <div class="bounce"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+        <div class="bounce4"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<section id="rec_sub">
+  <!-- Modal -->
+<div class="modal fade" id="submit_rec" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">SUBMIT YOUR RECIPIE</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+              
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Headline" required>
+              </div>
+              <div class="form-group">
+                <textarea type="text" class="form-control" placeholder="Small description" required></textarea>
+              </div>
+              
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect01">Category</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01" required>
+                  <option selected>Choose...</option>
+                  <option value="Vegitarian">Vegitarian</option>
+                  <option value="Non-veg">Non-veg</option>
+                  <option value="Drinks">Drinks</option>
+                  <option value="Snacks">Snacks</option>
+                </select>
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text">Total Cooking time</span>
+                <input type="time" class="form-control" placeholder="Total cooking time" aria-label="Recipient's username" aria-describedby="basic-addon2" required>
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">Minutes</span>
+                </div>
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="srv">Serves</label>
+                </div>
+                <select class="custom-select" id="srv" required>
+                  <option selected value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="5+">5+</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Cuisine (Punjabi,Indian,Japanese,...)" required>
+              </div>
+            
+              <div class="input_fields_wrap">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Incrediants" required>
+                </div>
+              </div>
+              <button class="add_field_button btn btn-std1 btn-block mb-3">Add more Incrediants</button>
+
+              
+             <div class="input_fields_wrap_steps">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Steps" required>
+              </div>
+            </div>
+            <button class="add_field_button_steps btn btn-std1 btn-block mb-3">Add more Steps</button>
+
+              <div class="form-group">
+                <input type="url" class="form-control"  placeholder="YouTube video link (Optional)">
+              </div>
+
+              <div class="form-group">
+                <label for="exampleFormControlFile1">Recipie Photo</label>
+                <input type="file" class="form-control-file" id="exampleFormControlFile1" required>
+              </div>
+
+
+              <button type="submit" class="btn btn-std btn-block">Submit Recipie</button>
+        </form>
+      </div>
+      <!--
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+      -->
+    </div>
+  </div>
+</div>
+</section>
+<!--<script>-->
+<!--  $(window).on("load",function(){-->
+<!--    $(".loader-body").fadeOut("slow");-->
+<!--    header.style.backgroundColor = 'transparent'-->
+<!--        $("#header").css("box-shadow", "none");-->
+<!--  });-->
+
+
+<!--</script>-->
+{% endblock %}
+</body>
+</html>

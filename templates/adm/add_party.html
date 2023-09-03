@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    {% block content %}
+<link rel="stylesheet" href="{% static 'css/adm_style.css' %}">
+<title>Add Party | JesyFoods</title>
+</head>
+<body>
+
+   {% include "adm/base_side_nav.html" %}
+
+
+    <section class="home_content">
+        <div class="black"><i class="fa fa-times" aria-hidden="true"></i></div>
+
+        <div class="nav_top">
+            <div class="hed">
+                <i class="fa fa-bars" id="btn_bar-2" aria-hidden="true"></i>
+                Add Party
+            </div>           
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+              <a class="nav-link" href="home"><i class="fa fa-home"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fa fa-bell"></i></a>
+            </li>
+            
+           <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i>
+                    <span class="name">{{request.user}}</span>
+               </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="MyAccount"><i class="fa fa-user-circle-o"></i> My Account</a>
+                      <a class="dropdown-item" href="price_list"><i class="fa fa-money" aria-hidden="true"></i> Price List</a>
+                      <a class="dropdown-item" href="https://jesyfoods.com/products"><i class="fa fa-tasks" aria-hidden="true"></i> Products</a>
+                      <a class="dropdown-item" href="settings"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp; Settings</a>
+                      <a style="color: darkgreen;" class="dropdown-item" href="https://jesyfoods.com/"><i class="fa fa-globe" aria-hidden="true"></i> Jesy Foods</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item logout" style="color: red;" href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                      </div>
+              </li>
+          </ul>
+    </div>
+
+
+
+         <form method="post" action="{% url 'add_party' %}" enctype="multipart/form-data">{% csrf_token %}
+    <section class="container mt-5 form">
+        <h3 class="text-center mb-3">Ragister Party</h3>
+
+        {% for message in messages %}
+           <div class="alert alert-warning" role="alert">
+               {{message}}
+            </div>
+        {% endfor %}
+          <div class="form-group">
+            <input name="name" type="text" class="form-control"  placeholder="Party Name" required>
+          </div>
+            <div class="form-group">
+            <input name="address" type="text" class="form-control"  placeholder="Address" required>
+          </div>
+           <div class="form-row mb-3">
+            <div class="col">
+                <input name="phone" type="number" id="phone" class="form-control"  placeholder="Phone" required>
+            </div>
+            <div class="col">
+              <input name="owner" type="text" class="form-control"  placeholder="Owner Name">
+            </div>
+          </div>
+
+            <div class="form-group mb-3">
+            <input name="gst" type="text" class="form-control"  placeholder="GST No:">
+          </div>
+            <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="check1">
+            <label class="form-check-label" for="Check1">Same as phone</label>
+          </div>
+         <div class="form-row mb-3">
+            <div class="col">
+                <input name="whatsapp" id="wno" type="number" class="form-control"  placeholder="WhatsApp">
+            </div>
+            <div class="col">
+              <input name="email" type="email" class="form-control"  placeholder="Email address">
+            </div>
+          </div>
+
+          <div class="form-row mb-3">
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" >Party </label>
+                </div>
+                <select name="party_type" class="custom-select" >
+                  <option selected value="seller">Seller</option>
+                  <option value="buyer"> Buyer</option>
+                  <option value="both"> Both</option>
+                </select>
+              </div>
+            </div>
+            <div class="col">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" >Route</label>
+                </div>
+                <select name="route" class="custom-select" >
+                  <option selected>General</option>
+                  <option value="Mon"> Route1-Monday</option>
+                  <option value="Tue">Route2-Tuesday</option>
+                  <option value="Wed">Route3-Wednesday</option>
+                  <option value="Thu">Route4-Thursday</option>
+                  <option value="Fri">Route5-Friday</option>
+                  <option value="Sat">Route6-Saturday</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row mb-3">
+            <div class="col">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text">Type</label>
+                    </div>
+                    <select name="type" class="custom-select" >
+                      <option selected>Retail</option>
+                      <option value="Wholesale">Wholesale</option>
+                      <option value="Hotel">Hotel</option>
+                      <option value="Agencies">Agencies</option>
+                    </select>
+                  </div>
+            </div>
+            <div class="col">
+                <div class="input-group ">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text">Category</label>
+                    </div>
+                    <select name="category" class="custom-select" >
+                      <option selected>Grocery</option>
+                      <option value="Wholesale">Supermarket</option>
+                      <option value="Hotel">Vegetables</option>
+                      <option value="Agencies">Hotel</option>
+                    </select>
+                  </div>
+            </div>
+          </div>
+
+          
+
+
+        
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Account Details:</label>
+            <textarea name="account" class="form-control" id="exampleFormControlTextarea1" placeholder="AccountNumber, IFSC Code & Branch" rows="3"></textarea>
+          </div>
+        <div class="form-group">
+        <input type="file" class="form-control" name="image">
+      </div>
+
+    </section>
+
+
+
+
+
+    <section class="bott_but">
+
+        <div class="container fixed-bottom">
+            <div class="info_box" style="margin-left:0;">
+                <button type="submit" class="btn btn-primary" >
+                    <p>Add Party</p>
+                </button>
+
+            </div>
+        </div>
+
+    </section>
+
+</form>
+<div class="plus_btn">
+    <div id="plus_btn_more">
+        <a href="add_expense" class="btn btn_round btn-4">
+            <i class="fa fa-money" aria-hidden="true"></i>
+            <span id="btn-4">Add Expense</span>
+        </a>
+        <a href="add_order" class="btn btn_round btn-3">
+            <i class="fa fa-truck" aria-hidden="true"></i>
+            <span id="btn-3">Add Order</span>
+        </a>
+        <a href="take_payment" class="btn btn_round btn-2">
+            <i class="fa fa-inr" aria-hidden="true"></i>
+            <span id="btn-2">Take Payment</span>
+        </a>
+        <a href="" class="btn btn_round btn-1">
+            <i class="fa fa-line-chart" aria-hidden="true"></i>
+            <span id="btn-1">Add Sale</span>
+        </a>
+    </div>
+    <button id="btn_plus" class="btn_round"><i class="fa fa-plus" aria-hidden="true"></i></button>
+</div>
+
+    </section>
+
+<script>
+$(document).ready(function() {
+    $('#check1').change(function() {
+        if($(this).is(":checked")) {
+            $('#wno').val($('#phone').val())
+        } 
+        else{
+            $('#wno').val('')
+        }     
+    });
+});
+</script>
+    <script src="{% static 'js/adm.js' %}"></script>
+<script>
+    $('#party').addClass('active');
+    $('#add_party').addClass('active');
+ </script>
+
+{% endblock %}
+
+</body>
+</html>

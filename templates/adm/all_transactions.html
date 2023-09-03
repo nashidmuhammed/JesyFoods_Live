@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    {% block content %}
+<link rel="stylesheet" href="{% static 'css/adm_style.css' %}">
+<title>All Transactions | JesyFoods</title>
+</head>
+<body>
+
+{% include "adm/base_side_nav.html" %}
+
+
+    <section class="home_content">
+        <div class="black"><i class="fa fa-times" aria-hidden="true"></i></div>
+
+        <div class="nav_top">
+            <div class="hed">
+                <i class="fa fa-bars" id="btn_bar-2" aria-hidden="true"></i>
+                All Transactions
+            </div>           
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+              <a class="nav-link" href="home"><i class="fa fa-home"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fa fa-bell"></i></a>
+            </li>
+            
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i>
+                    <span class="name">{{request.user}}</span>
+               </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="MyAccount"><i class="fa fa-user-circle-o"></i> My Account</a>
+                      <a class="dropdown-item" href="price_list"><i class="fa fa-money" aria-hidden="true"></i> Price List</a>
+                      <a class="dropdown-item" href="https://jesyfoods.com/products"><i class="fa fa-tasks" aria-hidden="true"></i> Products</a>
+                      <a class="dropdown-item" href="settings"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp; Settings</a>
+                      <a style="color: darkgreen;" class="dropdown-item" href="https://jesyfoods.com/"><i class="fa fa-globe" aria-hidden="true"></i> Jesy Foods</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item logout" style="color: red;" href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                      </div>
+              </li>
+          </ul>
+    </div>
+<!------------------------------------------------------->
+
+
+  <section class="mt-5">
+      <div class="container dt_tab">
+          <div>
+            <a href="add_order" class="btn btn-outline-primary">Add Order</a>
+          <a href="add_sale" class="btn btn-outline-info">Add Sale</a>
+          <a href="take_payment" class="btn btn-outline-success">Add Payment</a>
+          </div>
+          <select id="filter" class="form-control" aria-label="Default select example">
+            <option selected>This Month</option>
+            <!-- <option value="1">By Product</option> -->
+          </select>
+      </div>
+  </section>
+
+    <section class="container">
+        <table class="table table-hover" id="orders">
+            <thead>
+              <tr>
+                <th scope="col">Date </th>
+                <th scope="col">Party </th>
+                <th scope="col">Transaction</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Recieved/Paid</th>
+                <th scope="col">Type</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% if sale %}
+            {% for i in sale %}
+              <tr onclick="document.location='{% url 'update_sale' %}?data={{i.id}}';">
+                <td>{{i.date|date}}</td>
+                <td>{{i.party_name}}</td>
+                {% if i.t_type == 'sale' %}
+                <td style="color: blue;">{{i.t_type}}</td>
+                {% elif i.t_type == 'payment' %}
+                <td style="color: darkgreen;">{{i.t_type}}</td>
+                {% elif i.t_type == 'order' %}
+                <td style="color: orangered;">{{i.t_type}}</td>
+                {% elif i.t_type == 'return' %}
+                <td style="color: red;">{{i.t_type}}</td>
+                {% endif %}
+                <td>{{i.total}}</td>
+                <td>{{i.received}}</td>
+                <td>{{i.p_type}}</td>
+              </tr>
+              
+            {% endfor %}
+            {% else %}
+            <td>No data to found!</td>
+            {% endif %}
+
+            </tbody>
+          </table>
+        <br><br>
+    </section>
+   
+  
+
+
+    <div class="plus_btn">
+        <div id="plus_btn_more">
+            <a href="add_expense" class="btn btn_round btn-4">
+                <i class="fa fa-money" aria-hidden="true"></i>
+                <span id="btn-4">Add Expense</span>
+            </a>
+            <a href="add_order" class="btn btn_round btn-3">
+                <i class="fa fa-truck" aria-hidden="true"></i>
+                <span id="btn-3">Add Order</span>
+            </a>
+            <a href="take_payment" class="btn btn_round btn-2">
+                <i class="fa fa-inr" aria-hidden="true"></i>
+                <span id="btn-2">Take Payment</span>
+            </a>
+            <a href="" class="btn btn_round btn-1">
+                <i class="fa fa-line-chart" aria-hidden="true"></i>
+                <span id="btn-1">Add Sale</span>
+            </a>
+        </div>
+        <button class="btn_round"><i class="fa fa-plus" aria-hidden="true"></i></button>
+    </div>
+
+
+    </section>
+</section>
+
+
+
+<script src="{% static 'js/adm.js' %}"></script>
+
+<script>
+    $('#sales').addClass('active');
+    $('#all_transactions').addClass('active');
+ </script>
+{% endblock %}
+
+</body>
+</html>

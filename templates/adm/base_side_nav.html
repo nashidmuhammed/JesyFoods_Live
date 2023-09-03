@@ -1,0 +1,190 @@
+{% load static %}
+<div class="side_nav">
+        <div class="logo_content">
+            <div class="logo">
+                <img src="{% static 'images/logo.png' %}" alt="">
+                <div class="logo_name">JesyFoods</div>
+            </div>
+            <i class="fa fa-bars" id="btn_bar" aria-hidden="true"></i>
+        </div>
+        <ul class="nav_list">
+            <li class="mb-2">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <input type="text" placeholder="Search...">
+                <span class="tool_tip">Search</span>
+            </li>
+            <li>
+                <a  class="a" href="admin_panel" id="admin_panel">
+                <i class="fa fa-th-large" aria-hidden="true"></i>
+                <span class="links_name">Dashboard</span>
+                </a>
+                <span class="tool_tip">Dashboard</span>
+            </li>
+            <li>
+                <a  class=" a" href="home" id="home">
+                <i class="fa fa-home" aria-hidden="true"></i>
+                <span class="links_name">Home</span>
+                </a>
+                <span class="tool_tip">Home</span>
+            </li>
+            <li id="sale_drop">
+                <a class="a" id="sales">
+                <i class="fa fa-list" aria-hidden="true"></i>
+                <span class="links_name">Sales <i class="fa fa-caret-down" aria-hidden="true"></i></span>
+
+
+                </a>
+                <span class="tool_tip">Sales</span>
+            </li>
+            <div class="container drop">
+                <li>
+                    <a class="a" href="sale_report" id="sale_report">
+                    <i class="fa fa-line-chart" aria-hidden="true"></i>
+                    <span class="links_name">Sales Report</span>
+                    </a>
+                    <span class="tool_tip">Sales Report</span>
+                </li>
+                <li>
+                    <a class="a" href="payments" id="payments">
+                    <i class="fa fa-inr" aria-hidden="true"></i>
+                    <span class="links_name">Payment In</span>
+                    </a>
+                    <span class="tool_tip">Payment In</span>
+                </li>
+                <li>
+                    <a class=" a" href="daybook" id="daybook">
+                    <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+                    <span class="links_name">Day Book</span>
+                    </a>
+                    <span class="tool_tip">Day Book</span>
+                </li>
+                <li>
+                    <a class="a" href="gst_report" id="gst_report">
+                    <i class="fa fa-calculator" aria-hidden="true"></i>
+                    <span class="links_name">GSTIN Report</span>
+                    </a>
+                    <span class="tool_tip">GSTIN Report</span>
+                </li>
+                <li>
+                    <a class="a" href="view_orders" id="view_orders">
+                    <i class="fa fa-truck" aria-hidden="true"></i>
+                    <span class="links_name">Sales Orders</span>
+                    </a>
+                    <span class="tool_tip">Sales Orders</span>
+                </li>
+                <li>
+                    <a class="a" href="all_transactions" id="all_transactions">
+                    <i class="fa fa-table" aria-hidden="true"></i>
+                    <span class="links_name">All Transaction</span>
+                    </a>
+                    <span class="tool_tip">All Transaction</span>
+                </li>
+
+            </div>
+            <li id="cparty">
+                <a class="a" id="party">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                <span class="links_name">Party <i class="fa fa-caret-down" aria-hidden="true"></i></span>
+
+
+                </a>
+                <span class="tool_tip">Party</span>
+            </li>
+            <div class="container cdrop">
+                <li>
+                    <a class="a" href="party_report" id="party_statement">
+                    <i class="fa fa-line-chart" aria-hidden="true"></i>
+                    <span class="links_name">Party Statement</span>
+                    </a>
+                    <span class="tool_tip">Party Statement</span>
+                </li>
+                <li>
+                    <a class="a" href="party_report" id="party_report">
+                        <i class="fa fa-table" aria-hidden="true"></i>
+                    <span class="links_name">Party Report</span>
+                    </a>
+                    <span class="tool_tip">Party Report</span>
+                </li>
+                <li>
+                    <a class="a" href="add_party">
+                        <i class="fa fa-address-book-o" aria-hidden="true"></i>
+                    <span class="links_name">Add Party</span>
+                    </a>
+                    <span class="tool_tip">Add Party</span>
+                </li>
+            </div>
+
+
+            <li>
+                <a class="a" href="view_products" id="view_products">
+                    <i class="fa fa-leaf" aria-hidden="true"></i>
+                <span class="links_name">Products</span>
+                </a>
+                <span class="tool_tip">Products</span>
+            </li>
+            <li>
+                <a class="a" href="employees" id="employees">
+                    <i class="fa fa-briefcase" aria-hidden="true"></i>
+                <span class="links_name">Employees</span>
+                </a>
+                <span class="tool_tip">Employees</span>
+            </li>
+            <li>
+                <a class="a" id="purchase">
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                <span class="links_name">Purchase</span>
+                </a>
+                <span class="tool_tip">Purchase</span>
+            </li>
+            <li>
+                <a class="a" href="view_expense" id="view_expense">
+                    <i class="fa fa-money" aria-hidden="true"></i>
+                <span class="links_name">Expenses</span>
+                </a>
+                <span class="tool_tip">Expenses</span>
+            </li>
+            <li>
+                <a class="a" href="view_messages" id="view_messages">
+                <i class="fa fa-comments-o" aria-hidden="true"></i>
+                <span class="links_name">Messages</span>
+                </a>
+                <span class="tool_tip">Messages</span>
+            </li>
+            <li>
+                <a class="a" href="all_reports" id="all_reports">
+                    <i class="fa fa-line-chart" aria-hidden="true"></i>
+                <span class="links_name">Reports</span>
+                </a>
+                <span class="tool_tip">Reports</span>
+            </li>
+            <li>
+                <a class="a" href="settings">
+                <i class="fa fa-cog" aria-hidden="true"></i>
+                <span class="links_name">Settings</span>
+                </a>
+                <span class="tool_tip">Settings</span>
+            </li>
+            <li>
+                <a class="a" href="#">
+                   
+                <span class="links_name"></span>
+                </a>
+                <span class="tool_tip"></span>
+            </li>
+            <li>
+                <a class="a" href="logout" style="color: #ff2121 !important;">
+                    <i class="fa fa-sign-out" id="logout" aria-hidden="true"></i>
+                <span class="links_name">Logout</span>
+                </a>
+                <span class="tool_tip">Logout</span>
+            </li>
+        </ul>
+        <!-- <div class="log_sec">
+            <div class="log_out">
+                <a href="logout">
+                    <span>Logout</span>
+                <i class="fa fa-sign-out" id="logout" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div> -->
+    </div>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+{% extends 'jesyfoods-main/base.html' %}
+{% load static %}
+<html lang="en">
+
+
+    {% block content %}
+     <title>Jesy Foods | About</title>
+<body>
+    <!--NavBar-->
+    <section id="header">
+      <div class="header container">
+        <div class="nav-bar">
+          <div class="brand">
+            <a href="#logo"><img src="{% static 'images/logo.png' %}" alt="logo"></a>
+          </div>
+          <div class="nav-list">
+            <div class="hamburger"><div class="bar"></div></div>
+            <ul>
+              <li><a href="." data-after="Home">Home</a></li>
+              <li><a href="products" data-after="Products">Products</a></li>
+              <li><a class="active" href="#" data-after="About">About</a></li>
+              <li><a href="#" data-after="Gallery">Media</a></li>
+              <li><a href="tasty_hub" data-after="recipes">Recipes</a></li>
+              <li><a href="contact" data-after="Contact">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+ 
+
+
+<section id="abt" style="margin-top: 150px;">
+  <div class="hd" data-aos="fade-up">
+   About <span>Us</span>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6" data-aos="fade-up">
+        <img class="abt" src="{% static 'jesyfoods-main/assets/about_us.jpg' %}" alt="about jesyfoods">
+      </div>
+      <div class="col-sm-6 " data-aos="fade-up">
+        <span class="para">"Jesy Make Easy"</span>
+        <p>We are introducing a new brand <span>JESY</span> to the kitchens of Kerala. <span>JESY</span> is the new name of Spices, Mix Masala and Curry powders. <span>JESY</span> is direct from nature.
+          Didn't add any preservations or artificial flavors.  <br><span>JESY</span> - The Taste of Nature; The Colour of Nature. <br>
+           We bring spices direct from the plantations. Testing by our Quality team. Preparing in our flour mills. Packing with hygenic from our packing section. Supplying to the market quickly and reach your kitchens and hotels soon.
+         </p>
+        <ul>
+          <li>Safety First</li>
+          <li>Healthy and Tasty</li>
+          <li>Hygenic and Pure</li>
+          <li>Well packed</li>
+          <li>Quick Delivery</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="ref">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-3" data-aos="flip-right">
+        <img src="{% static 'jesyfoods-main/assets/truck.png' %}" alt="">
+        <p>Products From Reliable Sources</p>
+      </div>
+      <div class="col-sm-3" data-aos="flip-right">
+        <img src="{% static 'jesyfoods-main/assets/qlty_contrl.png' %}" alt="">
+        <p>Quality Control</p>
+      </div>
+      <div class="col-sm-3">
+        <img src="{% static 'jesyfoods-main/assets/process.png' %}" alt="" data-aos="flip-left">
+        <p>Processing</p>
+      </div>
+      <div class="col-sm-3">
+        <img src="{% static 'jesyfoods-main/assets/packing.png' %}" alt="" data-aos="flip-left">
+        <p>Packing</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <section>
+    <div class="container mill">
+      <div class="row">
+        <div class="col-sm-3 sub" data-aos="zoom-in" data-aos-duration="1000">
+            <h1>Jesy Flour Mill</h1>
+            <p>Jesy Flour Mills  is a well maintained high quality processing unit located at Kodampuzha in Calicut District, Kerala. </p>
+        </div>
+        <div class="col-sm-3 sub" data-aos="zoom-in" data-aos-duration="1500">
+          <h1>Packing</h1>
+          <p>The well processed products are carefully packed with an Automated packing technology  </p>
+      </div>
+      <div class="col-sm-3 sub" data-aos="zoom-in" data-aos-duration="2000">
+        <h1>Distribution</h1>
+        <p>We distribute our products to direct retailers , so we can provide high quality with low price. Hence products are available at most upmarket stores </p>
+    </div>
+    <div class="col-sm-3 sub" data-aos="zoom-in" data-aos-duration="2500">
+      <h1>Certificates</h1>
+      <p>Fssai License Number: <b>11321011000724</b> <br> Decentralization of licensing for food products. </p>
+    </div>
+      </div>
+    </div>
+  </section>
+  
+
+{% endblock %}
+</body>
+</html>

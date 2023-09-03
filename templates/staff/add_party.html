@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    {% block content %}
+<link rel="stylesheet" href="{% static 'css/adm_style.css' %}">
+<title>Add Party | JesyFoods</title>
+</head>
+<body>
+
+ <section class="jesy_nav">
+        <nav class="navbar navbar-light ">
+            <div class="logo-back">
+                <a onclick="window.history.back()"   class="back-btn"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+                <a href="home" class="navbar-brand"><img src="{% static 'images/logo.png' %}" class="logo" alt="jesy_logo"></a>
+            </div>
+            <form class="form-inline">
+              <div class="dropdown" style="margin-left: 15px;">
+                  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     <i class="fa fa-user-circle-o"></i> {{request.user}}
+                  </a>
+
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" href="MyAccount"><i class="fa fa-user-circle-o"></i> My Account</a>
+                    <a class="dropdown-item" href="price_list"><i class="fa fa-money" aria-hidden="true"></i> Price List</a>
+                    <a class="dropdown-item" href="https://jesyfoods.com/products"><i class="fa fa-tasks" aria-hidden="true"></i> Products</a>
+                    <a class="dropdown-item" href="settings"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp; Settings</a>
+                    <a style="color: darkgreen;" class="dropdown-item" href="https://jesyfoods.com/"><i class="fa fa-globe" aria-hidden="true"></i> Jesy Foods</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item logout" href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                    </div>
+                  </div>
+                </div>
+          </form>
+          </nav>
+    </section><br><br>
+
+
+
+
+
+
+
+
+        <form method="post" action="{% url 'add_party' %}">{% csrf_token %}
+    <section class="container mt-5 form">
+        <h3 class="text-center mb-3">Ragister Party</h3>
+          <div class="form-group">
+            <input name="name" type="text" class="form-control"  placeholder="Party Name" required>
+          </div>
+            <div class="form-group">
+            <input name="address" type="text" class="form-control"  placeholder="Address" required>
+          </div>
+           <div class="form-row mb-3">
+            <div class="col">
+                <input name="phone" type="number" id="phone" class="form-control"  placeholder="Phone" required>
+            </div>
+            <div class="col">
+              <input name="owner" type="text" class="form-control"  placeholder="Owner Name">
+            </div>
+          </div>
+
+            <div class="form-group mb-3">
+            <input name="gst" type="text" class="form-control"  placeholder="GST No:">
+          </div>
+            <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="check1">
+            <label class="form-check-label" for="Check1">Same as phone</label>
+          </div>
+         <div class="form-row mb-3">
+            <div class="col">
+                <input name="whatsapp" id="wno" type="number" class="form-control"  placeholder="WhatsApp">
+            </div>
+            <div class="col">
+              <input name="email" type="email" class="form-control"  placeholder="Email address">
+            </div>
+          </div>
+
+          <div class="form-row mb-3">
+            <div class="col">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text">Type</label>
+                    </div>
+                    <select name="type" class="custom-select" >
+                      <option selected>Retail</option>
+                      <option value="Wholesale">Wholesale</option>
+                      <option value="Hotel">Hotel</option>
+                      <option value="Agencies">Agencies</option>
+                    </select>
+                  </div>
+            </div>
+            <div class="col">
+                <div class="input-group ">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text">Category</label>
+                    </div>
+                    <select name="category" class="custom-select" >
+                      <option selected>Grocery</option>
+                      <option value="Wholesale">Supermarket</option>
+                      <option value="Hotel">Vegetables</option>
+                      <option value="Agencies">Hotel</option>
+                    </select>
+                  </div>
+            </div>
+          </div>
+
+     
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" >Route</label>
+          </div>
+          <select name="route" class="custom-select" >
+            <option selected>General</option>
+            <option value="Route1"> Route1-Monday</option>
+            <option value="Route2">Route2-Tuesday</option>
+            <option value="Route3">Route3-Wednesday</option>
+            <option value="Route4">Route4-Thursday</option>
+            <option value="Route5">Route5-Friday</option>
+            <option value="Route6">Route6-Saturday</option>
+          </select>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Account Details:</label>
+            <textarea name="account" class="form-control" id="exampleFormControlTextarea1" placeholder="AccountNumber, IFSC Code & Branch" rows="3"></textarea>
+          </div>
+        <div class="form-group">
+        <input type="file" class="form-control" disabled>
+      </div>
+
+    </section>
+
+
+
+
+
+    <section class="bott_but">
+
+        <div class="container fixed-bottom">
+            <div class="info_box" style="margin-left:0;">
+                <button type="submit" class="btn btn-primary" >
+                    <p>Add Party</p>
+                </button>
+
+            </div>
+        </div>
+
+    </section>
+
+</form>
+
+
+<script>
+$(document).ready(function() {
+    $('#check1').change(function() {
+        if($(this).is(":checked")) {
+            $('#wno').val($('#phone').val())
+        } 
+        else{
+            $('#wno').val('')
+        }     
+    });
+});
+</script>
+    <script src="{% static 'js/adm.js' %}"></script>
+
+{% endblock %}
+
+</body>
+</html>

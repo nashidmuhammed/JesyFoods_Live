@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    {% block content %}
+<link rel="stylesheet" href="{% static 'css/adm_style.css' %}">
+<title>Update Sale | JesyFoods</title>
+</head>
+<body>
+
+    <div class="side_nav">
+        <div class="logo_content">
+            <div class="logo">
+                <img  alt="">
+                <div class="logo_name">JesyFoods</div>
+            </div>
+            <i class="fa fa-bars" id="btn_bar" aria-hidden="true"></i>
+        </div>
+        <ul class="nav_list">
+            <li class="mb-2">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <input type="text" placeholder="Search...">
+                <span class="tool_tip">Search</span>
+            </li>
+            <li>
+                <a  class="a" href="admin_panel">
+                <i class="fa fa-th-large" aria-hidden="true"></i>
+                <span class="links_name">Dashboard</span>
+                </a>
+                <span class="tool_tip">Dashboard</span>
+            </li>
+            <li>
+                <a  class="  a" href="home">
+                <i class="fa fa-home" aria-hidden="true"></i>
+                <span class="links_name">Home</span>
+                </a>
+                <span class="tool_tip">Home</span>
+            </li>
+            <li id="sale_drop">
+                <a class="a active">
+                <i class="fa fa-list" aria-hidden="true"></i>
+                <span class="links_name">Sales <i class="fa fa-caret-down" aria-hidden="true"></i></span>
+
+
+                </a>
+                <span class="tool_tip">Sales</span>
+            </li>
+            <div class="container drop">
+                <li>
+                    <a class="a " href="sale_report">
+                    <i class="fa fa-line-chart" aria-hidden="true"></i>
+                    <span class="links_name">Sales Report</span>
+                    </a>
+                    <span class="tool_tip">Sales Report</span>
+                </li>
+                <li>
+                    <a class="a " href="payments">
+                    <i class="fa fa-inr" aria-hidden="true"></i>
+                    <span class="links_name">Payment In</span>
+                    </a>
+                    <span class="tool_tip">Payment In</span>
+                </li>
+                <li>
+                    <a class=" a" href="daybook">
+                    <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+                    <span class="links_name">Day Book</span>
+                    </a>
+                    <span class="tool_tip">Day Book</span>
+                </li>
+                <li>
+                    <a class="a" href="view_orders">
+                    <i class="fa fa-truck" aria-hidden="true"></i>
+                    <span class="links_name">Sales Orders</span>
+                    </a>
+                    <span class="tool_tip">Sales Orders</span>
+                </li>
+            </div>
+            <li id="cparty">
+                <a class="a ">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                <span class="links_name">Party <i class="fa fa-caret-down" aria-hidden="true"></i></span>
+
+
+                </a>
+                <span class="tool_tip">Party</span>
+            </li>
+            <div class="container cdrop">
+                <li>
+                    <a class="a " href="party_statement">
+                    <i class="fa fa-line-chart" aria-hidden="true"></i>
+                    <span class="links_name">Party Statement</span>
+                    </a>
+                    <span class="tool_tip">Party Statement</span>
+                </li>
+                <li>
+                    <a class="a" href="party_report">
+                        <i class="fa fa-table" aria-hidden="true"></i>
+                    <span class="links_name">Party Report</span>
+                    </a>
+                    <span class="tool_tip">Party Report</span>
+                </li>
+                <li>
+                    <a class="a" href="add_party">
+                        <i class="fa fa-address-book-o" aria-hidden="true"></i>
+                    <span class="links_name">Add Party</span>
+                    </a>
+                    <span class="tool_tip">Add Party</span>
+                </li>
+            </div>
+
+            <li>
+                <a class="a" href="view_products">
+                    <i class="fa fa-leaf" aria-hidden="true"></i>
+                <span class="links_name">Products</span>
+                </a>
+                <span class="tool_tip">Products</span>
+            </li>
+            <li>
+                <a class="a" href="employees">
+                    <i class="fa fa-briefcase" aria-hidden="true"></i>
+                <span class="links_name">Employees</span>
+                </a>
+                <span class="tool_tip">Employees</span>
+            </li>
+            <li>
+                <a class="a">
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                <span class="links_name">Purchase</span>
+                </a>
+                <span class="tool_tip">Purchase</span>
+            </li>
+            <li>
+                <a class="a" href="view_expense">
+                    <i class="fa fa-money" aria-hidden="true"></i>
+                <span class="links_name">Expenses</span>
+                </a>
+                <span class="tool_tip">Expenses</span>
+            </li>
+            <li>
+                <a class="a">
+                <i class="fa fa-comments-o" aria-hidden="true"></i>
+                <span class="links_name">Messages</span>
+                </a>
+                <span class="tool_tip">Messages</span>
+            </li>
+            <li>
+                <a class="a" href="settings">
+                <i class="fa fa-cog" aria-hidden="true"></i>
+                <span class="links_name">Settings</span>
+                </a>
+                <span class="tool_tip">Settings</span>
+            </li>
+        </ul>
+        <div class="log_sec">
+            <div class="log_out">
+                <a href="logout">
+                    <span>Logout</span>
+                <i class="fa fa-sign-out" id="logout" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <section class="home_content">
+
+        <div class="nav_top">
+            <div class="hed">
+                <a onclick="window.history.back()"   class="back-btn adm"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+                Update Sale
+            </div>           
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+              <a class="nav-link" href="home"><i class="fa fa-home"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fa fa-bell"></i></a>
+            </li>
+            
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i>
+                    <span class="name">{{request.user}}</span>
+               </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="MyAccount"><i class="fa fa-user-circle-o"></i> My Account</a>
+                      <a class="dropdown-item" href="price_list"><i class="fa fa-money" aria-hidden="true"></i> Price List</a>
+                      <a class="dropdown-item" href="https://jesyfoods.com/products"><i class="fa fa-tasks" aria-hidden="true"></i> Products</a>
+                      <a class="dropdown-item" href="settings"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp; Settings</a>
+                      <a style="color: darkgreen;" class="dropdown-item" href="https://jesyfoods.com/"><i class="fa fa-globe" aria-hidden="true"></i> Jesy Foods</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item logout" style="color: red;" href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                      </div>
+              </li>
+          </ul>
+    </div>
+
+<!------------------------------------------------------->
+
+
+        <form action="{% url 'update_sale' %}" method="post">
+            {% csrf_token %}
+        <div class="dt_tab container mt-5">
+            <input name="iid" id="iid" value="{{odr.iid}}" hidden>
+            <div class="dte"><span>Date:</span><input name="date" id="date" type="date" class="dt form-control" value="{{dt|date:'Y-m-d'}}"></div>
+            <div class="dtod"><span>Invoice No:</span><div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                  <input name="prefix" class="input-group-text" style="width:35px;" id="prefix" value="{{prefix}}" readonly>
+
+                </div>
+                <input name="inv_no" id="od_no" type="text" class="dt form-control" value="{{od_no}}" readonly>
+                <button id="inv_ed" class="btn btn-warning btn-sm" type="button" style="display: none;" data-toggle="modal" data-target="#invoice"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+              </div></div>
+            
+        </div>
+        
+        <!-- Modal Invoice Edit-->
+        <div class="modal fade" id="invoice" tabindex="-1" role="dialog" aria-labelledby="invoiceTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="invoiceTitle">Change Invoice Number</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <input style="width:50px;" class="input-group-text" id="inv_prefix" value="{{prefix}}">
+                        </div>
+                        <input id="inv_no" type="number" class="form-control" placeholder="invoice no" value="{{od_no}}">
+                    </div>
+                    <div class="alert alert-danger inv_alt" role="alert">
+                        This invoice no. already exists!
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="inv_cng" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        
+        {% for message in messages %}
+           <div class="alert alert-info" role="alert">
+               {{message}}
+            </div>
+        {% endfor %}
+        <div class="container mt-4">
+            <p style="float: right;">Party Balance: ₹ <span style="color: darkgreen;">{{party_ob.balance}}</span></p>
+            <select name="s_party" class="form-control" id="s_party" disabled>
+              <option selected>{{party_ob.party_name}}</option>
+                
+            </select>
+            <div class="form-row mt-1">
+                <div class="col">
+                  <input id="place" type="text" class="form-control form-control-sm" placeholder="Address" value="{{party_ob.address}}" readonly>
+                </div>
+                <div class="col">
+                    <!--
+                  <input id="phone" type="number" class="form-control form-control-sm" placeholder="Phone" value="{{party_ob.phone}}" readonly>
+                    -->
+                    <div class="input-group input-group-sm mb-3">
+                      <input type="number" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{party_ob.phone}}" readonly>
+                      <div class="input-group-append">
+                       <a href="tel:{{party_ob.phone}}" class="btn btn-outline-success" type="button"><i class="fa fa-phone" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+<!--
+            <table class="table mt-3">
+                <tbody>
+                <tr></tr>
+                {% if od %}
+                {% for i in od %}
+                  <tr id="{{i}}" >
+                    <td><a class="ed" data-toggle="modal" data-target="#AddItem">{{i.p_name}}</a></td>
+                    <td>{{i.qty}}{% if i.fqty %}+{{i.fqty}}{% endif %}</td>
+                    <td>₹{{i.amount}}</td>
+                  </tr>
+                {% endfor %}
+                {% endif %}
+
+                </tbody>
+              </table>
+-->
+              <table id="table" class="table mt-3">
+                <tbody>
+                <tr></tr>
+                {% if sale %}
+                {% for i in sale %}
+                  <tr id="item-{{i.id}}" >
+                      <td>{{forloop.counter}}</td>
+                    <td class="itemName td" name="name"><a onClick="editItem({{i.id}})" data-toggle="modal" data-target="#AddItem")>{{i.p_name}}</a></td>
+                    <td class="itemQty td" name="qty">{{i.qty}}{% if i.fqty %}+{{i.fqty}}{% endif %}</td>
+                    <td class="itemAmt td" name="amt">₹{{i.amount}}</td>
+                  </tr>
+                {% endfor %}
+                {% endif %}
+                </tbody>
+              </table>
+
+
+            {% if t_type != 2 %}
+            <button type="button" id="add_btn" class=" btn btn-std btn-block mt-3"  data-toggle="modal" data-target="#AddItem">Add Items</button>
+            {% endif %}
+<!--            <button type="button" id="add_rpt" class=" btn btn-std btn-block mt-3"  data-toggle="modal" data-target="#AddReport">Add Report</button>-->
+<!--            <div class="alert alert-info mt-2" id="alt-rpt" role="alert">-->
+<!--              Report submitted successfully!-->
+<!--            </div>-->
+           
+                
+           
+
+            <p class="total">Total : ₹<input id="tot" class="total_inp" type="number" value="{{odr.total}}" disabled></p>
+            <!-- <p class="total">Old Balance : ₹<input id="ob" class="total_inp ob_color" type="number" value="{{ob}}" disabled></p>
+            <p class="total">Current Balance : ₹<input id="cb" class="total_inp" type="number" value="{{cb}}" disabled></p> -->
+            {% if t_type != 0 %}
+            <p class="total">Recieved : ₹ <input name="rc" id="rc" class="total_inp inp-edit rc" type="number" step="any" value="{{odr.received}}"></p>
+            <p class="total">Payment Type: <select name="p_type" id="p-type" class="form-control" style="    display: inline-block; width: auto;"  aria-label="Default select example">
+                <option selected value="{{odr.p_type}}">{{odr.p_type}}</option>
+                <option value="Cash">Cash</option>
+                <option value="Gpay">GPay</option>
+                <option value="Cheque">Cheque</option>
+                <option value="Other">Other</option>
+              </select></p>
+            {% else %}
+                <input name="rc" class="rc" value="0" hidden>
+                <input name="p_type" hidden>
+            {% endif %}
+              <div class="alert alert-warning" id="alt-save" role="alert">
+                Couldn't save without item!
+              </div>
+              <div class="input-container" >
+                <textarea class="text-input" placeholder="Give sample pack Chilly" id="report" name="report" rows="2">{{odr.report}}</textarea>
+                <label for="report" class="label filled">Sale Report</label>
+              </div>
+              
+              <br><br>
+
+        </div>
+        
+
+
+
+        <!-- Modal View-->
+        <div class="modal fade" id="view" tabindex="-1" role="dialog" aria-labelledby="viewLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="viewLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                ...
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+
+
+
+<br><br><br><br><br>
+
+    <section class="bott_but">
+       
+        <div class="container fixed-bottom">
+            <div class="info_box">
+                <a id="cancel"  class="btn btn-danger" style="color:white;">
+                    <p>Delete</p>
+                </a>
+                <a id="edit" data-id="2" type="button" class="btn btn-primary" >
+                    <p>Edit</p>
+                </a>
+                <button id="update" style="display: none;" type="submit" class="btn btn-success" >
+                    <p>Update</p>
+                </button>
+            </div>
+        </div>
+    </section>
+</form>
+
+
+
+
+
+</section>
+ <!-- Modal ADD-->
+  <div class="modal fade" id="AddItem"  role="dialog" aria-labelledby="AddItemTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="AddItemLongTitle">Add Item</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+
+            <div class="form-group">
+                <!--<input type="text" class="form-control" placeholder="Item Name">-->
+                <select class="form-control" id="p_name" style="width:100%;">
+                    <option selected>--Select Product--</option>
+                    {% if product %}
+                    {% for i in product %}
+                    <option value="{{i.pname}}">{{i.pname}}</option>
+                    {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+            <input id="itm_id" hidden>
+            <div class="form-row mb-3">
+            <div class="col">
+                <input id="qty" type="number" class="form-control" placeholder="Qty" oninput="add_number()"  required>
+            </div><strong class="pt-2">+</strong>
+            <div class="col">
+                <input id="fqty" type="number" class="form-control" placeholder="Free Qty" value="0">
+            </div>
+            </div>
+            <div class="form-row mb-3">
+                <div class="col input-container">
+                    <input id="price" type="number" class="form-control "  oninput="add_number()"  required>
+                    <label for="price" class="label filled-sm">Last Price</label>
+                  </div>
+                <div class="col input-container">
+                  <input id="f_price" type="number" class="form-control" readonly>
+                  <label for="f_price" class="label filled-sm">Current {{party_ob.type}} Price</label>
+                </div>
+            </div>
+
+            <div class="input-group mt-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Total &#8377;</span>
+              </div>
+                <input id="toot" oninput="tot_number()" type="number" class="form-control" placeholder="000.00" required>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+
+        <button id="ed_delete" type="button" class="btn btn-danger"  style="display:none;">Delete</button>
+        <button id="add_n" data-id="2" type="button" class="btn btn-primary" >Save & New</button>
+        <button id="add" data-id="1" type="button" class="btn btn-success" >Save</button>
+        </div>
+    </div>
+    </div>
+</div>
+ <!-- Modal Report-->
+ <div class="modal fade" id="AddReport" role="dialog" aria-labelledby="AddReportCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="AddReportLongTitle">Add Report</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+        <textarea name="report" id="rpt" class="form-control" placeholder="eg:(Closed & not reachable)"></textarea>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button id="add_report" type="button" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+    </div>
+</div>
+<script src="{% static 'js/adm.js' %}"></script>
+
+<script src="{% static 'js/update_sale.js' %}"></script>
+{% endblock %}
+
+</body>
+</html>

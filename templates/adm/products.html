@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    {% block content %}
+<link rel="stylesheet" href="{% static 'css/adm_style.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/switch.css' %}">
+<title>Products | JesyFoods</title>
+<style>
+    .table td, .table th {
+        padding: 0.5rem;
+    }
+</style>
+</head>
+<body>
+{% include "adm/base_side_nav.html" %}
+
+
+<section class="home_content ">
+    <div class="black"><i class="fa fa-times" aria-hidden="true"></i></div>
+
+        <div class="nav_top">
+            <div class="hed">
+                <i class="fa fa-bars" id="btn_bar-2" aria-hidden="true"></i>
+                Jesy Products
+            </div>
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+              <a class="nav-link" href="home"><i class="fa fa-home"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fa fa-bell"></i></a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i>
+                    <span class="name">{{request.user}}</span>
+               </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="MyAccount"><i class="fa fa-user-circle-o"></i> My Account</a>
+                      <a class="dropdown-item" href="price_list"><i class="fa fa-money" aria-hidden="true"></i> Price List</a>
+                      <a class="dropdown-item" href="https://jesyfoods.com/products"><i class="fa fa-tasks" aria-hidden="true"></i> Products</a>
+                      <a class="dropdown-item" href="settings"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp; Settings</a>
+                      <a style="color: darkgreen;" class="dropdown-item" href="https://jesyfoods.com/"><i class="fa fa-globe" aria-hidden="true"></i> Jesy Foods</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item logout" style="color: red;" href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                      </div>
+              </li>
+          </ul>
+    </div>
+
+
+<!------------------------------------------------------->
+<section class=" container-sm mt-5">
+    
+    <div class="row">
+        <div class="col-sm-5">
+            <div class="dt_tab">
+                <a href="add_product" class="btn btn-outline-primary">Add Product</a>
+
+            </div>
+            <input type="text" placeholder="Search" class="form-control">
+            <table class="table table-hover mt-3 sc_tab" >
+                <thead>
+                  <tr>
+                    <th scope="col">Product Name </th>
+                    <th scope="col">Size </th>
+                    <th scope="col">MRP </th>
+                  </tr>
+                </thead>
+                <tbody style="height: 500px;">
+                    {% if products %}
+                    {% for i in products %}
+                  <tr  onclick="document.location='{% url 'view_products' %}?data={{i.id}}';">
+                    <td>{{i.pname}}</td>
+                    <td>{{i.size}}</td>
+                    <td>{{i.mrp}}</td>
+                  </tr>
+                  {% endfor %}
+                {% else %}
+                <td>No data available!</td>
+                {% endif %}
+
+                </tbody>
+              </table>
+        </div>
+        <div class="col-sm-7">
+             {% for message in messages %}
+            <div class="alert alert-info">
+                {{message}}
+            </div>
+            {% endfor %}
+            {% if prof != None %}
+            <form action="view_products" method="post">{% csrf_token %}
+            <table class="table mt-1 mb-5" id="by_product">
+                <tbody>
+
+                    <tr>
+                        <th>{{prof.pname}}</th>
+                       <th class="text-right"><button type="button" id="edit" class="btn btn-primary btn-sm">Edit</button>
+                            <button id="update" type="submit" class="btn btn-success btn-sm">Update</button></th>
+                    </tr>
+                    <tr>
+                      <td>Product Name</td>
+                      <td><input name="name" class="ed form-control" type="text" placeholder="Username" value="{{prof.pname}}" disabled>
+                      <input name="id"  value="{{prof.id}}" hidden></td>
+                      </tr>
+                    <tr>
+                    <td>Size</td>
+                    <td><input name="size" class="ed form-control" type="text" placeholder="Size" value="{{prof.size}}" disabled></td>
+                    </tr>
+                  <tr>
+                    <td>HSN No</td>
+                    <td><input name="hsn" class="ed form-control" type="number" placeholder="HSN Code" value="{{prof.HSN}}" disabled></td>
+                 </tr>
+                  <tr>
+                    <td>GSTIN</td>
+                    <td>5.0%</td>
+                </tr>
+                  <tr>
+                    <td>BAR CODE</td>
+                    <td><input name="barcode" class="ed form-control" type="text" placeholder="Barcode" value="{{prof.barcode}}" disabled></td>
+                </tr>
+                  <tr>
+                    <td>MRP &#8377;</td>
+                    <td><input name="mrp" class="ed form-control" type="number"  step="any"  placeholder="MRP in &#8377;" value="{{prof.mrp}}" disabled></td>
+                </tr>
+                  <tr>
+                    <td>Stock</td>
+                    <td><input name="stock" class="ed form-control" type="number"  step="any"  placeholder="Stock" value="{{prof.stock}}" disabled ></td>
+                </tr>
+                    <tr>
+                        <td>Active</td>
+                        <td>
+                            <label class="switch">
+                        <input data-id="{{prof.id}}"  type="checkbox" {% if prof.active == True %} checked {% endif %} >
+                        <span class="slider round"></span>
+                      </label>
+                        </td>
+                    </tr>
+
+                  <tr>
+                    <th>Price / Product:</th><td></td>
+                  </tr>
+                  <tr>
+                    <td>Retail Price</td>
+                    <td><input name="r_price" class="ed form-control" type="number" step="any" placeholder="Retail Price" value="{{prof.r_price}}" disabled required></td>
+                 </tr>
+                  <tr>
+                    <td>Wholesale Price</td>
+                    <td><input name="w_price" class="ed form-control" type="number"  step="any"  placeholder="Wholesale Price" value="{{prof.w_price}}" disabled required></td>
+                </tr>
+                  <tr>
+                    <td>Hotel Price</td>
+                    <td><input name="h_price" class="ed form-control" type="number"  step="any"  placeholder="Hotel Price" value="{{prof.h_price}}" disabled required></td>
+                    </tr>
+                  <tr>
+                    <td>Distribution Price</td>
+                    <td><input name="d_price" class="ed form-control" type="number"  step="any"  placeholder="Distribution Price" value="{{prof.d_price}}" disabled></td>
+                 </tr>
+                 <tr>
+                  <td colspan="2">
+                    <button type="button" class="btn btn-outline-danger btn-block" data-toggle="modal" data-target="#deleteProduct">Delete Product</button>
+                  </td>
+                 </tr>
+
+
+                </tbody>
+            </table>
+        </form>
+        {% else %}
+        <p class="text-center" style="padding: 25% 0;background-color: rgba(128, 128, 128, 0.164);">Select a product!</p>
+        {% endif %}
+
+
+        </div>
+    </div>
+</section>
+
+
+
+
+  
+   
+  
+
+</section>
+
+<!-- Modal Delete Party-->
+<div class="modal fade" id="deleteProduct" tabindex="-1" role="dialog" aria-labelledby="deleteProductLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteProductLabel">Danger-Zone</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning" role="alert">
+          You can't delete this product when it used any transaction
+        </div>
+        <div class="alert alert-danger" role="alert">
+          Are you confirm to delete this product!
+        </div>
+
+        
+      </div>
+      <form action="delete_product" method="post">{% csrf_token %}
+          <div class="modal-footer">
+              <input type="text" value="{{prof.id}}" name="id" hidden>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-danger">Confirm Delete</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+  <div class="plus_btn">
+    <div id="plus_btn_more">
+        <a href="add_expense" class="btn btn_round btn-4">
+            <i class="fa fa-money" aria-hidden="true"></i>
+            <span id="btn-4">Add Expense</span>
+        </a>
+        <a href="add_order" class="btn btn_round btn-3">
+            <i class="fa fa-truck" aria-hidden="true"></i>
+            <span id="btn-3">Add Order</span>
+        </a>
+        <a href="take_payment" class="btn btn_round btn-2">
+            <i class="fa fa-inr" aria-hidden="true"></i>
+            <span id="btn-2">Take Payment</span>
+        </a>
+        <a href="add_sale" class="btn btn_round btn-1">
+            <i class="fa fa-line-chart" aria-hidden="true"></i>
+            <span id="btn-1">Add Sale</span>
+        </a>
+    </div>
+    <button class="btn_round"><i class="fa fa-plus" aria-hidden="true"></i></button>
+</div>
+       
+
+
+<script src="{% static 'js/adm.js' %}"></script>
+<script src="{% static 'js/products.js' %}"></script>
+<script>
+    $('#view_products').addClass('active');
+ </script>
+{% endblock %}
+
+</body>
+</html>

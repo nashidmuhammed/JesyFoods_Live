@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+{% load mathfilters %}
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    {% block content %}
+<link rel="stylesheet" href="{% static 'css/adm_style.css' %}">
+<title>Party Report | JesyFoods</title>
+</head>
+<body>
+
+{% include "adm/base_side_nav.html" %}
+
+
+    <section class="home_content">
+
+        <div class="nav_top">
+            <div class="hed">
+                <a onclick="window.history.back()"   class="back-btn adm"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+                Party
+            </div>           
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+              <a class="nav-link" href="home"><i class="fa fa-home"></i></a>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fa fa-bell"></i></a>
+            </li>
+            
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i>
+                    <span class="name">{{request.user}}</span>
+               </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="MyAccount"><i class="fa fa-user-circle-o"></i> My Account</a>
+                      <a class="dropdown-item" href="price_list"><i class="fa fa-money" aria-hidden="true"></i> Price List</a>
+                      <a class="dropdown-item" href="https://jesyfoods.com/products"><i class="fa fa-tasks" aria-hidden="true"></i> Products</a>
+                      <a class="dropdown-item" href="settings"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp; Settings</a>
+                      <a style="color: darkgreen;" class="dropdown-item" href="https://jesyfoods.com/"><i class="fa fa-globe" aria-hidden="true"></i> Jesy Foods</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item logout" style="color: red;" href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                      </div>
+              </li>
+          </ul>
+    </div>
+
+    <section class="home_content pt-3">
+
+
+
+        <section class="prty container pb-5">
+            <div class="tab-head">
+                <a href="{% url 'party_statement' %}?data={{party.id}}" class="btn btn-primary btn-sm" ><i class="fa fa-database" aria-hidden="true"></i> View Statement</a>
+                <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#EditParty"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
+           </div>
+           <table class="table-head">
+            <tbody>
+                <tr>
+                    <td class="pt-3">
+                     
+                      <a href="{{ party.image.url }}"><img src="{{ party.image.url }}" alt="" class="profile_pic " ></a>
+                      <strong>
+                        {{party.party_name}}</strong>                    
+                    </td>
+                    <td class="text-right pt-3"><strong style="color: darkgreen;">Balance :₹ {{party.balance}}</strong></td>
+                </tr>
+                <tr>
+                    <td><a><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp; {{party.address}}</a></td>
+                    <td><a  style="float: right;">GSTIN: {{party.GSTIN}}</a></td>
+                </tr>
+                <tr>
+                    <td  class="pb-3"><a class="phone" href="tel:{{party.phone}}"><i class="fa fa-phone-square" aria-hidden="true"></i> {{party.phone}}</a></td>
+                    <td  class="pb-3"><a style="float: right;" > | Route: {{party.route}}</a>
+                        <a style="float: right;"> Type: {{party.type}} &nbsp;</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+              <div id="alert" class="alert alert-info mt-1" style="display: none;">
+            <p id="msg"></p>
+        </div>
+            <!-- <div class="tab-head head">
+                <div class="left">
+                    <p class="main"><i class="fa fa-user" aria-hidden="true"></i> {{party.party_name}}</p>
+                    <p><a><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp; {{party.address}}</a></p>
+                    <p><a class="phone" href="tel:{{party.phone}}"><i class="fa fa-phone-square" aria-hidden="true"></i> {{party.phone}}</a></p>
+                </div>
+                <div class="right">
+                    <p class="main mb-4" >Balance :₹ {{party.balance}}</p>
+                    <p><a class="mb-3" style="float: right;">GSTIN: {{party.GSTIN}}</a></p>
+                    <p><a style="float: right;" class="mb-3">Route: {{party.route}}</a></p>
+                    <i><a style="float: right;">Type: {{party.type}}</a></i>
+                </div>
+            </div> -->
+            <hr>
+            {% if sale %}
+            {% for i in sale.object_list %}
+            
+                <div class="tab mb-2" >
+                    <div class="tab-body">
+                        <div class="tab-row" onclick="document.location='{% url 'invoice_view' %}?data={{i.id}}';">
+                            <div class="tab-column">
+                              {% if i.t_type == 'payment' %}
+                              <p>Receipt</p>
+                              {% else %}
+                              <p>{{i.t_type|title}}</p>
+                              {% endif %}
+                            </div>
+                            <div class="tab-column">
+                                <div class="tab-row"><span class="sm-p sm-p-n"></span><p>{{i.iid}}</p>                                
+                                </div>
+                                <span style="font-weight: 600;color: gray;font-size: 0.8rem;">{{i.date|date}}</span>
+                                <!-- <p class="dt" style="float: unset;">{{i.date}}</p> -->
+                            </div>
+                        </div>
+                        <div class="tab-row" >
+                            <div class="tab-column" onclick="document.location='{% url 'invoice_view' %}?data={{i.id}}';">
+                                <span>Total
+                                    <span class="sm-p sm-p-n">₹ {{i.total|abs}}</span>
+                                </span>
+                            </div>
+                            <div class="tab-row" onclick="document.location='{% url 'invoice_view' %}?data={{i.id}}';">
+                                <span>{% if i.t_type == 'return' %}Paid {%else%}Recieved{%endif%}
+                                    <span class="sm-p sm-p-n">₹ {{i.received|abs}}</span>
+                                </span>
+                            </div>
+                            <div class="tab-row">
+                                <span class="sm-p sm-p-n" style="margin: -13px;">&nbsp;
+                                    <span class="sm-p sm-p-n print">
+                                      {% if i.t_type == 'payment'%}
+                                        <a class="icon-bt" href="https://wa.me/{{whats_app}}/?text=Hi%20{{party.party_name}}%2C%0APayment%20received%20on%20{{i.date|date}}%0AVoucher%20No%3A%20{{i.iid}}%0AReceived%3A%20Rs.%20{{i.received}}%0ACurrent%20Balance%3A%20Rs.%20{{party.balance}}%0AThank%20you%20for%20doing%20business%20with%20us!%0Aby%2C%0AJesyFoods" target="_blank"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
+                                        {% elif i.t_type == 'sale'%}
+                                        <a class="icon-bt" href="https://wa.me/{{whats_app}}/?text=Hi%20{{party.party_name}}%2C%0ASale%20on%20{{i.date|date}}%0AVoucher%20No%3A%20{{i.iid}}%0ASale%20Amount%3A%20Rs%20{{i.total}}%0AReceived%3A%20Rs.%20{{i.received}}%0ACurrent%20Balance%3A%20Rs.%20{{party.balance}}%0AThank%20you%20for%20doing%20business%20with%20us!%0Aby%2C%0AJesyFoods" target="_blank"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
+                                        {%endif%}
+                                        <a class="icon-bt" href="{% url 'pdf_view' %}?data={{i.id}}"><i class="fa fa-print" aria-hidden="true"></i></a>
+                                        <a class="icon-bt" href="{% url 'invoice_view' %}?data={{i.id}}" ><i class="fa fa-eye" aria-hidden="true"></i></a>
+
+                                        {% if i.t_type == 'return' %}
+                                        <a class="icon-bt"  href="{% url 'edit_return' %}?data={{i.id}}" ><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                        {% elif i.t_type == 'order' %}
+                                        <a class="icon-bt"  href="{% url 'add_order' %}?data={{i.id}}" ><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                        {% else %}
+                                        <a class="icon-bt"  href="{% url 'update_sale' %}?data={{i.id}}" ><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                        {%endif%}
+
+                                        <a class="icon-bt"  href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
+                                        
+                                          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                                            <a class="dropdown-item" href="{% url 'invoice_view' %}?data={{i.id}}">View</a>
+                                            <a class="dropdown-item" href="{% url 'pdf_view' %}?data={{i.id}}">Share</a>
+
+                                            {% if i.t_type == 'return' %}
+                                            <a class="dropdown-item" href="{% url 'edit_return' %}?data={{i.id}}">Edit</a>
+                                            {% elif i.t_type == 'order' %}
+                                            <a class="dropdown-item" href="{% url 'add_order' %}?data={{i.id}}">Edit</a>
+                                            {%else%}
+                                            <a class="dropdown-item" href="{% url 'update_sale' %}?data={{i.id}}">Edit</a>
+                                            {%endif%}
+
+                                            {% if i.t_type == 'sale' %}
+                                            <a class="dropdown-item" href="{% url 'sale_return' %}?data={{i.id}}">Return</a>
+                                            {% endif %}
+
+                                            {% if i.t_type == 'return' %}
+                                            <a  class="dropdown-item" style="color: red;"  href="{% url 'edit_return' %}?data={{i.id}}">Delete</a>
+                                            {% elif i.t_type == 'order' %}
+                                            <a  class="dropdown-item" style="color: red;"  href="{% url 'add_order' %}?data={{i.id}}">Delete</a>
+                                            {%else%}
+                                            <a  class="dropdown-item" style="color: red;"  href="{% url 'update_sale' %}?data={{i.id}}">Delete</a>
+                                            {% endif %}
+
+                                          </div>
+
+                                        <!-- <div class="dropdown show">
+                                          <a class="icon-bt dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                          </a>
+                                        
+                                          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <a class="dropdown-item" href="#">Action</a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <a class="dropdown-item" href="#">Something else here</a>
+                                          </div>
+                                        </div> -->
+
+                                    </span>
+                                </span>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+            
+            {% endfor %}
+            {% else %}
+            <p>No transaction found!</p>
+            {% endif %}
+            <nav aria-label="Page navigation example">
+              <ul class="pagination justify-content-center">
+                {%if sale.has_previous %}
+                <li class="page-item">
+                  <a class="page-link" href="?data={{party.id}}&page={{sale.previous_page_number}}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                </li>
+            
+                <!-- <li class="page-item"><a class="page-link" href="?data={{party.id}}&page={{sale.number|sub:3}}">{{sale.number|sub:3}}</a></li>
+                <li class="page-item"><a class="page-link" href="?data={{party.id}}&page={{sale.number|sub:2}}">{{sale.number|sub:2}}</a></li> -->
+                <li class="page-item"><a class="page-link" href="?data={{party.id}}&page={{sale.number|sub:1}}">{{sale.number|sub:1}}</a></li>
+            
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="?data={{party.id}}&page={{sale.number}}" style="color: #000;">{{sale.number}}</a></li>
+                {%if sale.has_next %}
+                <li class="page-item"><a class="page-link" href="?data={{party.id}}&page={{sale.number|add:1}}">{{sale.number|add:1}}</a></li>
+                <!-- <li class="page-item"><a class="page-link" href="?data={{party.id}}&page={{sale.number|add:2}}">{{sale.number|add:2}}</a></li> -->
+                <!-- <li class="page-item"><a class="page-link" href="?data={{party.id}}&page={{sale.number|add:3}}">{{sale.number|add:3}}</a></li>     -->
+                <li class="page-item">
+                  <a class="page-link" href="?data={{party.id}}&page={{sale.next_page_number}}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </li>
+                {% endif %}
+              </ul>
+            </nav>
+
+        <button class="btn btn-outline-danger btn-block mt-5 mb-5" data-toggle="modal" data-target="#deleteParty">Delete Party</button>
+        </section>
+        <br>
+  
+
+
+
+
+    </section>
+</section>
+
+<section class="bott_but">
+
+    <div class="container fixed-bottom">
+        <div class="info_box">
+            <a type="button" class="btn btn-success" href="{% url 'take_payment' %}?party={{party.id}}">
+                <p>Add Receipt</p>
+            </a>
+            <a class="btn btn-secondary btn-sm"  data-toggle="modal" data-target="#AddMore">
+                <p>+</p>
+            </a>
+            <a type="button" class="btn btn-primary" href="{% url 'add_sale' %}?party={{party.id}}">
+                <p>Add Sale</p>
+            </a>
+
+        </div>
+    </div>
+
+</section>
+<!-- Modal Delete Party-->
+<div class="modal fade" id="deleteParty" tabindex="-1" role="dialog" aria-labelledby="deletePartyLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deletePartyLabel">Danger-Zone</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-warning" role="alert">
+            If you delete this party, It also delete every sales and Receipts related to this Party,
+            and the Invoice number also misses
+          </div>
+          <div class="alert alert-danger" role="alert">
+            Are you confirm to delete this party!
+          </div>
+
+          
+        </div>
+        <form action="delete_party" method="post">{% csrf_token %}
+            <div class="modal-footer">
+                <input type="text" value="{{party.id}}" name="id" hidden>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-danger">Confirm Delete</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="AddMore" tabindex="-1" role="dialog" aria-labelledby="AddMoreTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="AddMoreLongTitle">Add More</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body btn_grp">
+          <a href="add_party" type="button" class="btn btn-outline-primary">Add New Party</a>
+          <!-- <a href="{% url 'add_party_account' %}?party={{party.id}}" type="button" class="btn btn-outline-dark">Add Party Account</a> -->
+           <button  type="button" class="btn btn-outline-dark" data-dismiss="modal" data-toggle="modal" data-target="#AddReport">Add Report / Feedback</button>
+          <a href="{% url 'add_order' %}?party={{party.id}}" class="btn btn-outline-info">Add Sale Order</a>
+          <a href="{% url 'take_payment' %}?party={{party.id}}" class="btn btn-outline-success">Add Receipt</a>
+          <a href="#" class="btn btn-outline-danger" >Sale Return</a>
+
+
+        </div>
+        <div class="modal-footer">
+
+        </div>
+    </div>
+    </div>
+  </div>  
+  <!-- Modal ED  Party-->
+<form action="party_view" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <input name="id" value="{{party.id}}" hidden>
+<div class="modal fade" id="EditParty" tabindex="-1" role="dialog" aria-labelledby="AddMoreTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="AddMoreLonTitle">Edit Party</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body btn_grp">
+         <input name="name" type="text" class="form-control mb-3" placeholder="Party Name:" value="{{party.party_name}}" required>
+         <input name="add" type="text" class="form-control mb-3" placeholder="Address:" {% if party.address != 'None' %} value="{{party.address}}" {% endif %} required>
+         <div class="form-row  mb-3">
+            <div class="col">
+              <input name="phone" type="number" class="form-control" placeholder="Phone" {% if party.phone != 'None' %} value="{{party.phone}}" {% endif %} required>
+            </div>
+            <div class="col">
+              <input name="email" type="email" class="form-control" placeholder="Email" {% if party.email != 'None' %} value="{{party.email}}" {% endif %}>
+            </div>
+          </div>
+          <input name="whatsapp" type="number" class="form-control mb-3" placeholder="whatsapp:" {% if party.whatsapp != 'None' %} value="{{party.whatsapp}}" {% endif %} >
+
+          <div class="form-row  mb-3">
+            <div class="col">
+              <input name="owner" type="text" class="form-control" placeholder="Owner Name" {% if party.owner != 'None' %} value="{{party.owner}}" {% endif %} >
+            </div>
+            <div class="col">
+                <div class="input-group ">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="inputGroupSelect01">Category</label>
+                    </div>
+                    <select name="cat" class="custom-select" id="Select01" >
+                      <option selected>{{party.category}}</option>
+                      <option value="Retail">Grocery</option>
+                      <option value="Wholesale">Supermarket</option>
+                      <option value="Hotel">Hotel</option>
+                      <option value="Distribution">Vegetables</option>
+                    </select>
+                  </div>
+            </div>
+          </div>
+          <input name="gst" type="text" class="form-control mb-3" placeholder="GSTIN:" {% if party.GSTIN != 'None' %} value="{{party.GSTIN}}" {% endif %} >
+          <div class="form-row  mb-3">
+            <div class="col">
+                <div class="input-group ">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="inputGroupSelect01">Type</label>
+                    </div>
+                    <select name="type" class="custom-select" id="Selet01" required>
+                      <option selected>{{party.type}}</option>
+                      <option value="Retail">Retail</option>
+                      <option value="Wholesale">Wholesale</option>
+                      <option value="Hotel">Hotel</option>
+                      <option value="Distribution">Distribution</option>
+                      <option value="General">General</option>
+                    </select>
+                  </div>
+            </div>
+            <div class="col">
+                <div class="input-group ">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="inputGroupSelect01">Route</label>
+                    </div>
+                    <select name="rt" class="custom-select" id="inputGroupSelect01" required>
+                      <option selected>{{party.route}}</option>
+                      <option value="Mon">Mon</option>
+                      <option value="Tue">Tue</option>
+                      <option value="Wed">Wed</option>
+                      <option value="Thu">Thu</option>
+                      <option value="Fri">Fri</option>
+                      <option value="Sat">Sat</option>
+                      <option value="General">General</option>
+                    </select>
+                  </div>
+            </div>
+          </div>
+          <div class="form-row  mb-3">
+            <div class="col">
+                <div class="input-group ">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="inputGroupSelect01">Type</label>
+                    </div>
+                    <select name="party_type" class="custom-select" id="Selet01" required>
+                      <!-- <option selected>{{party.party_type}}</option> -->
+                      <option value="{{party.party_type}}">{{party.party_type}}</option>
+                      <option value="seller">Seller</option>
+                      <option value="buyer">Buyer</option>
+                      <option value="both">Both</option>
+                    </select>
+                  </div>
+            </div>
+            <div class="col">
+                <div class="input-group ">
+                   <input type="file" class="form-control" name="image">
+            </div>
+          </div>
+        </div>
+        <div class="input-group ">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Group</label>
+          </div>
+          <select name="party_group" class="custom-select" id="Selet01" required>
+            <!-- <option selected>{{party.party_group}}</option> -->
+            <option value="{{party.party_group}}">{{party.party_group}}</option>
+            <option value="fasal">fasal</option>
+            <option value="other">other</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary btn-block">Update</button>
+        </div>
+    </div>
+    </div>
+  </div>
+    </form>
+    <!-- Add Report Modal -->
+     <div class="modal fade" id="AddReport" role="dialog" aria-labelledby="AddReportTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+          <h5 class="modal-title" id="AddReportLongTitle">Add Report / Feedback</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-check form-check-inline mb-2">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Report" checked>
+                <label class="form-check-label" for="inlineRadio1">Report</label>
+              </div>
+              <div class="form-check form-check-inline mb-2">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Feedback" >
+                <label class="form-check-label" for="inlineRadio2">Feedback</label>
+              </div>
+                <select name="s_party" class="form-control" id="s_party"  style="width:100%;">
+              <option selected>{{party.party_name}}</option>
+
+            </select>
+              <select id="rsn" class="form-control form-control-sm mt-3">
+                  <option>-----</option>
+                  <option>Stock</option>
+                  <option>Closed and unreachable call</option>
+                  <option>No owner and unreachable call</option>
+                  <option>Other</option>
+              </select>
+              <div class="form-group mt-3">
+                <textarea id="disc" class="form-control" rows="3" placeholder="Description (optional)"></textarea>
+              </div>
+
+          </div>
+          <div class="modal-footer">
+            <button id="sub_repor" class="btn btn-info btn-block">Submit</button>
+          </div>
+      </div>
+      </div>
+    </div>
+<script src="{% static 'js/add_report.js' %}"></script>
+<script src="{% static 'js/adm.js' %}"></script>
+<script>
+    $('#party_report').addClass('active');
+ </script>
+{% endblock %}
+
+</body>
+</html>

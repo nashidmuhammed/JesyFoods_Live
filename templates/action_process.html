@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    {% block content %}
+<link rel="stylesheet" href="{% static 'css/adm_style.css' %}">
+<title>Action | JesyFoods</title>
+<style>
+    /* KEYFRAMES */
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+  to{
+    transform: rotate(359deg);
+  }
+}
+
+@keyframes spin3D {
+  from {
+    transform: rotate3d(.5,.5,.5, 360deg);
+  }
+  to{
+    transform: rotate3d(0deg);
+  }
+}
+
+@keyframes configure-clockwise {
+  0% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(90deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  75% {
+    transform: rotate(270deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes configure-xclockwise {
+  0% {
+    transform: rotate(45deg);
+  }
+  25% {
+    transform: rotate(-45deg);
+  }
+  50% {
+    transform: rotate(-135deg);
+  }
+  75% {
+    transform: rotate(-225deg);
+  }
+  100% {
+    transform: rotate(-315deg);
+  }
+}
+
+@keyframes pulse {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: .25;
+    transform: scale(.75);
+  }
+}
+
+#loader{
+    display: none;
+}
+    .spinner-box {
+  width: 300px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+}
+
+.configure-border-1 {
+  width: 115px;
+  height: 115px;
+  padding: 3px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fb5b53;
+  animation: configure-clockwise 3s ease-in-out 0s infinite alternate;
+}
+
+.configure-border-2 {
+  width: 115px;
+  height: 115px;
+  padding: 3px;
+  left: -115px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgb(63,249,220);
+  transform: rotate(45deg);
+  animation: configure-xclockwise 3s ease-in-out 0s infinite alternate;
+}
+
+.configure-core {
+  width: 100%;
+  height: 100%;
+  background-color: #1d2630;
+}
+
+
+</style>
+</head>
+<body id="login">
+
+<section class="login">
+<div class="lwrapper">
+    <div class="title"><img src="{% static 'images/logo.png' %}" alt=""> <span>Action</span></div>
+    <form id="form" action="active_process" method="post">
+        {% csrf_token %}
+
+        <div class="container-fluid" id="loader">
+            <div class="spinner-box">
+                <div class="configure-border-1">  
+                  <div class="configure-core"></div>
+                </div>  
+                <div class="configure-border-2">
+                  <div class="configure-core"></div>
+                </div> 
+              </div>
+              <div class=" mb-5 text-center">
+                <p>Loading...</p>
+              </div>
+        </div>
+        {% if messages %}
+        {% for message in messages %}
+           <div class="alert alert-success" role="alert">
+               {{message}}
+            </div>
+        {% endfor %}
+        {% else %}
+        <div class="alert alert-danger" role="alert" id="warning">            
+            #Do not close this window while loading <br>
+            #Make sure network is active
+         </div>
+         {% endif %}
+       
+        <div class="row button">
+           <input type="submit" value="Start Action" id="submit" >
+        </div>
+        
+    </form>
+</div>
+</section>
+
+
+
+
+<script src="{% static 'js/adm.js' %}"></script>
+<script>
+    $(document).ready(function() {
+
+        $("#submit").click(function(){   
+            $('#form').submit()         
+            $('#loader').show()
+            // $('#warning').hide()
+            $('#submit').hide()
+            
+            
+        })
+
+            });
+
+</script>
+{% endblock %}
+
+</body>
+</html>

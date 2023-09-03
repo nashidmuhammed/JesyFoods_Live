@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+{% extends 'jesyfoods-main/base.html' %}
+{% load static %}
+<html lang="en">
+
+
+    {% block content %}
+<body>
+    <!--NavBar-->
+    <section id="header">
+      <div class="header container">
+        <div class="nav-bar">
+          <div class="brand">
+            <a href="#logo"><img src="./assets/logos/logo.png" alt="logo"></a>
+          </div>
+          <div class="nav-list">
+            <div class="hamburger"><div class="bar"></div></div>
+            <ul>
+              <li><a href="." data-after="Home">Home</a></li>
+              <li><a href="products" data-after="Products">Products</a></li>
+              <li><a href="about" data-after="About">About</a></li>
+              <li><a href="#" data-after="Media">Media</a></li>
+              <li><a class="active" href="recipes" data-after="recipes">Recipes</a></li>
+              <li><a href="contact" data-after="Contact">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="sub_top"><a href="#" class="btn btn-std"  data-toggle="modal" data-target="#submit_rec">Submit Recipe</a></div>
+    </section>
+   
+    <section id="rec_one">
+      <div class="hd">
+       Malabar Chicken Curry
+     </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8">
+            <img src="./assets/White and Black Simple Food Facebook Cover.png" alt="">
+          </div>
+          <div class="com-md-4">
+            <div class="single_rec_box">
+              <p class="rec_box pt-5"><i class="fa fa-folder"></i> Category
+              <span class="rec_box_add"><a href="">Non-Veg</a></span></p>
+              <p class="rec_box"><i class="fa fa-hourglass-half"></i> Total Time
+              <span class="rec_box_add"><a href="">10 Min.</a></span></p>
+              <p class="rec_box"><i class="fa fa-dashboard"></i> Difficulty
+              <span class="rec_box_add"><a href="">Easy</a></span></p>
+              <p class="rec_box"><i class="fa fa-cutlery"></i> Serves
+              <span class="rec_box_add"><a href="">3 Servings</a></span></p>
+              <p class="rec_box"><i class="fa fa-globe"></i> Cuisine
+              <span class="rec_box_add"><a href="">Indian</a></span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <h1 class="desc">Description</h1>
+        <p>
+          Chicken Tikka Masala is boneless chicken gravy, originated in India and is very popular around the world. The chicken cubes or tikka is marinated in yoghurt, fried to perfection and cooked into the thick creamy gravy to yield a yummy dish that can be served with hot Naan, roti and rice.
+        </p>
+        <h1 class="desc"> Ingredients</h1>
+        <ul>
+          <li>tablespoon ginger</li>
+          <li>teaspoons Nirapara garam masala</li>
+          <li>teaspoon Nirapara turmeric</li>
+          <li>1/2 teaspoon ground cumin</li>
+          <li>tablespoon ginger</li>
+          <li>1/2 tablespoons minced garlic</li>
+          <li>cup plain yoghurt</li>
+          <li>1/2 tablespoons garlic finely grated</li>
+        </ul>
+        
+        <h1 class="desc">Preparation</h1>
+        <p>
+          <span>Step 1</span>
+          In a bowl, combine chicken with all of the ingredients for the chicken marinade. Marinate for 10 minutes to an hour (or overnight if time allows).
+        </p>
+          <p><span>Step 2</span>
+            Heat oil in a large skillet or pot over medium-high heat. Add chicken and fry until browned for only 3 minutes on each side. Set aside and keep warm.
+            </p>
+         <p> <span>Step 3</span>
+          Melt the butter in the same pan. Fry the onions until soft (about 3 minutes).
+          </p>
+         <p> <span>Step 4</span>
+          Add garlic and ginger and sauté for 1 minute until fragrant, then add garam masala, cumin, turmeric and coriander. Fry for about 20 seconds until fragrant while stirring occasionally.
+          </p>
+         <p> <span>Step 5</span>
+          Pour tomato puree, chilli powders and salt. Let simmer for about 10-15 minutes, occasionally stirring until sauce thickens and becomes a deep brown, red colour.
+          </p>
+         <p> <span>Step 6</span>
+          Add the cream and sugar through the sauce. Add the chicken and cook for an additional 8-10 minutes until the chicken is cooked through and the sauce is thick and bubbling. Pour in the water to thin out the sauce, if needed.
+          </p>
+       <p>  <span>Step 7</span>
+        Garnish with cilantro (coriander) and serve with hot garlic butter rice and fresh Naan!
+      </p>
+      </div>
+      <div class="container">
+        
+          <div class="row">
+            <div class="col-sm-6 mb-4">
+              <div class="desc"><span><i class="fa fa-user-circle-o"></i></span> Author</div>
+            <div class="container ml-4">
+              <h2>Jasy Foods</h2>
+              <a href="" class="ss_media"><i class="fa fa-youtube"></i></a>
+              <a href="" class="ss_media"><i class="fa fa-facebook"></i></a>
+              <a href="" class="ss_media"><i class="fa fa-whatsapp"></i></a>
+              <a href="" class="ss_media"><i class="fa fa-instagram"></i></a>
+            </div>
+            </div>
+            <div class="col-sm-6 mt-5">
+                <div class="container-fluid">
+                  <p class="shareit"><i class="fa fa-share-alt" aria-hidden="true"></i> Share it on</p>
+                  <a href="http://" class="btn btn-std wh"><i class="fa fa-whatsapp"> </i> WhatsApp</a>
+                  <a href="http://" class="btn btn-std in"><i class="fa fa-instagram"> </i> Instagram</a>
+                  <a href="http://" class="btn btn-std tw"><i class="fa fa-twitter"> </i> Twitter</a>
+                  <a href="http://" class="btn btn-std fc"><i class="fa fa-facebook"> </i> Facebook</a>
+                 
+                </div>
+            </div>
+          </div>
+
+      </div>
+
+      <div id="comments" class="container">
+        <h1 class="desc mt-5">Comments & Reviews</h1>
+        <div class="container mb-3">
+          <h2>Full name</h2>
+          <div class="star">
+            <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+          </div> 
+          <p>I made chicken curry with Nirapara Chicken powder masala. No words to describe its yumminess. My family just loved it. Thankyou Nirapara for adding more spice to our life.</p>
+        </div>
+
+        <div class="container mb-3">
+          <h2>Full name</h2>
+          <div class="star">
+            <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+          </div> 
+          <p>I made chicken curry with Nirapara Chicken powder masala. No words to describe its yumminess. My family just loved it. Thankyou Nirapara for adding more spice to our life.</p>
+        </div>
+      </div>
+
+      <div class="container">
+        <h1 class="desc mt-5">Leave a Review</h1>
+        <form id="submit-form" action="">
+          <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Your Rating</label>
+              </div>
+              <div class="stars">
+                <form action="">
+                  <input class="star star-5" id="star-5" type="radio" name="star"/>
+                  <label class="star star-5" for="star-5"></label>
+                  <input class="star star-4" id="star-4" type="radio" name="star"/>
+                  <label class="star star-4" for="star-4"></label>
+                  <input class="star star-3" id="star-3" type="radio" name="star"/>
+                  <label class="star star-3" for="star-3"></label>
+                  <input class="star star-2" id="star-2" type="radio" name="star"/>
+                  <label class="star star-2" for="star-2"></label>
+                  <input class="star star-1" id="star-1" type="radio" name="star"/>
+                  <label class="star star-1" for="star-1"></label>
+                </form>
+                </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-md-6">
+                <input class="form-control" type="text" name="name" placeholder="Name" required>
+              </div>
+              <div class="form-group col-md-6">
+                 <input class="form-control" type="number" name="phone" placeholder="Phone" required>
+              </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-md-12">
+              <input class="form-control" type="email" name="email" placeholder="Email" required>
+              </div>
+              <div class="form-group col-md-12">
+                <textarea class="form-control" rows="4" type="text" name="review" placeholder="Write your Review" required></textarea>
+              </div>
+          </div>
+              <button type="submit" class="btn btn-std">Submit your Review</button>                    
+              <div class="subload ml-5"><div class="loader-content">
+                <div class="loading-dots">
+                  <div class="bounce"></div>
+                  <div class="bounce2"></div>
+                  <div class="bounce3"></div>
+                  <div class="bounce4"></div>
+                </div>
+              </div></div>
+            </form>
+      </div>
+    </section>
+
+
+    <section id="rec_pop">
+      <div class="hd">
+        Most Popular  <span>Recipes</span>
+        <p>Most peoples are watched or liked Recipes</p>
+     </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-3">
+            <a href="#">
+            <div class="bx">
+              <img src="./assets/Group 1.png" alt="">
+            </div>
+              <h2>Heading of the recipe</h2></a>              
+              <p><i class="fa fa-user" aria-hidden="true"></i> <a href="#">Author Name</a></p>
+           </div>
+           <div class="col-sm-3">
+            <a href="#">
+            <div class="bx">
+              <img src="./assets/Group 1.png" alt="">
+            </div>
+              <h2>Heading of the recipe</h2></a>              
+              <p><i class="fa fa-user" aria-hidden="true"></i> <a href="#">Author Name</a></p>
+           </div>
+           <div class="col-sm-3">
+            <a href="#">
+            <div class="bx">
+              <img src="./assets/Group 1.png" alt="">
+            </div>
+              <h2>Heading of the recipe</h2></a>              
+              <p><i class="fa fa-user" aria-hidden="true"></i> <a href="#">Author Name</a></p>
+           </div>
+           <div class="col-sm-3">
+            <a href="#">
+            <div class="bx">
+              <img src="./assets/Group 1.png" alt="">
+            </div>
+              <h2>Heading of the recipe</h2></a>              
+              <p class="usr"><i class="fa fa-user" aria-hidden="true"></i> <a href="#">Author Name</a></p>
+           </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="follow">
+      <div class="container-fluid">
+        <h1>Follow Us</h1>
+        <a href="http://" class="btn btn-std in"><i class="fa fa-instagram"> </i> Follow on instagram</a>
+        <a href="http://" class="btn btn-std tw"><i class="fa fa-twitter"> </i> Follow on Twitter</a>
+        <a href="http://" class="btn btn-std fc"><i class="fa fa-facebook"> </i> Like on Facebook</a>
+        <a href="http://" class="btn btn-std wh"><i class="fa fa-whatsapp"> </i> Chat on WhatsApp</a>
+        <a href="http://" class="btn btn-std yo"><i class="fa fa-youtube"> </i> Subscribe on YouTube</a>
+      </div>
+    </section>
+
+<section>
+  <div class="loader-body">
+    <div class="loader-content">
+      <img src="assets/logos/logo.png" alt="">
+      <p>make <b>easy</b></p>
+      <div class="loading-dots">
+        <div class="bounce"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+        <div class="bounce4"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+<section id="rec_sub">
+  <!-- Modal -->
+<div class="modal fade" id="submit_rec" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">SUBMIT YOUR RECIPIE</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+              <div class="form-group">
+                <input type="text" class="form-control"  placeholder="First name" required>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Last name" required>
+              </div>
+              <div class="form-group">
+                <input type="email" class="form-control" placeholder="Enter email" required>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Headline" required>
+              </div>
+              <div class="form-group">
+                <textarea type="text" class="form-control" placeholder="Small description" required></textarea>
+              </div>
+              
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect01">Category</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01" required>
+                  <option selected>Choose...</option>
+                  <option value="Vegitarian">Vegitarian</option>
+                  <option value="Non-veg">Non-veg</option>
+                  <option value="Drinks">Drinks</option>
+                  <option value="Snacks">Snacks</option>
+                </select>
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text">Total Cooking time</span>
+                <input type="time" class="form-control" placeholder="Total cooking time" aria-label="Recipient's username" aria-describedby="basic-addon2" required>
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">Minutes</span>
+                </div>
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="srv">Serves</label>
+                </div>
+                <select class="custom-select" id="srv" required>
+                  <option selected value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="5+">5+</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Cuisine (Punjabi,Indian,Japanese,...)" required>
+              </div>
+            
+              <div class="input_fields_wrap">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Incrediants" required>
+                </div>
+              </div>
+              <button class="add_field_button btn btn-std1 btn-block mb-3">Add more Incrediants</button>
+
+              
+             <div class="input_fields_wrap_steps">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Steps" required>
+              </div>
+            </div>
+            <button class="add_field_button_steps btn btn-std1 btn-block mb-3">Add more Steps</button>
+
+              <div class="form-group">
+                <input type="url" class="form-control"  placeholder="YouTube video link (Optional)">
+              </div>
+
+              <div class="form-group">
+                <label for="exampleFormControlFile1">Recipie Photo</label>
+                <input type="file" class="form-control-file" id="exampleFormControlFile1" required>
+              </div>
+
+
+              <button type="submit" class="btn btn-std btn-block">Submit Recipie</button>
+        </form>
+      </div>
+      <!--
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+      -->
+    </div>
+  </div>
+</div>
+</section>
+
+
+
+
+
+{% endblock %}
+</body>
+</html>

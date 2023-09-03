@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    {% block content %}
+<link rel="stylesheet" href="{% static 'css/adm_style.css' %}">
+<title>Add Product | JesyFoods</title>
+</head>
+<body>
+
+    {% include "adm/base_side_nav.html" %}
+
+
+    <section class="home_content">
+
+        <div class="nav_top">
+            <div class="hed">
+                <i class="fa fa-bars" id="btn_bar-2" aria-hidden="true"></i>
+                Add New Product
+            </div>           
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+              <a class="nav-link" href="home"><i class="fa fa-home"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fa fa-bell"></i></a>
+            </li>
+            
+             <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i>
+                    <span class="name">{{request.user}}</span>
+               </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="MyAccount"><i class="fa fa-user-circle-o"></i> My Account</a>
+                      <a class="dropdown-item" href="price_list"><i class="fa fa-money" aria-hidden="true"></i> Price List</a>
+                      <a class="dropdown-item" href="https://jesyfoods.com/products"><i class="fa fa-tasks" aria-hidden="true"></i> Products</a>
+                      <a class="dropdown-item" href="settings"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp; Settings</a>
+                      <a style="color: darkgreen;" class="dropdown-item" href="https://jesyfoods.com/"><i class="fa fa-globe" aria-hidden="true"></i> Jesy Foods</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item logout" style="color: red;" href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                      </div>
+              </li>
+          </ul>
+    </div>
+
+
+
+        <form method="post" action="add_product"> {% csrf_token %}
+    <section class="container mt-5 form">
+        <h3 class="text-center mb-3">Add New Product</h3>
+          <div class="form-group">
+            <input name="name" type="text" class="form-control"  placeholder="Product Name" required>
+          </div>
+           <div class="row mb-3">
+            <div class="col">                
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Size</label>
+                </div>
+                <select name="size" class="custom-select" id="inputGroupSelect01">
+                <option selected>100g</option>
+                <option >50g</option>
+                <option >250g</option>
+                <option >500g</option>
+                <option >1kg</option>
+                <option >Loose 1kg</option>
+                <option value="size" style="color: rgb(0, 132, 255);" disabled>Add New Size?</option>
+                </select>
+            </div>
+            </div>
+            <div class="col">
+              <input name="mrp" type="number" class="form-control"  placeholder="MRP" required>
+            </div>
+          </div>            
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" >Retail Price</span>
+            </div>
+            <input name="r_price" id="rt_price" type="number" class="form-control" placeholder="Price" required>
+            <input type="number" class="form-control" placeholder="Taxable Price" readonly>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" >Wholesale Price</span>
+            </div>
+            <input name="w_price" type="number" class="form-control" placeholder="Price" required>
+            <input type="number" class="form-control" placeholder="Taxable Price" readonly>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Hotel Price</span>
+            </div>
+            <input name="h_price" type="number" class="form-control" placeholder="Price" required>
+            <input type="number" class="form-control" placeholder="Taxable Price" readonly>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" >Distribution Price</span>
+            </div>
+            <input name="d_price" type="number" class="form-control" placeholder="Price" required>
+            <input type="number" class="form-control" placeholder="Taxable Price" readonly >
+          </div>
+          <div class="row mb-3">
+            <div class="col"> 
+                <div class="form-group mb-3">
+                    <input name="hsn" type="number" class="form-control"  placeholder="HSN Code:">
+                  </div>
+            </div>
+            <div class="col"> 
+                <div class="form-group mb-3">
+                    <input name="barcode" type="text" class="form-control"  placeholder="Barcode:">
+                  </div>
+            </div>
+        </div>
+
+        
+
+    </section>
+
+
+
+
+
+    <section class="bott_but">
+
+        <div class="container fixed-bottom">
+            <div class="info_box">
+                <button type="submit" class="btn btn-primary" >
+                    <p>Add Product</p>
+                </button>
+
+            </div>
+        </div>
+
+    </section>
+
+</form>
+<div class="plus_btn">
+    <div id="plus_btn_more">
+        <a href="add_expense" class="btn btn_round btn-4">
+            <i class="fa fa-money" aria-hidden="true"></i>
+            <span id="btn-4">Add Expense</span>
+        </a>
+        <a href="add_order" class="btn btn_round btn-3">
+            <i class="fa fa-truck" aria-hidden="true"></i>
+            <span id="btn-3">Add Order</span>
+        </a>
+        <a href="take_payment" class="btn btn_round btn-2">
+            <i class="fa fa-inr" aria-hidden="true"></i>
+            <span id="btn-2">Take Payment</span>
+        </a>
+        <a href="" class="btn btn_round btn-1">
+            <i class="fa fa-line-chart" aria-hidden="true"></i>
+            <span id="btn-1">Add Sale</span>
+        </a>
+    </div>
+    <button id="btn_plus" class="btn_round"><i class="fa fa-plus" aria-hidden="true"></i></button>
+</div>
+
+    </section>
+
+  
+    <script src="{% static 'js/adm.js' %}"></script>
+<script>
+    $('#view_products').addClass('active');
+ </script>
+
+{% endblock %}
+
+</body>
+</html>

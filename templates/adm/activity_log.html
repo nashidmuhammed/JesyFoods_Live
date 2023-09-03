@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+{% load mathfilters %}
+<html lang="en">
+<head>
+    {% block content %}
+<link rel="stylesheet" href="{% static 'css/adm_style.css' %}">
+<title>LOG | JesyFoods</title>
+</head>
+<body>
+
+{% include "adm/base_side_nav.html" %}
+
+    <section class="home_content">
+        <div class="black"><i class="fa fa-times" aria-hidden="true"></i></div>
+        <div class="nav_top">
+            <div class="hed">
+            <i class="fa fa-bars" id="btn_bar-2" aria-hidden="true"></i>
+                Log
+            </div>           
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+              <a class="nav-link" href="home"> <i class="fa fa-home" aria-hidden="true"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fa fa-bell"></i></a>
+            </li>
+            
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i>
+                    <span class="name">{{request.user}}</span>
+               </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="MyAccount"><i class="fa fa-user-circle-o"></i> My Account</a>
+                      <a class="dropdown-item" href="price_list"><i class="fa fa-money" aria-hidden="true"></i> Price List</a>
+                      <a class="dropdown-item" href="https://jesyfoods.com/products"><i class="fa fa-tasks" aria-hidden="true"></i> Products</a>
+                      <a class="dropdown-item" href="settings"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp; Settings</a>
+                      <a style="color: darkgreen;" class="dropdown-item" href="https://jesyfoods.com/"><i class="fa fa-globe" aria-hidden="true"></i> Jesy Foods</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item logout" style="color: red;" href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                      </div>
+              </li>
+          </ul>
+    </div>
+<!------------------------------------------------------->
+<br>
+<section class="container">
+  <div class="party search">
+    <form id="form1" method="post">{% csrf_token %}
+    <div class="input-group mb-3">
+        <!-- <div class="input-group-prepend" >
+            <select name="filter" class="custom-select" id="filter">
+              {%if filter %}
+                <option selected>{{filter}}</option>
+                {% endif %}
+                <option >Information</option>
+                <option >Warning</option>
+                <option >Error</option>
+            </select>
+        </div> -->
+        <input id="search" autocomplete="off" name="search" type="search" class="form-control search" placeholder="Search..." value="{{search}}">
+           <div class="input-group-append">
+            <button type="submit" class="btn btn-outline-success"> <i class="fa fa-search" aria-hidden="true"></i>                </button>
+        </div>
+    </div>
+    </form>
+</div>
+{% if log %} 
+{% for i in page_obj.object_list %}
+<div class="act_log" >
+  <div class="dt_tab mb-0"><p style="color: #056630;">{{i.user}}</p> <span style="color: gray;font-size: 13px;">{{i.date}}</span></div>
+  <p style="font-size: 15px;" class="mb-1">{{i.process}}: {{i.reference}}</p>
+</div>
+
+{% endfor %}
+{% else %} 
+<p>No data Found!</p>
+{% endif %}
+  <!-- <table class="table">
+    <thead>
+      <tr>
+        <th>Date & Time</th>
+        <th>User</th>
+        <th>Type</th>
+        <th>Process</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if log %} 
+      {% for i in page_obj.object_list %}
+      <tr>
+        <td>{{i.date}}</td>
+        <td style="color: darkgreen;">{{i.user}}</td>
+        <td>{{i.type}}</td>
+        <td>{{i.process}}</td>
+        <td>{{i.reference}}</td>
+      </tr>
+      {% endfor %}
+      {% else %} 
+      <tr>No data Found!</tr>
+      {% endif %}
+    </tbody>
+  </table> -->
+  <!-- <center>
+    {%if page_obj.has_previous %} {# whether the previous page exists #}
+        <a href="?page={{page_obj.previous_page_number}}" class="btn btn-"><</a> {# link to the prev page #}
+    {% endif %}
+    <span>{{page_obj.number}}</span> {# the current page number #}
+    
+    {%if page_obj.has_next %} {# whether the next page exists #}
+        <a href="?page={{page_obj.next_page_number}}">></a> {# link to the next page #}
+    {% endif %}
+</center> -->
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    {%if page_obj.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{page_obj.previous_page_number}}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+        <span class="sr-only">Previous</span>
+      </a>
+    </li>
+
+    <!-- <li class="page-item"><a class="page-link" href="?page={{page_obj.number|sub:3}}">{{page_obj.number|sub:3}}</a></li>
+    <li class="page-item"><a class="page-link" href="?page={{page_obj.number|sub:2}}">{{page_obj.number|sub:2}}</a></li> -->
+    <li class="page-item"><a class="page-link" href="?page={{page_obj.number|sub:1}}">{{page_obj.number|sub:1}}</a></li>
+
+    {% endif %}
+    <li class="page-item"><a class="page-link" href="?page={{page_obj.number}}" style="color: #000;">{{page_obj.number}}</a></li>
+    {%if page_obj.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{page_obj.number|add:1}}">{{page_obj.number|add:1}}</a></li>
+    <li class="page-item"><a class="page-link" href="?page={{page_obj.number|add:2}}">{{page_obj.number|add:2}}</a></li>
+    <li class="page-item"><a class="page-link" href="?page={{page_obj.number|add:3}}">{{page_obj.number|add:3}}</a></li>    
+    <li class="page-item">
+      <a class="page-link" href="?page={{page_obj.next_page_number}}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+        <span class="sr-only">Next</span>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+</section>
+
+
+
+
+
+
+<br>
+
+
+
+    </section>
+<script src="{% static 'js/adm.js' %}"></script>
+<script>
+  $('#filter').change(function(){
+    $('#form1').submit()
+
+  }); 
+</script>
+
+<!--<script src="{% static 'js/add_order.js' %}"></script>-->
+{% endblock %}
+
+</body>
+</html>

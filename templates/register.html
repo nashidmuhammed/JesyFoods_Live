@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    {% block content %}
+<link rel="stylesheet" href="{% static 'css/adm_style.css' %}">
+<title>Register User | JesyFoods</title>
+</head>
+<body id="login">
+<section class="login">
+<div class="lwrapper">
+    <div class="title"><img src="{% static 'images/logo.png' %}" alt=""> <span>Register User</span></div>
+    <form action="" method="post">
+    {% csrf_token %}
+        <div class="row">
+            <i class="fa fa-user" aria-hidden="true"></i>
+           {{form.username}}
+        </div>
+        <div class="row">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+             {{form.email}}
+        </div>
+<!--        <div class="row">-->
+<!--            <i class="fa fa-phone" aria-hidden="true"></i>-->
+<!--            {{form.phone}}-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--            <i class="fa fa-address-book-o" aria-hidden="true"></i>-->
+<!--            {{form.address}}-->
+<!--        </div>-->
+        <div class="row">
+            <i class="fa fa-lock" aria-hidden="true"></i>
+             {{form.password1}}
+        </div>   
+        <div class="row">
+            <i class="fa fa-lock" aria-hidden="true"></i>
+             {{form.password2}}
+        </div>  
+        <div class="pass"><a href="#">Login?</a></div>
+       {{form.errors}}
+        <div class="row button">
+           <input type="submit" value="Register">
+        </div>
+    </form>
+</div>
+</section>
+
+
+
+<script>
+    var form_fields = document.getElementsByTagName('input')
+    form_fields[1].placeholder='Username'
+    form_fields[2].placeholder='Email'
+
+    form_fields[3].placeholder='Enter Password'
+    form_fields[4].placeholder='Re-enter Password'
+</script>
+<script src="{% static 'js/adm.js' %}"></script>
+{% endblock %}
+
+</body>
+</html>

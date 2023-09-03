@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    {% block content %}
+<link rel="stylesheet" href="{% static 'css/adm_style.css' %}">
+<title>Update Sale & Payment | JesyFoods</title>
+</head>
+<body>
+
+
+    <section class="jesy_nav">
+        <nav class="navbar navbar-light ">
+            <div class="logo-back">
+                <a onclick="window.history.back()"   class="back-btn"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+                <a href="home" class="navbar-brand"><img src="{% static 'images/logo.png' %}" class="logo" alt="jesy_logo"></a>
+            </div>
+            <form class="form-inline">
+                <div class="dropdown" style="margin-left: 15px;">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                       <i class="fa fa-user-circle-o"></i> {{request.user}}
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                      <a class="dropdown-item" href="MyAccount"><i class="fa fa-user-circle-o"></i> My Account</a>
+                      <a class="dropdown-item" href="price_list"><i class="fa fa-money" aria-hidden="true"></i> Price List</a>
+                      <a class="dropdown-item" href="https://jesyfoods.com/products"><i class="fa fa-tasks" aria-hidden="true"></i> Products</a>
+                      <a class="dropdown-item" href="settings"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp; Settings</a>
+                      <a style="color: darkgreen;" class="dropdown-item" href="https://jesyfoods.com/"><i class="fa fa-globe" aria-hidden="true"></i> Jesy Foods</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item logout" href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                      </div>
+                    </div>
+                  </div>
+            </form>
+          </nav>
+    </section><br>
+
+
+
+<!------------------------------------------------------->
+
+
+        <form action="{% url 'update_sale' %}" method="post">
+            {% csrf_token %}
+        <div class="dt_tab container mt-5">
+            <input name="iid" id="iid" value="{{odr.iid}}" hidden>
+            <div class="dte"><span>Date:</span><input name="date" id="date" type="date" class="dt form-control" value="{{dt|date:'Y-m-d'}}"></div>
+            <div class="dtod"><span>Invoice No:</span><div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                  <input name="prefix" class="input-group-text" style="width:35px;" id="prefix" value="{{prefix}}" readonly>
+
+                </div>
+                <input name="inv_no" id="od_no" type="text" class="dt form-control" value="{{od_no}}" readonly>
+                <button id="inv_ed" class="btn btn-warning btn-sm" type="button" style="display: none;" data-toggle="modal" data-target="#invoice"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+              </div></div>
+            
+        </div>
+        
+        <!-- Modal Invoice Edit-->
+        <div class="modal fade" id="invoice" tabindex="-1" role="dialog" aria-labelledby="invoiceTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="invoiceTitle">Change Invoice Number</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <input style="width:50px;" class="input-group-text" id="inv_prefix" value="{{prefix}}">
+                        </div>
+                        <input id="inv_no" type="number" class="form-control" placeholder="invoice no" value="{{od_no}}">
+                    </div>
+                    <div class="alert alert-danger inv_alt" role="alert">
+                        This invoice no. already exists!
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="inv_cng" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        
+        {% for message in messages %}
+           <div class="alert alert-info" role="alert">
+               {{message}}
+            </div>
+        {% endfor %}
+        <div class="container mt-4">
+            <p style="float: right;">Party Balance: ₹ <span style="color: darkgreen;">{{party_ob.balance}}</span></p>
+            <select name="s_party" class="form-control" id="s_party" disabled>
+              <option selected>{{party_ob.party_name}}</option>
+                
+            </select>
+            <div class="form-row mt-1">
+                <div class="col">
+                  <input id="place" type="text" class="form-control form-control-sm" placeholder="Address" value="{{party_ob.address}}" readonly>
+                </div>
+                <div class="col">
+                    <!--
+                  <input id="phone" type="number" class="form-control form-control-sm" placeholder="Phone" value="{{party_ob.phone}}" readonly>
+                    -->
+                    <div class="input-group input-group-sm mb-3">
+                      <input type="number" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" value="{{party_ob.phone}}" readonly>
+                      <div class="input-group-append">
+                       <a href="tel:{{party_ob.phone}}" class="btn btn-outline-success" type="button"><i class="fa fa-phone" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+<!--
+            <table class="table mt-3">
+                <tbody>
+                <tr></tr>
+                {% if od %}
+                {% for i in od %}
+                  <tr id="{{i}}" >
+                    <td><a class="ed" data-toggle="modal" data-target="#AddItem">{{i.p_name}}</a></td>
+                    <td>{{i.qty}}{% if i.fqty %}+{{i.fqty}}{% endif %}</td>
+                    <td>₹{{i.amount}}</td>
+                  </tr>
+                {% endfor %}
+                {% endif %}
+
+                </tbody>
+              </table>
+-->
+              <table id="table" class="table mt-3">
+                <tbody>
+                <tr></tr>
+                {% if sale %}
+                {% for i in sale %}
+                  <tr id="item-{{i.id}}" >
+                      <td>{{forloop.counter}}</td>
+                    <td class="itemName td" name="name"><a onClick="editItem({{i.id}})" data-toggle="modal" data-target="#AddItem")>{{i.p_name}}</a></td>
+                    <td class="itemQty td" name="qty">{{i.qty}}{% if i.fqty %}+{{i.fqty}}{% endif %}</td>
+                    <td class="itemAmt td" name="amt">₹{{i.amount}}</td>
+                  </tr>
+                {% endfor %}
+                {% endif %}
+                </tbody>
+              </table>
+
+
+            {% if t_type != 2 %}
+            <button type="button" id="add_btn" class=" btn btn-std btn-block mt-3"  data-toggle="modal" data-target="#AddItem">Add Items</button>
+            {% endif %}
+            <!-- <button type="button" id="add_rpt" class=" btn btn-std btn-block mt-3"  data-toggle="modal" data-target="#AddReport">Add Report</button>
+            <div class="alert alert-info mt-2" id="alt-rpt" role="alert">
+              Report submitted successfully!
+            </div> -->
+           
+                
+           
+
+            <p class="total">Total : ₹<input id="tot" class="total_inp" type="number" value="{{odr.total}}" disabled></p>
+            <!-- <p class="total">Old Balance : ₹<input id="ob" class="total_inp ob_color" type="number" value="{{ob}}" disabled></p>
+            <p class="total">Current Balance : ₹<input id="cb" class="total_inp" type="number" value="{{cb}}" disabled></p> -->
+            {% if t_type != 0 %}
+            <p class="total">Recieved : ₹ <input name="rc" id="rc" class="total_inp inp-edit rc" type="number" step="any" value="{{odr.received}}"></p>
+            <p class="total">Payment Type: <select name="p_type" id="p-type" class="form-control" style="    display: inline-block; width: auto;"  aria-label="Default select example">
+                <option selected value="{{odr.p_type}}">{{odr.p_type}}</option>
+                <option value="Cash">Cash</option>
+                <option value="Gpay">GPay</option>
+                <option value="Cheque">Cheque</option>
+                <option value="Other">Other</option>
+              </select></p>
+            {% else %}
+                <input name="rc" hidden>
+                <input name="p_type" hidden>
+            {% endif %}
+              <div class="alert alert-warning" id="alt-save" role="alert">
+                Couldn't save without item!
+              </div>
+
+              <div class="input-container" >
+                <textarea class="text-input" placeholder="Give sample pack Chilly" id="report" name="report" rows="2">{{odr.report}}</textarea>
+                <label for="report" class="label filled">Sale Report</label>
+              </div>
+              
+              <br><br>
+
+        </div>
+        
+
+
+
+        <!-- Modal View-->
+        <div class="modal fade" id="view" tabindex="-1" role="dialog" aria-labelledby="viewLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="viewLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                ...
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+
+
+
+        <br><br><br><br><br>
+
+    <section class="bott_but">
+       
+        <div class="container fixed-bottom">
+            <div class="info_box">
+                <a id="cancel"  class="btn btn-danger" style="color:white;">
+                    <p>Delete</p>
+                </a>
+                <a id="edit" data-id="2" type="button" class="btn btn-primary" >
+                    <p>Edit</p>
+                </a>
+                <button id="update" style="display: none;" type="submit" class="btn btn-success" >
+                    <p>Update</p>
+                </button>
+            </div>
+        </div>
+    </section>
+</form>
+
+
+
+
+
+ <!-- Modal ADD-->
+ <div class="modal fade" id="AddItem"  role="dialog" aria-labelledby="AddItemTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="AddItemLongTitle">Add Item</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+
+            <div class="form-group">
+                <!--<input type="text" class="form-control" placeholder="Item Name">-->
+                <select class="form-control" id="p_name" style="width:100%;">
+                    <option selected>--Select Product--</option>
+                    {% if product %}
+                    {% for i in product %}
+                    <option value="{{i.pname}}">{{i.pname}}</option>
+                    {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+            <input id="itm_id" hidden>
+            <div class="form-group">
+                <input id="price" type="number" class="form-control" placeholder="Price" oninput="add_number()"  required>
+            </div>
+            <div class="row">
+            <div class="col">
+                <input id="qty" type="number" class="form-control" placeholder="Qty" oninput="add_number()"  required>
+            </div>+
+            <div class="col">
+                <input id="fqty" type="number" class="form-control" placeholder="Free Qty" value="0">
+            </div>
+            </div>
+            <div class="input-group mt-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Total</span>
+              </div>
+                <input id="toot" type="number" class="form-control" placeholder="000.00" readonly>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+
+        <button id="ed_delete" type="button" class="btn btn-danger"  style="display:none;">Delete</button>
+        <button id="add_n" data-id="2" type="button" class="btn btn-primary" >Save & New</button>
+        <button id="add" data-id="1" type="button" class="btn btn-success" >Save</button>
+        </div>
+    </div>
+    </div>
+</div>
+ <!-- Modal Report-->
+ <div class="modal fade" id="AddReport" role="dialog" aria-labelledby="AddReportCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="AddReportLongTitle">Add Report</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+        <textarea name="report" id="rpt" class="form-control" placeholder="eg:(Closed & not reachable)"></textarea>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button id="add_report" type="button" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+    </div>
+</div>
+<script src="{% static 'js/adm.js' %}"></script>
+
+<script src="{% static 'js/update_sale.js' %}"></script>
+{% endblock %}
+
+</body>
+</html>

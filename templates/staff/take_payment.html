@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    {% block content %}
+
+
+<link rel="stylesheet" href="{% static 'css/adm_style.css' %}">
+<!-- <title>Take Payment | JesyFoods</title> -->
+<title>Create Receipt | JesyFoods</title>
+
+
+</head>
+<body>
+ <section class="jesy_nav">
+        <nav class="navbar navbar-light ">
+            <div class="logo-back">
+                <a onclick="window.history.back()"   class="back-btn"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+                <a href="home" class="navbar-brand"><img src="{% static 'images/logo.png' %}" class="logo" alt="jesy_logo"></a>
+            </div>
+            <form class="form-inline">
+              <div class="dropdown" style="margin-left: 15px;">
+                  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     <i class="fa fa-user-circle-o"></i> {{request.user}}
+                  </a>
+
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" href="MyAccount"><i class="fa fa-user-circle-o"></i> My Account</a>
+                    <a class="dropdown-item" href="price_list"><i class="fa fa-money" aria-hidden="true"></i> Price List</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item logout" href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                    </div>
+                  </div>
+                </div>
+          </form>
+          </nav>
+    </section><br><br>
+
+     <form id="form2"  action="{% url 'take_payment' %}" method="post">{% csrf_token %}
+    <input name="path" value="{{path}}" hidden>
+    <section>
+        <div class="dt_tab container mt-5">
+            <div class="dte"><span>Date:</span><input name="date" id="date" type="date" class="dt form-control" value="{{pay.date|date:'Y-m-d'}}"></div>
+            <div class="dtod"><span>Receipt No:</span><input name="rp_no" id="rp_no" type="text" class="dt form-control" value="{{rp_no}}" readonly></div>
+        </div>
+        <div class="container">
+
+           <select name="s_party" class="form-control" id="s_party" required>
+              <option selected>{{party_ob.party_name}}</option>
+                {% if party %}
+                {% for i in party %}
+              <option value="{{i.party_name}}">{{i.party_name}}</option>
+              {% endfor %}
+              {% endif %}
+            </select>
+            <div class="form-row mt-1">
+                <div class="col">
+                  <input id="p_place" value="{{party_ob.address}}" type="text" class="form-control form-control-sm" placeholder="Address"  readonly>
+                </div>
+                <div class="col">
+                    <!--
+                  <input id="phone" type="number" class="form-control form-control-sm" placeholder="Phone" value="{{party_ob.phone}}" readonly>
+                    -->
+                    <div class="input-group input-group-sm mb-3">
+                      <input id="p_phone" value="{{party_ob.phone}}" type="number" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" readonly>
+                      <div class="input-group-append">
+                       <a href="" class="btn btn-outline-success" type="button"><i class="fa fa-phone" aria-hidden="true"></i></a>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group mt-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" >₹</span>
+              </div>
+              <input id="amount" oninput="add_number()" value="{{pay.amount}}"   name="amount" type="number" step="any" class="form-control" placeholder="Amount" aria-label="Amount" required>
+            </div>
+            <div class="input-group mt-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">Payment Type:</span>
+                </div>
+                <select  class="custom-select" name="type" id="type">
+                    {% if pay.type %}
+                    <option value="{{pay.type}}">{{pay.type}}</option>
+                    {% endif %}
+                    <option value="Cash">Cash</option>
+                    <option value="Bank">Bank</option>
+                    <option value="GPay">GPay</option>
+                    <option value="Cheque">Cheque</option>
+                    <option value="Other">Other</option>
+                </select>
+              </div>
+              <p class="total">Old Balance : ₹<input value="{{party_ob.balance}}" oninput="add_number()"   id="p_balance" class="total_inp ob_color" type="number"   disabled></p>
+              <p class="total">Current Balance : ₹<input value="" id="c_balance" class="total_inp" type="number"   disabled></p>
+
+        
+
+        </div>
+    </section>
+
+   
+  
+
+ 
+  
+ 
+
+
+
+    <section class="bott_but">
+        <div class="container fixed-bottom">
+            <div class="info_box">
+                <a id="cancel" href="." class="btn btn-danger" style="color:white;">
+                    <p>Delete</p>
+                </a>
+
+                <button type="submit" class="btn btn-success" ><p>Save</p></button>
+
+            </div>
+        </div>
+    </section>
+     </form>
+<script>
+    $(document).ready(function() {
+        var date = new Date();
+
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+
+        if (month < 10) month = "0" + month;
+        if (day < 10) day = "0" + day;
+
+        var today = year + "-" + month + "-" + day;
+        if ($("#date").val() == ''){
+        $("#date").attr("value", today);
+        }
+
+      });
+
+
+
+        $(document).ready(function() {
+        $('#s_party').change(function(){
+           console.log('entereed');
+           var s_party = $('#s_party option:selected').val();
+           $('#amount').val('');
+               $.ajax({
+                type: 'GET',
+                url: 'view_bal',
+                data: {s_party:s_party},
+                success: function(data) {
+                if (data.bal == 'none'){
+                     alert('Please Select a party');
+                     }
+                else{
+                    $('#p_balance').val(data.bal);
+                    console.log('balanceee='+data.bal);
+                    $('#p_place').val(data.place);
+                    $('#p_phone').val(data.phone);
+                    $('#c_balance').val(data.bal);
+                    }
+                    },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+       });
+
+    $('#cancel').click(function(){
+    var rp_no = $('#rp_no').val();
+    $.ajax({
+                type: 'GET',
+                url: 'del_payment',
+                data: {rp_no:rp_no},
+                success: function(data) {
+                    if (data == 1){
+                        alert("Amount Deleted!")
+                        }
+                    },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+
+    });
+
+      });
+
+
+
+</script>
+<script>
+var text1 = document.getElementById("p_balance");
+var text2 = document.getElementById("amount");
+
+function add_number() {
+   var first_number = parseFloat(text1.value);
+   if (isNaN(first_number)) first_number = 0;
+   var second_number = parseFloat(text2.value);
+   if (isNaN(second_number)) second_number = 0;
+   var result = first_number - second_number;
+   console.log('result='+result);
+   document.getElementById("c_balance").value = result;
+}
+</script>
+
+   {% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    {% block content %}
+<link rel="stylesheet" href="{% static 'css/adm_style.css' %}">
+<title>Party Report | JesyFoods</title>
+</head>
+<body>
+
+     <div class="side_nav">
+        <div class="logo_content">
+            <div class="logo">
+                <img src="{% static 'images/logo.png' %}" alt="">
+                <div class="logo_name">JesyFoods</div>
+            </div>
+            <i class="fa fa-bars" id="btn_bar" aria-hidden="true"></i>
+        </div>
+        <ul class="nav_list">
+            <li class="mb-2">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <input type="text" placeholder="Search...">
+                <span class="tool_tip">Search</span>
+            </li>
+            <li>
+                <a  class="a" href="admin_panel">
+                <i class="fa fa-th-large" aria-hidden="true"></i>
+                <span class="links_name">Dashboard</span>
+                </a>
+                <span class="tool_tip">Dashboard</span>
+            </li>
+            <li>
+                <a  class="  a" href="home">
+                <i class="fa fa-home" aria-hidden="true"></i>
+                <span class="links_name">Home</span>
+                </a>
+                <span class="tool_tip">Home</span>
+            </li>
+            <li id="sale_drop">
+                <a class="a ">
+                <i class="fa fa-list" aria-hidden="true"></i>
+                <span class="links_name">Sales <i class="fa fa-caret-down" aria-hidden="true"></i></span>
+
+
+                </a>
+                <span class="tool_tip">Sales</span>
+            </li>
+            <div class="container drop">
+                <li>
+                    <a class="a " href="sale_report">
+                    <i class="fa fa-line-chart" aria-hidden="true"></i>
+                    <span class="links_name">Sales Report</span>
+                    </a>
+                    <span class="tool_tip">Sales Report</span>
+                </li>
+                <li>
+                    <a class="a " href="payments">
+                    <i class="fa fa-inr" aria-hidden="true"></i>
+                    <span class="links_name">Payment In</span>
+                    </a>
+                    <span class="tool_tip">Payment In</span>
+                </li>
+                <li>
+                    <a class=" a" href="daybook">
+                    <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+                    <span class="links_name">Day Book</span>
+                    </a>
+                    <span class="tool_tip">Day Book</span>
+                </li>
+                <li>
+                    <a class="a" href="view_orders">
+                    <i class="fa fa-truck" aria-hidden="true"></i>
+                    <span class="links_name">Sales Orders</span>
+                    </a>
+                    <span class="tool_tip">Sales Orders</span>
+                </li>
+            </div>
+            <li id="cparty">
+                <a class="a active">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                <span class="links_name">Party <i class="fa fa-caret-down" aria-hidden="true"></i></span>
+
+
+                </a>
+                <span class="tool_tip">Party</span>
+            </li>
+            <div class="container cdrop">
+                <li>
+                    <a class="a" href="party_statement">
+                    <i class="fa fa-line-chart" aria-hidden="true"></i>
+                    <span class="links_name">Party Statement</span>
+                    </a>
+                    <span class="tool_tip">Party Statement</span>
+                </li>
+                <li>
+                    <a class="a active" href="party_report">
+                        <i class="fa fa-table" aria-hidden="true"></i>
+                    <span class="links_name">Party Report</span>
+                    </a>
+                    <span class="tool_tip">Party Report</span>
+                </li>
+                <li>
+                    <a class="a" href="add_party">
+                        <i class="fa fa-address-book-o" aria-hidden="true"></i>
+                    <span class="links_name">Add Party</span>
+                    </a>
+                    <span class="tool_tip">Add Party</span>
+                </li>
+            </div>
+
+            <li>
+                <a class="a" href="view_products">
+                    <i class="fa fa-leaf" aria-hidden="true"></i>
+                <span class="links_name">Products</span>
+                </a>
+                <span class="tool_tip">Products</span>
+            </li>
+            <li>
+                <a class="a" href="employees">
+                    <i class="fa fa-briefcase" aria-hidden="true"></i>
+                <span class="links_name">Employees</span>
+                </a>
+                <span class="tool_tip">Employees</span>
+            </li>
+            <li>
+                <a class="a">
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                <span class="links_name">Purchase</span>
+                </a>
+                <span class="tool_tip">Purchase</span>
+            </li>
+            <li>
+                <a class="a" href="view_expense">
+                    <i class="fa fa-money" aria-hidden="true"></i>
+                <span class="links_name">Expenses</span>
+                </a>
+                <span class="tool_tip">Expenses</span>
+            </li>
+            <li>
+                <a class="a">
+                <i class="fa fa-comments-o" aria-hidden="true"></i>
+                <span class="links_name">Messages</span>
+                </a>
+                <span class="tool_tip">Messages</span>
+            </li>
+            <li>
+                <a class="a" href="settings">
+                <i class="fa fa-cog" aria-hidden="true"></i>
+                <span class="links_name">Settings</span>
+                </a>
+                <span class="tool_tip">Settings</span>
+            </li>
+        </ul>
+        <div class="log_sec">
+            <div class="log_out">
+                <a href="logout">
+                    <span>Logout</span>
+                <i class="fa fa-sign-out" id="logout" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <section class="home_content">
+        <div class="black"><i class="fa fa-times" aria-hidden="true"></i></div>
+
+        <div class="nav_top">
+            <div class="hed">
+                <i class="fa fa-bars" id="btn_bar-2" aria-hidden="true"></i>
+                Party Report
+            </div>
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+              <a class="nav-link" href="home"><i class="fa fa-home"></i></a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fa fa-bell"></i></a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i>
+                    <span class="name">{{request.user}}</span>
+               </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="MyAccount"><i class="fa fa-user-circle-o"></i> My Account</a>
+                      <a class="dropdown-item" href="price_list"><i class="fa fa-money" aria-hidden="true"></i> Price List</a>
+                      <a class="dropdown-item" href="https://jesyfoods.com/products"><i class="fa fa-tasks" aria-hidden="true"></i> Products</a>
+                      <a class="dropdown-item" href="settings"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp; Settings</a>
+                      <a style="color: darkgreen;" class="dropdown-item" href="https://jesyfoods.com/"><i class="fa fa-globe" aria-hidden="true"></i> Jesy Foods</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item logout" style="color: red;" href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                      </div>
+              </li>
+          </ul>
+    </div>
+
+    <section class="home_content">
+
+
+<!------------------------------------------------------->
+
+
+  <section class="pt container">
+            <div class="party">
+                <form action="{% url 'party_report' %}" method="post">{% csrf_token %}
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <select name="route" class="custom-select" id="inputGroupSelect01">
+                            <option selected>{{route}}</option>
+                            <option value="All">All</option>
+                            <option value="mon">Route-1:Mon</option>
+                            <option value="tue">Route-2:Tue</option>
+                            <option value="wed">Route-3:Wed</option>
+                            <option value="thu">Route-4:Thu</option>
+                            <option value="fri">Route-5:Fri</option>
+                            <option value="sat">Route-6:Sat</option>
+                        </select>
+                    </div>
+                    <input name="search" type="text" class="form-control" placeholder="Search..." value="{% if search != None %}{{search}}{% endif %}">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-outline-success">Search</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+        <table class="table table-hover ">
+            <tbody>
+            {% if party %}
+            {% for i in party %}
+                <tr onclick="document.location='{% url 'party_view' %}?data={{i.id}}';">
+                    <td>{{i.party_name}}
+                        <p class="sm-p sm-p-n">{{i.address}}</p>
+                    </td>
+                    <td ><span class="blc">{{i.balance}}</span>
+                    </td>
+                </tr>
+            {% endfor %}
+            {% else %}
+            <td>No data Found!</td>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+  </section>
+
+
+
+
+
+    <div class="plus_btn">
+        <div id="plus_btn_more">
+            <a href="add_expense" class="btn btn_round btn-4">
+                <i class="fa fa-money" aria-hidden="true"></i>
+                <span id="btn-4">Add Expense</span>
+            </a>
+            <a href="add_order" class="btn btn_round btn-3">
+                <i class="fa fa-truck" aria-hidden="true"></i>
+                <span id="btn-3">Add Order</span>
+            </a>
+            <a href="take_payment" class="btn btn_round btn-2">
+                <i class="fa fa-inr" aria-hidden="true"></i>
+                <span id="btn-2">Take Payment</span>
+            </a>
+            <a href="" class="btn btn_round btn-1">
+                <i class="fa fa-line-chart" aria-hidden="true"></i>
+                <span id="btn-1">Add Sale</span>
+            </a>
+        </div>
+        <button class="btn_round"><i class="fa fa-plus" aria-hidden="true"></i></button>
+    </div>
+
+
+    </section>
+</section>
+
+
+
+<script src="{% static 'js/adm.js' %}"></script>
+
+{% endblock %}
+
+</body>
+</html>

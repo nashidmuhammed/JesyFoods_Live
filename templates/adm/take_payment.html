@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    {% block content %}
+<link rel="stylesheet" href="{% static 'css/adm_style.css' %}">
+<!-- <title>Take Payment | JesyFoods</title> -->
+<title>Create Receipt | JesyFoods</title>
+
+</head>
+<body>
+
+     <div class="side_nav">
+        <div class="logo_content">
+            <div class="logo">
+                <img src="{% static 'images/logo.png' %}" alt="">
+                <div class="logo_name">JesyFoods</div>
+            </div>
+            <i class="fa fa-bars" id="btn_bar" aria-hidden="true"></i>
+        </div>
+        <ul class="nav_list">
+            <li class="mb-2">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <input type="text" placeholder="Search...">
+                <span class="tool_tip">Search</span>
+            </li>
+            <li>
+                <a  class="a" href="admin_panel">
+                <i class="fa fa-th-large" aria-hidden="true"></i>
+                <span class="links_name">Dashboard</span>
+                </a>
+                <span class="tool_tip">Dashboard</span>
+            </li>
+            <li>
+                <a  class="  a" href="home">
+                <i class="fa fa-home" aria-hidden="true"></i>
+                <span class="links_name">Home</span>
+                </a>
+                <span class="tool_tip">Home</span>
+            </li>
+            <li id="sale_drop">
+                <a class="a active">
+                <i class="fa fa-list" aria-hidden="true"></i>
+                <span class="links_name">Sales <i class="fa fa-caret-down" aria-hidden="true"></i></span>
+
+
+                </a>
+                <span class="tool_tip">Sales</span>
+            </li>
+            <div class="container drop">
+                <li>
+                    <a class="a " href="sale_report">
+                    <i class="fa fa-line-chart" aria-hidden="true"></i>
+                    <span class="links_name">Sales Report</span>
+                    </a>
+                    <span class="tool_tip">Sales Report</span>
+                </li>
+                <li>
+                    <a class="a" href="payments">
+                    <i class="fa fa-inr" aria-hidden="true"></i>
+                    <span class="links_name">Payment In</span>
+                    </a>
+                    <span class="tool_tip">Payment In</span>
+                </li>
+                <li>
+                    <a class=" a" href="daybook">
+                    <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+                    <span class="links_name">Day Book</span>
+                    </a>
+                    <span class="tool_tip">Day Book</span>
+                </li>
+                <li>
+                    <a class="a" href="view_orders">
+                    <i class="fa fa-truck" aria-hidden="true"></i>
+                    <span class="links_name">Sales Orders</span>
+                    </a>
+                    <span class="tool_tip">Sales Orders</span>
+                </li>
+            </div>
+            <li id="cparty">
+                <a class="a">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                <span class="links_name">Party <i class="fa fa-caret-down" aria-hidden="true"></i></span>
+
+
+                </a>
+                <span class="tool_tip">Party</span>
+            </li>
+            <div class="container cdrop">
+                <li>
+                    <a class="a" href="party_statement">
+                    <i class="fa fa-line-chart" aria-hidden="true"></i>
+                    <span class="links_name">Party Statement</span>
+                    </a>
+                    <span class="tool_tip">Party Statement</span>
+                </li>
+                <li>
+                    <a class="a" href="party_report">
+                        <i class="fa fa-table" aria-hidden="true"></i>
+                    <span class="links_name">Party Report</span>
+                    </a>
+                    <span class="tool_tip">Party Report</span>
+                </li>
+                <li>
+                    <a class="a" href="add_party">
+                        <i class="fa fa-address-book-o" aria-hidden="true"></i>
+                    <span class="links_name">Add Party</span>
+                    </a>
+                    <span class="tool_tip">Add Party</span>
+                </li>
+            </div>
+
+            <li>
+                <a class="a" href="view_products">
+                    <i class="fa fa-leaf" aria-hidden="true"></i>
+                <span class="links_name">Products</span>
+                </a>
+                <span class="tool_tip">Products</span>
+            </li>
+            <li>
+                <a class="a" href="employees">
+                    <i class="fa fa-briefcase" aria-hidden="true"></i>
+                <span class="links_name">Employees</span>
+                </a>
+                <span class="tool_tip">Employees</span>
+            </li>
+            <li>
+                <a class="a">
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                <span class="links_name">Purchase</span>
+                </a>
+                <span class="tool_tip">Purchase</span>
+            </li>
+            <li>
+                <a class="a" href="view_expense">
+                    <i class="fa fa-money" aria-hidden="true"></i>
+                <span class="links_name">Expenses</span>
+                </a>
+                <span class="tool_tip">Expenses</span>
+            </li>
+            <li>
+                <a class="a">
+                <i class="fa fa-comments-o" aria-hidden="true"></i>
+                <span class="links_name">Messages</span>
+                </a>
+                <span class="tool_tip">Messages</span>
+            </li>
+            <li>
+                <a class="a" href="settings">
+                <i class="fa fa-cog" aria-hidden="true"></i>
+                <span class="links_name">Settings</span>
+                </a>
+                <span class="tool_tip">Settings</span>
+            </li>
+        </ul>
+        <div class="log_sec">
+            <div class="log_out">
+                <a href="logout">
+                    <span>Logout</span>
+                <i class="fa fa-sign-out" id="logout" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <section class="home_content">
+
+        <div class="nav_top">
+            <div class="hed">
+                <a onclick="window.history.back()"   class="back-btn"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+                Create Receipt
+            </div>           
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+              <a class="nav-link" href="home"><i class="fa fa-home"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fa fa-bell"></i></a>
+            </li>
+            
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i>
+                    <span class="name">{{request.user}}</span>
+               </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="MyAccount"><i class="fa fa-user-circle-o"></i> My Account</a>
+                      <a class="dropdown-item" href="price_list"><i class="fa fa-money" aria-hidden="true"></i> Price List</a>
+                      <a class="dropdown-item" href="https://jesyfoods.com/products"><i class="fa fa-tasks" aria-hidden="true"></i> Products</a>
+                      <a class="dropdown-item" href="settings"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp; Settings</a>
+                      <a style="color: darkgreen;" class="dropdown-item" href="https://jesyfoods.com/"><i class="fa fa-globe" aria-hidden="true"></i> Jesy Foods</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item logout" style="color: red;" href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                      </div>
+              </li>
+          </ul>
+    </div>
+
+    <section class="home_content">
+
+
+<!------------------------------------------------------->
+
+    <form id="form2"  action="{% url 'take_payment' %}" method="post">{% csrf_token %}
+        <input name="path" value="{{path}}" hidden>
+
+        <section>
+            <div class="dt_tab container">
+                <div class="dte"><span>Date:</span><input name="date" id="date" type="date" class="dt form-control" value="{{pay.date|date:'Y-m-d'}}"></div>
+                <div class="dtod"><span>Receipt No:</span><input name="rp_no" id="rp_no" type="text" class="dt form-control" value="{{rp_no}}" readonly></div>
+            </div>
+            <div class="container">
+
+               <select name="s_party" class="form-control" id="s_party" required>
+                  <option selected>{{party_ob.party_name}}</option>
+                    {% if party %}
+                    {% for i in party %}
+                  <option value="{{i.party_name}}">{{i.party_name}}</option>
+                  {% endfor %}
+                  {% endif %}
+                </select>
+                <div class="form-row mt-1">
+                    <div class="col">
+                      <input id="p_place" value="{{party_ob.address}}" type="text" class="form-control form-control-sm" placeholder="Address"  readonly>
+                    </div>
+                    <div class="col">
+                        <!--
+                      <input id="phone" type="number" class="form-control form-control-sm" placeholder="Phone" value="{{party_ob.phone}}" readonly>
+                        -->
+                        <div class="input-group input-group-sm mb-3">
+                          <input id="p_phone" value="{{party_ob.phone}}" type="number" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" readonly>
+                          <div class="input-group-append">
+                           <a href="" class="btn btn-outline-success" type="button"><i class="fa fa-phone" aria-hidden="true"></i></a>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mt-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" >₹</span>
+                  </div>
+                  <input id="amount" oninput="add_number()" value="{{pay.amount}}"   name="amount" type="number" step="any" class="form-control" placeholder="Amount" aria-label="Amount" required>
+                </div>
+                <div class="input-group mt-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">Payment Type:</span>
+                    </div>
+                    <select  class="custom-select" name="type" id="type">
+                        {% if pay.type %}
+                        <option value="{{pay.type}}">{{pay.type}}</option>
+                        {% endif %}
+                        <option value="Cash">Cash</option>
+                        <option value="Bank">Bank</option>
+                        <option value="GPay">GPay</option>
+                        <option value="Cheque">Cheque</option>
+                        <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  <p class="total">Old Balance : ₹<input value="{{party_ob.balance}}" oninput="add_number()"   id="p_balance" class="total_inp ob_color" type="number"   disabled></p>
+                  <p class="total">Current Balance : ₹<input value="" id="c_balance" class="total_inp" type="number"   disabled></p>
+
+
+
+            </div>
+        </section>
+
+
+
+
+
+        <section>
+        <div class="plus_btn">
+            <div id="plus_btn_more">
+                <a href="add_expense" class="btn btn_round btn-4">
+                    <i class="fa fa-money" aria-hidden="true"></i>
+                    <span id="btn-4">Add Expense</span>
+                </a>
+                <a href="add_order" class="btn btn_round btn-3">
+                    <i class="fa fa-truck" aria-hidden="true"></i>
+                    <span id="btn-3">Add Order</span>
+                </a>
+                <a href="take_payment" class="btn btn_round btn-2">
+                    <i class="fa fa-inr" aria-hidden="true"></i>
+                    <span id="btn-2">Take Payment</span>
+                </a>
+                <a href="add_sale" class="btn btn_round btn-1">
+                    <i class="fa fa-line-chart" aria-hidden="true"></i>
+                    <span id="btn-1">Add Sale</span>
+                </a>
+            </div>
+            <button class="btn_round"><i class="fa fa-plus" aria-hidden="true"></i></button>
+        </div>
+
+
+        </section>
+
+    <section class="bott_but">
+        <div class="container fixed-bottom">
+            <div class="info_box">
+                <a id="cancel" href="." class="btn btn-danger" style="color:white;">
+                    <p>Delete</p>
+                </a>
+
+                <button type="submit" class="btn btn-success" ><p>Save</p></button>
+
+            </div>
+        </div>
+    </section>
+     </form>
+    </section>
+    </section>
+<script>
+$(document).ready(function() {
+    var date = new Date();
+
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+
+    if (month < 10) month = "0" + month;
+    if (day < 10) day = "0" + day;
+
+    var today = year + "-" + month + "-" + day;
+    if ($("#date").val() == ''){
+    $("#date").attr("value", today);
+    }
+
+  });
+
+
+
+    $(document).ready(function() {
+    if ($('#s_party option:selected').val() != '---Select a party---'){
+        console.log('ready...For rock')
+        var s_party = $('#s_party option:selected').val();
+        $('#amount').val('');
+            $.ajax({
+                type: 'GET',
+                url: 'view_bal',
+                data: {s_party:s_party},
+                success: function(data) {
+                if (data.bal == 'none'){
+                    alert('Please Select a party');
+                    }
+                else{
+                    $('#p_balance').val(data.bal);
+                    console.log('balanceee='+data.bal);
+                    $('#p_place').val(data.place);
+                    $('#p_phone').val(data.phone);
+                    $('#c_balance').val(data.bal);
+                    }
+                    },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+    }
+    $('#s_party').change(function(){
+       console.log('entereed');
+       var s_party = $('#s_party option:selected').val();
+       $('#amount').val('');
+           $.ajax({
+            type: 'GET',
+            url: 'view_bal',
+            data: {s_party:s_party},
+            success: function(data) {
+            if (data.bal == 'none'){
+                 alert('Please Select a party');
+                 }
+            else{
+                $('#p_balance').val(data.bal);
+                console.log('balanceee='+data.bal);
+                $('#p_place').val(data.place);
+                $('#p_phone').val(data.phone);
+                $('#c_balance').val(data.bal);
+                }
+                },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+   });
+
+$('#cancel').click(function(){
+var rp_no = $('#rp_no').val();
+$.ajax({
+            type: 'GET',
+            url: 'del_payment',
+            data: {rp_no:rp_no},
+            success: function(data) {
+                if (data == 1){
+                    alert("Amount Deleted!")
+                    }
+                },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+
+});
+
+  });
+
+
+
+</script>
+<script>
+var text1 = document.getElementById("p_balance");
+var text2 = document.getElementById("amount");
+
+function add_number() {
+var first_number = parseFloat(text1.value);
+if (isNaN(first_number)) first_number = 0;
+var second_number = parseFloat(text2.value);
+if (isNaN(second_number)) second_number = 0;
+var result = first_number - second_number;
+console.log('result='+result);
+document.getElementById("c_balance").value = result;
+}
+</script>
+
+<script src="{% static 'js/adm.js' %}"></script>
+{% endblock %}
+</body>
+</html>
+<!-- 
+<script src="{% static 'js/adm.js' %}"></script>
+
+</body>
+</html> -->

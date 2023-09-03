@@ -1,0 +1,229 @@
+<html>
+    {% load static %}
+<head>
+
+    <style>
+        @page {
+            size: a4 portrait;
+            @frame header_frame {           /* Static Frame */
+                -pdf-frame-content: header_content;
+                left: 40pt; width: 512pt; top: 20pt; height: 20pt;
+            }
+            @frame content_frame {          /* Content Frame */
+                left: 13pt; width: 570pt; top: 20pt; height: 730pt;
+            }
+            @frame footer_frame {           /* Another static Frame */
+                -pdf-frame-content: footer_content;
+                left: 40pt; width: 550; top: 20pt; height: 20pt;
+            }
+        }
+    </style>
+    <style>
+        .tab{
+            display: flex;
+            justify-content: space-between;
+            color: rgb(8, 87, 38);
+        }
+        .right{
+            text-align: right;
+            line-height: -10px;
+        }
+        .border{
+            border: 1px solid #000;
+            padding-left: 3px;
+            padding-top: 4px;
+        }
+        .border-left{
+            border: 1px solid #000;
+            border-right: 0px;
+            padding: 5px;
+        }
+        .border-right{
+            border: 1px solid #000;
+            border-left: 0px;
+            padding: 5px;
+        }
+        .border-bt{
+            border: 1px solid #000;
+            padding-left: 3px;
+            padding-top: 4px;
+            border-bottom: 0;
+            border-top: 0;
+        }
+        #itm{
+            font-size: 1.2rem;
+        }
+        .tr{
+            text-align: right;
+            padding-right: 1px;
+        }
+    </style>
+    </head>
+    
+    <body>
+        <!-- Content for Static Frame 'header_frame' -->
+        <h1 style="align-items: center;text-align: center;margin-bottom: 1px;font-size:1.8rem;">Tax Invoice</h1>
+        
+        <table >
+            <tr>
+                <td class="border-left" >
+                    <img src="./assets/logo.png" style="width:125px;height:auto;" alt="" srcset="">
+                </td>
+                <td class="right border-right">
+                    <h2 style="margin-bottom: -55px;font-size:2.2rem;">Jesy Foods</h2>
+                    <p style="margin-top: 0px;margin-bottom: 0px;font-size:1.3rem;">Kodampuzha, Kozhikode - 673632</p>
+                    <p style="margin-top: 0px;margin-bottom: 0px;font-size:1.3rem;">Phone: +91 8137 969 111, Email: info@jesyfoods.com</p>
+                    <p style="margin-top: 0px;margin-bottom: 0px;font-size:1.3rem;">GSTIN : 32MCLPS3184G1Z4 State: 32-Kerala</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="border" ><h3>Bill To:</h3></td>
+                <td class="border" style="text-align: right;padding-right: 3px;" rowspan="2">
+                    <h3 style="margin-bottom: -55px;font-size:1.3rem;">Invoice No: {{sale.iid}}</h3>
+                    <h3 style="margin-top: -5px;margin-bottom: -5px;font-size:1.3rem;">Date : {{sale.date|date:" d-m-Y" }}</h3>
+                </td>
+            </tr>
+            <tr>
+                <td class="border" ><h3 style="margin-bottom: -55px;font-size:1.3rem;">{{sale.party_name}}</h3>
+                    <p style="margin-top: -5px;margin-bottom: -5px;font-size:1.3rem;">{{sale.party_name.address}}</p>
+                    <p style="margin-top: -5px;margin-bottom: 0px;font-size:1.3rem;">Contact No: {{sale.party_name.phone}}</p>
+                </td>
+            </tr>
+        </table>
+        <table id="itm">
+            <tr class="border" style="font-size:1.1rem;text-align:center;">
+                <th style="width: 20px;">#</th>
+                <th style="width: 200px;">Item Name</th>
+                <th>HSN Code</th>
+                <th>Quantity</th>
+                <th>Price/
+                    Unit</th>
+                <th>Taxable amount</th>
+                <th>CGST
+                    (2.5%)</th>
+                <th>SGST
+                    (2.5%)</th>
+                <th>Final Rate</th>
+                <th>Amount</th>
+            </tr>
+            {% if itm %}
+            {% for i in itm %}
+            <tr class="border-bt" style="font-size:1.2rem;line-height:1.5rem;">
+                <td >{{forloop.counter}}</td>
+                <td>{{i.p_name}}</td>
+                <td>0904</td>
+                <td class="tr">{{i.qty|floatformat:0}}</td>
+                <td class="tr"><img src="./assets/rs.png" style="width:5px;height:auto;">&nbsp;{{i.t_price|floatformat:2}}</td>
+                <td class="tr"><img src="./assets/rs.png" style="width:5px;height:auto;">&nbsp;{{i.t_amount|floatformat:2}}</td>
+                <td class="tr"><img src="./assets/rs.png" style="width:5px;height:auto;">&nbsp;{{i.gst|floatformat:2}}</td>
+                <td class="tr"><img src="./assets/rs.png" style="width:5px;height:auto;">&nbsp;{{i.gst|floatformat:2}}</td>
+                <td class="tr"><img src="./assets/rs.png" style="width:5px;height:auto;">&nbsp;{{i.price|floatformat:2}}</td>
+                <td class="tr"><img src="./assets/rs.png" style="width:5px;height:auto;">&nbsp;{{i.amount|floatformat:2}}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+            {% if gap %}
+            {% for i in gap %}
+            <tr class="border-bt">
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+            <tr class="border">
+                <td>&nbsp;</td>
+                <td><h3 style="font-size:1.2rem;">Total</h3></td>
+                <td>&nbsp;</td>
+                <td class="tr"><h3 style="font-size:1.2rem;">{{sale.q_total|floatformat:0}}</h3></td>
+                <td>&nbsp;</td>
+                <td class="tr"><h3 style="font-size:1.2rem;"><img src="./assets/rs.png" style="width:6px;height:auto;">&nbsp;{{sale.t_total|floatformat:2}}</h3></td>
+                <td class="tr"><h3 style="font-size:1.2rem;"><img src="./assets/rs.png" style="width:6px;height:auto;">&nbsp;{{sale.g_total|floatformat:2}}</h3></td>
+                <td class="tr"><h3 style="font-size:1.2rem;"><img src="./assets/rs.png" style="width:6px;height:auto;">&nbsp;{{sale.g_total|floatformat:2}}</h3></td>
+                <td>&nbsp;</td>
+                <td class="tr"><h3 style="font-size:1.2rem;"><img src="./assets/rs.png" style="width:6px;height:auto;">&nbsp;{{sale.total|floatformat:2}}</h3></td>
+            </tr>
+        </table>
+        <table>
+            <tr class="border">
+                <td >
+                    <h3 style="font-size:1.3rem;">Tax Details:</h3>
+                </td>
+                <td class="tr"><p style="font-size:1.3rem;">2.5%</p></td>
+                <td rowspan="2">
+                    <table style="font-size: 1.2rem;line-height:0;">
+                        <tr style="margin-bottom: -55px;">
+                            <td>
+                                <h2 style="font-size:1.2rem;">Amounts:</h2>
+                            </td>
+                        </tr>
+                        <tr style="margin-top: -10px;margin-bottom: -10px;">
+                            <td>
+                                <p style="font-size:1.2rem;">Rount off</p>
+                            </td>
+                            <td class="tr"><p style="font-size:1.3rem;"><img src="./assets/rs.png" style="width:6px;height:auto;">&nbsp;0</p></td>
+                        </tr>
+                        <tr style="padding-bottom: 5px;">
+                            <td  style="margin-top: 0px;margin-bottom: 0px;"><p style="font-size:1.2rem;">Sub Total</p></td>
+                            <td class="tr"><p style="font-size:1.3rem;"><img src="./assets/rs.png" style="width:5px;height:auto;">&nbsp;{{sale.total|floatformat:2}}</p></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="border">
+                <td ><p style="font-size:1.2rem;">CGST</p></td>
+                <td class="tr"><p style="font-size:1.2rem;"><img src="./assets/rs.png" style="width:5px;height:auto;">&nbsp;{{sale.g_total|floatformat:2}}</p></td>
+            </tr>
+            <tr class="border">
+                <td ><p style="font-size:1.2rem;">SGST</p></td>
+                <td class="tr"><p style="font-size:1.2rem;"><img src="./assets/rs.png" style="width:5px;height:auto;">&nbsp;{{sale.g_total|floatformat:2}}</p></td>
+                <td>
+                    <table>
+                        <tr>
+                            <td><h1>Total</h1></td>
+                            <td class="tr"><h1><img src="./assets/rs.png" style="width:6px;height:auto;">&nbsp;{{sale.total|floatformat:2}}</h1></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            </table>
+            <table>
+            <tr style="text-align: center;line-height: 0;" class="border">
+                <td >
+                    <h3 style="margin-bottom: 0;font-size:1.5rem;">Invoice Amount In Words</h3>
+                    <p style="margin-top: 7px;margin-bottom: 0px;font-size:1.3rem;">{{words|title}} Rupees only</p>
+                    <h3 style="margin-top: -5px;margin-bottom: 0px;">&nbsp;</h3>
+                </td>
+                <td>
+                    <h2>&nbsp;</h2>
+                </td>
+            </tr>
+            <tr style="line-height: 0;" class="border">
+                <td >
+                    <h3 style="margin-bottom: 0;font-size:1.3rem;">Terms and conditions:</h3>
+                    <p style="margin-top: 5px;margin-bottom: 0px;font-size:1.2rem;">Goods will not be Returned without Bill</p>
+                    <!-- <h3 style="margin-top: -5px;margin-bottom: 0px;">&nbsp;</h3> -->
+                    <h3 style="margin-top: 7px;margin-bottom: 7px;font-size:1.2rem;">Thank you for doing bussiness with us.</h3>
+                    <p style="margin-top: 5px;margin-bottom: 0px;font-size:1.2rem;">Visit: www.jesyfoods.com</p>
+                    <br>
+                    <br><br>
+                </td>
+                <td>
+                    <p style="text-align: center;font-size:1.3rem">For Jesy Foods</p>
+                    <br><br><br>
+                    <p style="text-align: center;font-size:1.3rem">Authorized Signatory</p>
+                    <br>
+                    
+
+                </td>
+            </tr>
+            </table>
+    </body>
+    </html>

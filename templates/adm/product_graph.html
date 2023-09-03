@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    {% block content %}
+<link rel="stylesheet" href="{% static 'css/adm_style.css' %}">
+<title>Products Sales Report | JesyFoods</title>
+</head>
+<body>
+
+{% include "adm/base_side_nav.html" %}
+
+
+    <section class="home_content">
+        <div class="black"><i class="fa fa-times" aria-hidden="true"></i></div>
+        
+        <div class="nav_top">
+            <div class="hed">
+            <i class="fa fa-bars" id="btn_bar-2" aria-hidden="true"></i>
+                Products Sales Report
+            </div>           
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+              <a class="nav-link" href="home"><i class="fa fa-home"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://am2.myprofessionalmail.com/appsuite/#!!&app=io.ox/mail&folder=default0/INBOX"><i class="fa fa-envelope"></i></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="view_messages"><i class="fa fa-bell"></i><span class="badge badge-pill badge-danger">{%if count_msg != 0 %}{{count_msg}}{%endif%}</span></a>
+              </li>
+            
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i>
+                    <span class="name">{{request.user}}</span>
+               </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="MyAccount"><i class="fa fa-user-circle-o"></i> My Account</a>
+                      <a class="dropdown-item" href="price_list"><i class="fa fa-money" aria-hidden="true"></i> Price List</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item logout" style="color: red;" href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                      </div>
+              </li>
+          </ul>
+    </div>
+
+<section class="Home_content">
+  <div id="tab">
+    <ul class="nav nav-tabs nav-fill">
+      <li class="nav-item ">
+        <a class="nav-link  active" aria-current="page" href="#" id="0">Detail Report</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if graph == 2 %} active {%endif%}" href="#" id="1">Graphical Report</a>
+      </li>
+      
+    </ul>
+  </div>
+
+  <div class="container mt-5" id="detail">
+   <table class="table">
+    <thead>
+      <th>Product Name</th>
+      <th>Size</th>
+      <th>Qty</th>
+      <th>Qty/Kg</th>
+      <th>Avg Price/Kg</th>
+      <th>Total Sale</th>
+    </thead>
+    <tbody>
+      {% if result %}
+      {% for i in result %}
+      <tr>
+        <td>{{i.product}}</td>
+        <td>{{i.size}}</td>
+        <td>{{i.qty}}</td>
+        <td>{{i.qty_kg}}</td>
+        <td>{{i.avg_price|floatformat:2}}</td>
+        <td>{{i.amount|floatformat:2}}</td>
+      </tr>
+      {% endfor %}
+      {% else %}
+      <tr>
+        <td colspan="4">No Data</td>
+      </tr>
+      {% endif %}
+    </tbody>
+   </table>
+   <br><br>
+  </div>
+    
+    <!-- <div class="container-fluid mt-3 align-middle text-center"> -->
+      
+      
+      <div id="container" style="width: 100%; " >
+        <canvas id="pie-chart" width="100%"></canvas>
+      </div>
+    <!-- </div> -->
+
+
+    <!-- <h1 class="text-center">DEVELOPEMENT MOD</h1> -->
+    <!-- <div class="container-fluid flow-chart mt-5">
+
+        <div class="tab-head">
+            <a href="" class="btn btn-outline-dark btn-sm">View more monthly reports</a>
+            <a href="" class="btn btn-outline-dark btn-sm">View more weekly reports</a>
+        </div>
+        <div class="row mb-5">
+            <div class="col-sm-5 mb-5">
+                <canvas id="barChart" height="200%"></canvas>
+            </div>
+            <div class="col-sm-7 mb-5">
+                <canvas id="lineChart" ></canvas>
+            </div>
+        </div>
+    </div> -->
+</section>    
+</section>
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script>
+
+ var xValues = {{xValues|safe}};
+ var yValues = {{yValues|safe}};
+
+      var config = {
+        type: 'pie',
+        data: {
+          datasets: [{
+            data: yValues,
+            backgroundColor: [
+              'red','green','orange', 'blue','gray','darkgreen','skyblue', 'darkgray','darkblue','darkyellow','brown', 'lightgreen','darkred','darkyellow','lightred', 'lightblue','green','darkbrown','red', 'orange','gray','darkgreen','skyblue', 'darkgray','darkblue',
+            ],
+            label: 'Products'
+          }],
+          labels: xValues
+        },
+        options: {
+          responsive: true
+        }
+      };
+  
+      window.onload = function() {
+        var ctx = document.getElementById('pie-chart').getContext('2d');
+        window.myPie = new Chart(ctx, config);
+      };
+  
+    </script>
+    <!-- <script>
+        
+        var xValues = {{labels|safe}};
+        var yValues = {{data|safe}};
+        // var barColors = ["#013d1c"];
+        
+        new Chart("myChart", {
+          type: {% if graph == 1 %}"line"{%elif graph == 2 %}"bar"{%endif%},
+          data: {
+            labels: xValues,
+            datasets: [{
+              pointRadius: 4,
+              lineTension: 0,
+              fill: false,
+              backgroundColor: "#013d1c",
+              borderColor: "red",
+              data: yValues
+            }]
+          },
+          options: {
+            legend: {display: false},
+            title: {
+              display: true,
+              text: {% if graph == 1 %} "This month sale" {%elif graph == 2 %} "Monthly Sales Report" {%endif%}
+            },
+          scales: {
+              yAxes: [{ticks: {min: 0}}]
+            }
+          }
+        });
+        </script> -->
+<script>
+  
+ var xValues = ["August", "September", "October", "November", "December", "January", "February", "March"];
+ var yValues = [24, 27, 30, 32, 35, 34, 40, 44, 50, 60];
+  new Chart("pieChart", {
+    type: "pie",
+    data: {
+      labels: xValues,
+      datasets: [{
+        backgroundColor: barColors,
+        data: yValues
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: "Products sale in July 22"
+      }
+    }
+    });
+</script>
+
+
+<script>
+var wi = $(window).width();
+console.log("width=",wi)
+if (wi <= 768) {
+        $('.side_nav').removeClass('active');
+    }
+var width;
+$(window).resize(function() {
+width = $(window).width();
+if (width <= 900) {
+        $('.side_nav').removeClass('active');
+    }
+else {
+    $('.side_nav').addClass('active');
+}
+});
+$('.side_nav').addClass('active');
+$('#all_reports').addClass('active');
+$(document).ready(function() {
+  $('#container').hide();
+  $("#1").click(function(){
+  console.log("Clicked fgfgfgf")
+  $('#detail').hide();
+  $('#container').show();
+
+})
+$("#0").click(function(){
+  console.log("Clicked fgfgfgf")
+  $('#detail').show();
+  $('#container').hide();
+
+})
+});
+</script>
+
+<script src="{% static 'js/adm.js' %}"></script>
+{% endblock %}
+
+</body>
+</html>

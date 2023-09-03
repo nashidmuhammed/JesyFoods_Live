@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+{% extends 'jesyfoods-main/base.html' %}
+{% load static %}
+<html lang="en">
+
+
+    {% block content %}
+     <title>Jesy Foods | Contact</title>
+<body>
+    <!--NavBar-->
+    <section id="header">
+      <div class="header container">
+        <div class="nav-bar">
+          <div class="brand">
+            <a href="#logo"><img src="{% static 'images/logo.png' %}" alt="logo"></a>
+          </div>
+          <div class="nav-list">
+            <div class="hamburger"><div class="bar"></div></div>
+            <ul>
+              <li><a href="." data-after="Home">Home</a></li>
+              <li><a href="products" data-after="Products">Products</a></li>
+              <li><a href="about" data-after="About">About</a></li>
+              <li><a href="#" data-after="Media">Media</a></li>
+              <li><a href="tasty_hub" data-after="recipes">Recipes</a></li>
+              <li><a class="active" href="#" data-after="Contact">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+ 
+
+
+<section id="cont" style="margin-top: 150px;">
+  <div class="hd" data-aos="fade-up">
+   Contact <span>Us</span>
+  </div>
+  
+  <div class="container">
+    {% for message in messages %}
+    <div class="alert alert-success" role="alert">
+        <p>{{message}}</p>
+    </div>
+    {% endfor %}
+
+    <form id="submit-form" action="contact" method="post"> {% csrf_token %}
+      <div class="input-group mb-3" data-aos="fade-up">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Contact Purpose</label>
+          </div>
+          <select name="category" class="custom-select" id="inputGroupSelect01">
+            <option selected>General Enquiry</option>
+            <option>Distribution Enquiry</option>
+            <option>Customer Feedback</option>
+          </select>
+      </div>
+      <div class="form-row">
+          <div class="form-group col-md-6" data-aos="fade-up">
+            <input class="form-control" type="text" name="name" placeholder="Name" required>
+          </div>
+          <div class="form-group col-md-6" data-aos="fade-up">
+             <input class="form-control" type="number" name="phone" placeholder="Phone" required>
+          </div>
+      </div>
+      <div class="form-row">
+          <div class="form-group col-md-12" data-aos="fade-up">
+          <input class="form-control" type="email" name="email" placeholder="Email" required>
+          </div>
+          <div class="form-group col-md-12" data-aos="fade-up">
+            <textarea class="form-control" rows="4" type="text" name="message" placeholder="Message" required></textarea>
+          </div>
+      </div>
+          <button type="submit" class="btn btn-std btn-block" data-aos="fade-up">Send Message</button>                    
+          <div class="subload ml-5"><div class="loader-content">
+            <div class="loading-dots">
+              <div class="bounce"></div>
+              <div class="bounce2"></div>
+              <div class="bounce3"></div>
+              <div class="bounce4"></div>
+            </div>
+          </div></div>
+    </form>
+
+
+      </div>
+      <div class="container">
+        <div class="row mt-5">
+          <div class="col-sm-7" data-aos="fade-up">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15655.33532340041!2d75.8430277!3d11.1999275!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x242ff1b91bfb55bc!2sJesy%20Foods!5e0!3m2!1sen!2sin!4v1626454987613!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe> 
+          </div>
+          <div class="col-sm-5" data-aos="fade-up">
+            <div class="single_rec_box">
+              <p class="rec_box pt-5"><i class="fa fa-envelope-o"></i> Email
+              <span class="rec_box_add"><a href="">info@jesyfoods.com</a></span></p>
+              <p class="rec_box"><i class="fa fa-phone"></i> Phone
+              <span class="rec_box_add"><a href="">+91 8137 969 111</a></span></p>
+              <p class="rec_box"><i class="fa fa-whatsapp"></i> WhatsApp
+              <span class="rec_box_add"><a href="">+91 8137 969 111</a></span></p>
+              <p class="rec_box"><i class="fa fa-instagram"></i> Instagram
+              <span class="rec_box_add"><a href="">jesyfoods</a></span></p>
+              <p class="rec_box mb-5"><i class="fa fa-map-marker"></i> Address
+              <span class="rec_box_add"><a href="">Kodampuzha, Feroke College PO, Kozhikode, 673632, Kerala</a></span></p>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      </div>
+  <!--Success Modal -->
+  <!-- <div class="modal fade" id="success_alert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Thankyou </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Form submitted successfully</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="clos btn btn-dark" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <!--Error Modal -->
+  <!-- <div class="modal fade" id="error_alert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" style="color: rgb(255, 0, 0);">Error </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Something went wrong</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="clos btn btn-dark" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+</section>
+
+<script>
+  console.log("============================/........===========")
+  
+  (function () {
+    'use strict';
+    
+    var module = {
+        options: [],
+        header: [navigator.platform, navigator.userAgent, navigator.appVersion, navigator.vendor, window.opera],
+        dataos: [
+            { name: 'Windows Phone', value: 'Windows Phone', version: 'OS' },
+            { name: 'Windows', value: 'Win', version: 'NT' },
+            { name: 'iPhone', value: 'iPhone', version: 'OS' },
+            { name: 'iPad', value: 'iPad', version: 'OS' },
+            { name: 'Kindle', value: 'Silk', version: 'Silk' },
+            { name: 'Android', value: 'Android', version: 'Android' },
+            { name: 'PlayBook', value: 'PlayBook', version: 'OS' },
+            { name: 'BlackBerry', value: 'BlackBerry', version: '/' },
+            { name: 'Macintosh', value: 'Mac', version: 'OS X' },
+            { name: 'Linux', value: 'Linux', version: 'rv' },
+            { name: 'Palm', value: 'Palm', version: 'PalmOS' }
+        ],
+        databrowser: [
+            { name: 'Chrome', value: 'Chrome', version: 'Chrome' },
+            { name: 'Firefox', value: 'Firefox', version: 'Firefox' },
+            { name: 'Safari', value: 'Safari', version: 'Version' },
+            { name: 'Internet Explorer', value: 'MSIE', version: 'MSIE' },
+            { name: 'Opera', value: 'Opera', version: 'Opera' },
+            { name: 'BlackBerry', value: 'CLDC', version: 'CLDC' },
+            { name: 'Mozilla', value: 'Mozilla', version: 'Mozilla' }
+        ],
+        init: function () {
+            var agent = this.header.join(' '),
+                os = this.matchItem(agent, this.dataos),
+                browser = this.matchItem(agent, this.databrowser);
+            
+            return { os: os, browser: browser };
+        },
+        matchItem: function (string, data) {
+            var i = 0,
+                j = 0,
+                html = '',
+                regex,
+                regexv,
+                match,
+                matches,
+                version;
+            
+            for (i = 0; i < data.length; i += 1) {
+                regex = new RegExp(data[i].value, 'i');
+                match = regex.test(string);
+                if (match) {
+                    regexv = new RegExp(data[i].version + '[- /:;]([\\d._]+)', 'i');
+                    matches = string.match(regexv);
+                    version = '';
+                    if (matches) { if (matches[1]) { matches = matches[1]; } }
+                    if (matches) {
+                        matches = matches.split(/[._]+/);
+                        for (j = 0; j < matches.length; j += 1) {
+                            if (j === 0) {
+                                version += matches[j] + '.';
+                            } else {
+                                version += matches[j];
+                            }
+                        }
+                    } else {
+                        version = '0';
+                    }
+                    return {
+                        name: data[i].name,
+                        version: parseFloat(version)
+                    };
+                }
+            }
+            return { name: 'unknown', version: 0 };
+        }
+    };
+    
+    var e = module.init(),
+        debug = '';
+    
+    debug += 'os.name = ' + e.os.name + '\n';
+    debug += 'os.version = ' + e.os.version + '\n';
+    debug += 'browser.name = ' + e.browser.name + '\n';
+    debug += 'browser.version = ' + e.browser.version + '\n';
+    
+    debug += '\n';
+    debug += 'navigator.userAgent = ' + navigator.userAgent + '\n';
+    debug += 'navigator.appVersion = ' + navigator.appVersion + '\n';
+    debug += 'navigator.platform = ' + navigator.platform + '\n';
+    debug += 'navigator.vendor = ' + navigator.vendor + '\n';
+    
+  //   document.getElementById('log').innerHTML = debug;
+  $.ajax({
+    type: 'GET',
+    url: "{% url 'contact' %}",
+    data: {debug:debug},
+    success: function() {
+    console.log('<www.jesyfoods.com>')
+        }
+});
+  }());
+</script>
+
+
+{% endblock %}
+</body>
+</html>

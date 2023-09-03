@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    {% block content %}
+<link rel="stylesheet" href="{% static 'css/adm_style.css' %}">
+<title>Employees | JesyFoods</title>
+<style>
+    .table td, .table th {
+        padding: 0.5rem;
+    }
+</style>
+</head>
+<body>
+{% include "adm/base_side_nav.html" %}
+
+
+<section class="home_content ">
+    <div class="black"><i class="fa fa-times" aria-hidden="true"></i></div>
+
+        <div class="nav_top">
+            <div class="hed">
+                <i class="fa fa-bars" id="btn_bar-2" aria-hidden="true"></i>
+                Jesy Staff's
+            </div>
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+              <a class="nav-link" href="home"><i class="fa fa-home"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fa fa-bell"></i></a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i>
+                    <span class="name">{{request.user}}</span>
+               </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="MyAccount"><i class="fa fa-user-circle-o"></i> My Account</a>
+                      <a class="dropdown-item" href="price_list"><i class="fa fa-money" aria-hidden="true"></i> Price List</a>
+                      <a class="dropdown-item" href="https://jesyfoods.com/products"><i class="fa fa-tasks" aria-hidden="true"></i> Products</a>
+                      <a class="dropdown-item" href="settings"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp; Settings</a>
+                      <a style="color: darkgreen;" class="dropdown-item" href="https://jesyfoods.com/"><i class="fa fa-globe" aria-hidden="true"></i> Jesy Foods</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item logout" style="color: red;" href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                      </div>
+              </li>
+          </ul>
+    </div>
+
+
+<!------------------------------------------------------->
+<section class=" container-sm mt-5">
+    
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="dt_tab">
+                <a href="register" class="btn btn-outline-primary">Add Staff</a>
+                <a href="register" class="btn btn-outline-success" data-toggle="modal" data-target="#takeCollection">Receive Collection</a>        
+                
+            </div>
+            <input type="text" placeholder="Search" class="form-control">
+            <table class="table table-hover mt-3" >
+                <thead>
+                  <tr>
+                    <th scope="col">User </th>
+                    <th scope="col">Phone </th>
+                    <th scope="col">Position </th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% if profile %}
+                    {% for i in profile %}
+                  <tr  onclick="document.location='{% url 'employees' %}?data={{i.id}}';">
+                    <td>{{i.user}}</td>
+                    <td><a class="phone" href="tel:{{i.phone}}">{{i.phone}}</a></td>
+                    <td>{{i.position}}</td>
+                  </tr>
+                  {% endfor %}
+                {% else %}
+                <td>No data available!</td>
+                {% endif %}
+    
+                </tbody>
+              </table>
+        </div>        
+        <div class="col-lg-8">
+            {% if prof != None %}
+            <form action="employees" method="post">{% csrf_token %}
+            <table class="table mt-1" id="by_product">
+                <tbody>
+                  {% if prof.user.groups.all.0.name == 'staff' %}
+                    <tr>
+                        <th>Collection Balance:</th>
+                       <th class="text-right">
+                        <p>&#8377; {{prof.balance}}</p>
+                       </th>
+                    </tr>
+                    {% endif %}
+                    <tr>
+                        <th>Personal Details:</th>
+                       <th class="text-right"><button type="button" id="edit" class="btn btn-primary btn-sm">Edit</button>
+                            <button id="update" type="submit" class="btn btn-success btn-sm">Update</button></th>
+                    </tr>
+                    <tr>
+                    <td>User Name</td>
+                    <td><input name="username" class="ed form-control" type="text" placeholder="Username" value="{{prof.user.username}}" disabled>
+                        <input name="user" value="{{prof.user.username}}" readonly hidden></td>
+                    </tr>
+                  <tr>
+                    <td>Full Name</td>
+                    <td><input name="name" class="ed form-control" type="text" placeholder="Full Name" value="{{prof.name}}" disabled></td>
+                 </tr>
+                  <tr>
+                    <td>Position</td>
+                    <td><input name="position" class="ed form-control" type="text" placeholder="Position" value="{{prof.position}}" disabled></td>
+                </tr>
+                  <tr>
+                    <td>Joined</td>
+                    <td><input name="joined" class="ed form-control" type="date"  value="{{prof.date_created|date:'Y-m-d'}}" disabled></td>
+                </tr>
+                  <tr>
+                    <td>Salary</td>
+                    <td><input name="salary" class="ed form-control" type="number" placeholder="Salary" value="{{prof.salary}}" disabled></td>
+                </tr>
+                  <tr>
+                    <td>Email</td>
+                    <td><input name="email" class="ed form-control" type="email" placeholder="Email" value="{{prof.user.email}}" disabled required></td>
+                </tr>
+                  <tr>
+                    <td>Phone</td>
+                    <td><input name="phone" class="ed form-control" type="text" placeholder="Phone" value="{{prof.phone}}" disabled></td>
+                </tr>
+                  <tr>
+                    <td>Alternative Phone</td>
+                    <td><input name="phone_2" class="ed form-control" type="text" placeholder="Phone-2" value="{{prof.phone_2}}" disabled></td>
+                </tr>
+                  <tr>
+                    <td>WhatsApp</td>
+                    <td><input name="whatsapp" class="ed form-control" type="text" placeholder="WhatsApp" value="{{prof.whatsapp}}" disabled></td>
+                    </tr>
+                  <tr>
+                    <td>Address</td>
+                    <td><input name="address" class="ed form-control" type="text" placeholder="Address" value="{{prof.address}}" disabled></td>
+                  </tr>
+                  <tr>
+                    <th>Account Details:</th>
+                  </tr>
+                  <tr>
+                    <td>Account No:</td>
+                    <td><input name="account" class="ed form-control" type="number" placeholder="Account Number" value="{{prof.acoount}}" disabled></td>
+                 </tr>
+                  <tr>
+                    <td>IFSC No:</td>
+                    <td><input name="ifsc" class="ed form-control" type="text" placeholder="IFSC" value="{{prof.ifsc}}" disabled></td>
+                </tr>
+                  <tr>
+                    <td>Branch:</td>
+                    <td><input name="branch" class="ed form-control" type="text" placeholder="Branch" value="{{prof.branch}}" disabled></td>
+                    </tr>
+                  <tr>
+                    <td>GooglePay:</td>
+                    <td><input name="gpay" class="ed form-control" type="text" placeholder="GPay" value="{{prof.gpay}}" disabled></td>
+                 </tr>
+
+    
+                </tbody>
+            </table>
+        </form>
+        {% else %}
+        <p class="text-center" style="padding: 30% 0;background-color: rgba(128, 128, 128, 0.164);">Select a staff account!</p>
+        {% endif %}
+
+        </div>
+    </div>
+</section>
+
+
+
+
+  
+   
+  
+
+</section>
+<!-- Modal collect collection-->
+<div class="modal fade" id="takeCollection"  role="dialog" aria-labelledby="takeCollectionTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="takeCollectionTitle">Take Collection</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <select name="s_party" class="form-control" id="s_party" style="width: 100%;">
+                <option selected>--Select a staff---</option>
+                  {% if profile %}
+                  {% for i in profile %}
+                <option value="{{i.user}}">{{i.user}}</option>
+                {% endfor %}
+                {% endif %}
+              </select>
+
+                <div class="input-group mt-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">Amount &#8377;</span>
+                    </div>
+                    <input id="amount" type="number" class="form-control" placeholder="000.00" >
+                  </div>
+                <div class="input-group mt-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="p_type">Payment Type</label>
+                  </div>
+                  <select  class="custom-select" id="p_type">
+                    <option selected>Cash</option>
+                    <option>GPay</option>
+                    <option>Cheque</option>
+                    <option>Bank</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button id="sub" type="button" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="plus_btn">
+    <div id="plus_btn_more">
+        <a href="add_expense" class="btn btn_round btn-4">
+            <i class="fa fa-money" aria-hidden="true"></i>
+            <span id="btn-4">Add Expense</span>
+        </a>
+        <a href="add_order" class="btn btn_round btn-3">
+            <i class="fa fa-truck" aria-hidden="true"></i>
+            <span id="btn-3">Add Order</span>
+        </a>
+        <a href="take_payment" class="btn btn_round btn-2">
+            <i class="fa fa-inr" aria-hidden="true"></i>
+            <span id="btn-2">Take Payment</span>
+        </a>
+        <a href="add_sale" class="btn btn_round btn-1">
+            <i class="fa fa-line-chart" aria-hidden="true"></i>
+            <span id="btn-1">Add Sale</span>
+        </a>
+    </div>
+    <button class="btn_round"><i class="fa fa-plus" aria-hidden="true"></i></button>
+</div>
+       
+
+        <script>
+            $(document).ready(function() {
+              $('#update').hide()
+              $('#edit').click(function () {
+                         $('.ed').attr("disabled", false);
+                         $('#update').show();
+                         $('#edit').hide()
+                      });
+
+        $("#sub").click(function(){
+        var staff = $('#s_party option:selected').val();
+        var amount = $('#amount').val();
+        var p_type = $('#p_type option:selected').val();
+        if (amount == '' || staff == '--Select a staff---'){
+            alert('Cannot submit without amount & Staff')
+            return;
+        }
+            $.ajax({
+             type: 'GET',
+             url: 'take_collection',
+             data: {staff:staff,amount:amount,p_type:p_type},
+             success: function(data) {
+             console.log('data success='+data)
+                $('#takeCollection').modal('toggle');
+                location.reload();
+                 },
+             error: function(error) {
+                 console.log(error);
+             }
+         });
+     })
+
+            });
+          </script>
+<script src="{% static 'js/adm.js' %}"></script>
+<script>
+    $('#employees').addClass('active');
+ </script>
+{% endblock %}
+
+</body>
+</html>

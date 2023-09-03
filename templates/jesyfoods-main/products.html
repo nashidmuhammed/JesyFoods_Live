@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+{% extends 'jesyfoods-main/base.html' %}
+{% load static %}
+<html lang="en">
+
+
+    {% block content %}
+     <title>Jesy Foods | Products</title>
+<body>
+    <!--NavBar-->
+    <section id="header">
+      <div class="header container">
+        <div class="nav-bar">
+          <div class="brand">
+            <a href="#logo"><img src="{% static 'images/logo.png' %}" alt="logo"></a>
+          </div>
+          <div class="nav-list">
+            <div class="hamburger"><div class="bar"></div></div>
+            <ul>
+              <li><a href="." data-after="Home">Home</a></li>
+              <li><a class="active" href="products" data-after="Products">Products</a></li>
+              <li><a href="about" data-after="About">About</a></li>
+              <li><a href="#" data-after="Media">Media</a></li>
+              <li><a href="tasty_hub" data-after="recipes">Recipes</a></li>
+              <li><a href="contact" data-after="Contact">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+ 
+
+
+<section id="prod" style="margin-top: 150px;margin-bottom: 15rem;">
+  <div class="hd" data-aos="fade-up">
+    <span>Our Featured</span> Products
+  </div>
+  <div class="wrapper">
+    <div class="caro owl-carousel">
+      <div class="card card-1" data-aos="fade-up"><img src="{% static 'jesyfoods-main/assets/Products/Jesy_Chicken_Masala.png' %}" alt=""></div>
+      <div class="card card-2" data-aos="fade-up"><img src="{% static 'jesyfoods-main/assets/Products/Jesy_Sambar_Powder.png' %}" alt=""></div>
+      <div class="card card-3" data-aos="fade-up"><img src="{% static 'jesyfoods-main/assets/Products/Jesy_Chilli.png' %}" alt=""></div>
+      <div class="card card-4" data-aos="fade-up"><img src="{% static 'jesyfoods-main/assets/Products/Jesy_Meat_Masala.png' %}" alt=""></div>
+    </div>
+  </div>
+
+
+
+  <div class="hd" data-aos="fade-up">
+   <span>All</span> Products
+  </div>
+  <div class="container">
+      <div class="row">
+        <div class="col-6 col-sm-3">
+          <a data-toggle="modal" data-target="#kashmiri">
+            <img src="{% static 'jesyfoods-main/assets/Products/Jesy_Kashmiri_Chilli.png' %}" alt="" data-aos="fade-up" data-aos-duration="500" >
+            <div class="disc">
+              <span>Kashmiri Chilli Powder</span>
+              <p>Available : 100g, 250g, 1kg</p>
+            </div>
+          </a>
+          <!-- Modal -->
+              <div class="modal fade" id="kashmiri" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                      <h5 class="modal-title" >Jesy Kashmiri Powder</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                      </div>
+                      <div class="modal-body">
+                          <div class="container">
+                              <div class="row">
+                                  <div class="col-sm-6">
+                                      <img src="{% static 'jesyfoods-main/assets/Products/Jesy_Kashmiri_Chilli.png' %}" alt="">
+                                  </div>
+                                  <div class="col-sm-6">
+                                      <h2>Kashmiri Chilli Powder</h2>
+                                      <p>Chili powder is the dried, pulverized fruit of one or more varieties of chili pepper, sometimes with the addition of other spices. It is used as a spice to add pungency and flavor to culinary dishes. </p>
+                                      <hr>
+                                      <p>Net Weight : 100g, 250g, 1kg</p>
+                                      <hr>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      </div>
+                  </div>
+                  </div>
+              </div>
+        </div>
+          <div class="col-6 col-sm-3">
+              <a data-toggle="modal" data-target="#chilly">
+              <img src="{% static 'jesyfoods-main/assets/Products/Jesy_Chilli.png' %}" alt="" data-aos="fade-up" data-aos-duration="550">
+              <div class="disc">
+                <span>Chilly Powder</span>
+                <p>Available : 100g, 250g, 1kg</p>
+              </div>
+            </a>
+            <!-- Modal -->
+                <div class="modal fade" id="chilly" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" >Jesy Chilly Powder</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <img src="{% static 'jesyfoods-main/assets/Products/Jesy_Chilli.png' %}" alt="">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h2>Chilly Powder</h2>
+                                        <p>Chili powder is the dried, pulverized fruit of one or more varieties of chili pepper, sometimes with the addition of other spices. It is used as a spice to add pungency and flavor to culinary dishes. </p>
+                                        <hr>
+                                        <p>Net Weight : 100g, 250g, 1kg</p>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+          </div>
+          <div class="col-6 col-sm-3">
+            <a data-toggle="modal" data-target="#Coriander">
+              <img src="{% static 'jesyfoods-main/assets/Products/Jesy_Coriander.png' %}" alt="" data-aos="fade-up" data-aos-duration="1000">
+              <div class="disc">
+                <span>Coriander Powder</span>
+                <p>Available : 100g, 250g, 1Kg</p>
+              </div>
+            </a>
+            <!-- Modal -->
+                <div class="modal fade" id="Coriander" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" >Jesy Coriander Powder</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <img src="{% static 'jesyfoods-main/assets/Products/Jesy_Coriander.png' %}" alt="">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h2>Coriander Powder</h2>
+                                        <p>Coriander is the dried seed or fruit of the Coriandrum sativum plant, which belongs to the parsley family. Cilantro is the leaf of this same plant and surprisingly, its flavor is vastly different from that of coriander. Cilantro has a complex but delicate flavor with a hint of pepper, mint and lemon. Coriander has a sweet, aromatic taste with a touch of citrus.</p>
+                                        <hr>
+                                        <p>Available : 100g, 250g, 1kg</p>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+        </div>
+        <div class="col-6 col-sm-3">
+          <a data-toggle="modal" data-target="#turmeric">
+            <img src="{% static 'jesyfoods-main/assets/Products/Jesy_Turmeric.png' %}" alt="" data-aos="fade-up" data-aos-duration="1050">
+            <div class="disc">
+              <span>Turmeric Powder</span>
+              <p>Available : 100g, 250g, 1kg</p>
+            </div>
+          </a>
+          <!-- Modal -->
+              <div class="modal fade" id="turmeric" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                      <h5 class="modal-title" >Jesy Turmeric Powder</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                      </div>
+                      <div class="modal-body">
+                          <div class="container">
+                              <div class="row">
+                                  <div class="col-sm-6">
+                                      <img src="{% static 'jesyfoods-main/assets/Products/Jesy_Turmeric.png' %}" alt="">
+                                  </div>
+                                  <div class="col-sm-6">
+                                      <h2>Turmeric Powder</h2>
+                                      <p>Turmeric powder, which contains curcumin, is used worldwide in both cooking and natural coloring. Culinary use is a way to take advantage of its health benefits. Turmeric is a staple ingredient in Indian curries and is served in tea in Japan. In the United States, turmeric powder is found in mustard, cheese and other foods </p>
+                                      <hr>
+                                      <p>Net Weight : 100g, 250g, 1kg</p>
+                                      <hr>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      </div>
+                  </div>
+                  </div>
+              </div>
+        </div>
+        <div class="col-6 col-sm-3">
+          <a data-toggle="modal" data-target="#sambar">
+            <img src="{% static 'jesyfoods-main/assets/Products/Jesy_Sambar_Powder.png' %}" alt="" data-aos="fade-up" data-aos-duration="1100">
+            <div class="disc">
+              <span>Sambar Powder</span>
+              <p>Available : 100g, 250g, 1kg</p>
+            </div>
+          </a>
+          <!-- Modal -->
+              <div class="modal fade" id="sambar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                      <h5 class="modal-title" >Jesy Sambar Powder</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                      </div>
+                      <div class="modal-body">
+                          <div class="container">
+                              <div class="row">
+                                  <div class="col-sm-6">
+                                      <img src="{% static 'jesyfoods-main/assets/Products/Jesy_Sambar_Powder.png' %}" alt="">
+                                  </div>
+                                  <div class="col-sm-6">
+                                      <h2>Sambar Powder</h2>
+                                      <p>Sambar is a lentil-based vegetable stew/porridge/soup, cooked with pigeon pea and tamarind broth. It is popular in South Indian and Sri Lankan cuisines.</p>
+                                      <p>Type: Highly Spiced Curry</p>
+                                      <p>Place of Origin: India</p>
+                                      <hr>
+                                      <p>Net Weight : 100g, 250g, 1kg</p>
+                                      <hr>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      </div>
+                  </div>
+                  </div>
+              </div>
+        </div>
+        <div class="col-6 col-sm-3">
+            <a data-toggle="modal" data-target="#chicken">
+              <img src="{% static 'jesyfoods-main/assets/Products/Jesy_Chicken_Masala.png' %}" alt="" data-aos="fade-up" data-aos-duration="1150">
+              <div class="disc">
+                <span>Chicken Masala</span>
+                <p>Available : 100g, 250g, 1kg</p>
+              </div>
+            </a>
+            <!-- Modal -->
+                <div class="modal fade" id="chicken" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" >Jesy Chicken Powder</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <img src="{% static 'jesyfoods-main/assets/Products/Jesy_Chicken_Masala.png' %}" alt="">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h2>Chicken Masala</h2>
+                                        <p>Chicken Masala, which contains curcumin, is used worldwide in both cooking and natural coloring. Culinary use is a way to take advantage of its health benefits. Turmeric is a staple ingredient in Indian curries and is served in tea in Japan. In the United States, turmeric powder is found in mustard, cheese and other foods </p>
+                                        <hr>
+                                        <p>Net Weight : 100g, 250g, 1kg</p>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+          </div>
+          <!--chhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh-->
+          <div class="col-6 col-sm-3">
+            <a data-toggle="modal" data-target="#meat">
+              <img src="{% static 'jesyfoods-main/assets/Products/Jesy_Meat_Masala.png' %}" alt="" data-aos="fade-up" data-aos-duration="1200">
+              <div class="disc">
+                <span>Meat Masala</span>
+                <p>Available : 100g, 250g, 1kg</p>
+              </div>
+            </a>
+            <!-- Modal -->
+                <div class="modal fade" id="meat" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" >Jesy Meat Masala</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <img src="{% static 'jesyfoods-main/assets/Products/Jesy_Meat_Masala.png' %}" alt="">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h2>Meat Masala</h2>
+                                        <p></p>
+                                        <hr>
+                                        <p>Net Weight : 100g, 250g, 1kg</p>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+          </div>
+
+          <div class="col-6 col-sm-3">
+            <a data-toggle="modal" data-target="#fish">
+              <img src="{% static 'jesyfoods-main/assets/Products/Jesy_Fish_Masala.png' %}" alt="" data-aos="fade-up" data-aos-duration="1250">
+              <div class="disc">
+                <span>Fish Masala</span>
+                <p>Available : 100g, 250g, 1kg</p>
+              </div>
+            </a>
+            <!-- Modal -->
+                <div class="modal fade" id="fish" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" >Jesy Fish Masala</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <img src="{% static 'jesyfoods-main/assets/Products/Jesy_Fish_Masala.png' %}" alt="Fish Masala">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h2>Fish Masala</h2>
+                                        <p></p>
+                                        <hr>
+                                        <p>Net Weight : 100g, 250g, 1kg</p>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+          </div>
+
+          <div class="col-6 col-sm-3">
+            <a data-toggle="modal" data-target="#biryani">
+              <img src="{% static 'jesyfoods-main/assets/Products/Jesy_Biryani_Masala.png' %}" alt="" data-aos="fade-up" data-aos-duration="1300">
+              <div class="disc">
+                <span>Biryani Masala</span>
+                <p>Available : 50g, 100g</p>
+              </div>
+            </a>
+            <!-- Modal -->
+                <div class="modal fade" id="biryani" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" >Jesy Biryani Masala</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <img src="{% static 'jesyfoods-main/assets/Products/Jesy_Biryani_Masala.png' %}" alt="Fish Masala">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h2>Biryani Masala</h2>
+                                        <p></p>
+                                        <hr>
+                                        <p>Net Weight : 50g, 100g</p>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+          </div>
+
+          <div class="col-6 col-sm-3">
+            <a data-toggle="modal" data-target="#garam">
+              <img src="{% static 'jesyfoods-main/assets/Products/Jesy_Garam_Masala.png' %}" alt="" data-aos="fade-up" data-aos-duration="1350">
+              <div class="disc">
+                <span>Garam Masala</span>
+                <p>Available : 50g, 100g</p>
+              </div>
+            </a>
+            <!-- Modal -->
+                <div class="modal fade" id="garam" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" >Jesy Garam Masala</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <img src="{% static 'jesyfoods-main/assets/Products/Jesy_Garam_Masala.png' %}" alt="Garam Masala">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h2>Garam Masala</h2>
+                                        <p></p>
+                                        <hr>
+                                        <p>Net Weight : 50g, 100g</p>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+          </div>
+          <div class="col-6 col-sm-3">
+            <a data-toggle="modal" data-target="#pepper">
+              <img src="{% static 'jesyfoods-main/assets/Products/Jesy_Pepper.png' %}" alt="" data-aos="fade-up" data-aos-duration="1400">
+              <div class="disc">
+                <span>Pepper Powder</span>
+                <p>Available : 50g, 100g</p>
+              </div>
+            </a>
+            <!-- Modal -->
+                <div class="modal fade" id="pepper" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" >Jesy Pepper Powder</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <img src="{% static 'jesyfoods-main/assets/Products/Jesy_Pepper.png' %}" alt="Pepper Powder">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h2>Pepper Powder</h2>
+                                        <p></p>
+                                        <hr>
+                                        <p>Net Weight : 50g, 100g</p>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+          </div>
+
+
+
+          
+      </div>
+   
+  </div>
+  
+</section>
+
+{% endblock %}
+</body>
+</html>

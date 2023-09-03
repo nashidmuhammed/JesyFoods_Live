@@ -1,0 +1,183 @@
+<html>
+    {% load static %}
+<head>
+
+    <style>
+        @page {
+            size : a5 portrait;
+            margin: 5mm;
+            width: 200mm;
+            height: 279mm
+             }
+    </style>
+    <style>
+        *{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .right{
+            text-align: right;
+            line-height: -10px;
+        }
+        .border{
+            border: 1px solid #495057;
+            padding-left: 2px;
+            padding-top: 0.3rem;
+            padding-bottom: -0.1rem;
+        }
+        .border-left{
+            border: 1px solid #495057;
+            border-right: 0px;
+            padding: 5px;
+        }
+        .border-right{
+            border: 1px solid #495057;
+            border-left: 0px;
+            padding: 5px;
+        }
+        .border-bt{
+            border: 1px solid #495057;
+            padding-left: 3px;
+            padding-top: 4px;
+            border-bottom: 0;
+            border-top: 0;
+        }
+        .tr{
+            text-align: right;
+        }
+        h1{
+            font-size:1.7rem;
+            }
+        h3{
+            font-size:1.1rem
+            }
+        p{
+            font-size:1rem;
+        }
+    </style>
+    </head>
+    
+    <body>
+        <!-- Content for Static Frame 'header_frame' -->
+        <h2 style="align-items: center;text-align: center;margin-bottom: 1px;">Payment Receipt</h2>
+        
+        <table >
+            <tr>
+                <td class="border-left" >
+                    <img src="/home/JesyFoods/jesyfoods/jesy/static/images/logo.png" style="width:90px;height:auto;" >
+                </td>
+                <td class="right border-right">
+                    <h1 style="margin-bottom: -8px;">Jesy Foods</h1>
+                    <p style="margin-top: -0.5rem;margin-bottom: -0.5rem;">Kodampuzha, Kozhikode - 673632</p>
+                    <p style="margin-top: -0.5rem;margin-bottom: -0.5rem;">Phone:+91 8137 969 111, Email:info@jesyfoods.com</p>
+                    <p style="margin-top: -0.5rem;padding-bottom: 0rem;">GSTIN : 32MCLPS3184G1Z4 State: 32-Kerala</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="border"><h4>Bill To:</h4></td>
+                <td class="border" style="text-align: right;padding-right: 3px;" rowspan="2">
+                    <h4 style="margin-bottom: -0.3rem;">Receipt No: {{sale.iid}}</h4>
+                    <h4 style="margin-top: -0.3rem;margin-bottom: 0.7rem;">Date : {{sale.date|date:" d-m-Y" }}</h4>
+                </td>
+            </tr>
+            <tr>
+                <td class="border" >
+                    <h3 style="padding-top: 0.1rem;margin-bottom: -0.4rem;">{{sale.party_name}}</h3>
+                    <p style="margin-top: -0.5rem;margin-bottom: -0.7rem;">{{sale.party_name.address}}</p>
+                    <p style="margin-top: -0.5rem;margin-bottom: -0.7rem;">Contact No: {{sale.party_name.phone}}</p>
+                    {% if sale.party_name.GSTIN != 'None' %}
+                    <p style="margin-top: -0.5rem;margin-bottom: -0.7rem;">GSTIN No: {{sale.party_name.GSTIN}}</p>
+                    <p style="margin-top: -0.5rem;margin-bottom: 0px;">State: 32-Kerala</p>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr class="" >
+                <td style="border-left: 1px solid #495057;">&nbsp;</td>
+
+
+                <td  width="50%" style="border: 1px solid #495057; padding: 1px;padding-top: 0.5rem;padding-bottom: 0.5rem;">
+
+                    <table style="padding-top:0rem;padding-bottom:-0.1rem;">
+                        <tr>
+                            <td><h3>&nbsp;&nbsp;Amounts:</h3></td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr style="display:none;">
+                            <td><p>Round off</p></td>
+                            <td class="tr" ><p><img src="/home/JesyFoods/jesyfoods/jesy/static/images/rs.png" style="width:5px;height:auto;">&nbsp;0</p></td>
+                        </tr>
+                        <tr style="padding-bottom:-0.1rem;">
+                            <td><p>&nbsp;&nbsp;Received</p></td>
+                            <td class="tr" ><p style="font-size: 1rem;"><img src="/home/JesyFoods/jesyfoods/jesy/static/images/rs.png" style="width:5px;height:auto;">&nbsp;{{sale.received|floatformat:2}}</p></td>
+                        </tr>
+                    </table>
+
+                </td>
+
+            </tr>
+            <tr class="">
+                <td class="tr" style="border-left: 1px solid #495057;"><p>&nbsp;</p></td>
+                <td style="border: 1px solid #495057; padding: 0px;padding-top: 0.3rem;">
+                    <table >
+                        <tr>
+                            <td><h3>&nbsp;&nbsp; Total</h3></td>
+                            <td class="tr"><h3><img src="/home/JesyFoods/jesyfoods/jesy/static/images/rs.png" style="width:4px;height:auto;">&nbsp;{{sale.received|floatformat:2}}</h3></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            </table>
+            <table>
+
+            {% if cb is True %}
+            <tr class="border">
+                <td>&nbsp;</td>
+                <td>
+                    <table style="padding-top:0.1rem;">
+<!--                        <tr>-->
+<!--                            <td><p>Previous Balance</p></td>-->
+<!--                            <td class="tr"><p><img src="./assets/rs.png" style="width:5px;height:auto;">&nbsp;{{ob|floatformat:2}}</p></td>-->
+<!--                        </tr>-->
+                        <tr>
+                            <td><p>Current Balance</p></td>
+                            <td class="tr"><h3><img src="/home/JesyFoods/jesyfoods/jesy/static/images/rs.png" style="width:5px;height:auto;">&nbsp;{{sale.party_name.balance|floatformat:2}}</h3></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            {% endif %}
+
+            <tr style="text-align: center;" class="border">
+                <td >
+                    <h4 style="margin-bottom: -0.9rem;">Invoice Amount In Words</h4>
+                    <p style="margin-top: -0.2rem;">{{words|title}} Rupees only</p>
+                </td>
+                <td>
+                    <h2>&nbsp;</h2>
+                </td>
+            </tr>
+            <tr class="border-bt">
+                <td >
+                   
+                    <h4 style="margin-top: 0rem;margin-bottom: 0rem;">Thank you for doing bussiness with us.</h4>
+                    <p style="margin-top: 0.1rem;margin-bottom: 0px;">Visit: www.jesyfoods.com</p>
+                </td>
+                <td rowspan="2">
+                    <p style="text-align: center;">For Jesy Foods</p>
+                    <br>
+                    <p style="text-align: center;">Authorized Signatory</p>
+
+                </td>
+            </tr>
+                <tr class="border-bt">
+                    <td>&nbsp;</td>
+                </tr>
+                <tr class="border-bt" style="border-bottom:1px solid black;">
+                    <td>&nbsp;</td>
+                </tr>
+
+            </table>
+    </body>
+    </html>

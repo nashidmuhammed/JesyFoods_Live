@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    {% block content %}
+<link rel="stylesheet" href="{% static 'css/adm_style.css' %}">
+<title>Sales Report | JesyFoods</title>
+</head>
+<body>
+
+{% include "adm/base_side_nav.html" %}
+
+
+    <section class="home_content">
+        <div class="black"><i class="fa fa-times" aria-hidden="true"></i></div>
+        
+        <div class="nav_top">
+            <div class="hed">
+            <i class="fa fa-bars" id="btn_bar-2" aria-hidden="true"></i>
+                Sales Graph
+            </div>           
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+              <a class="nav-link" href="home"><i class="fa fa-home"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://am2.myprofessionalmail.com/appsuite/#!!&app=io.ox/mail&folder=default0/INBOX"><i class="fa fa-envelope"></i></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="view_messages"><i class="fa fa-bell"></i><span class="badge badge-pill badge-danger">{%if count_msg != 0 %}{{count_msg}}{%endif%}</span></a>
+              </li>
+            
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i>
+                    <span class="name">{{request.user}}</span>
+               </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="MyAccount"><i class="fa fa-user-circle-o"></i> My Account</a>
+                      <a class="dropdown-item" href="price_list"><i class="fa fa-money" aria-hidden="true"></i> Price List</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item logout" style="color: red;" href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                      </div>
+              </li>
+          </ul>
+    </div>
+
+<section class="Home_content">
+  <div id="tab">
+    <ul class="nav nav-tabs nav-fill">
+      <li class="nav-item">
+        <a class="nav-link {% if graph == 1 %} active {%endif%} " aria-current="page" href="daily_graph">Daily Sale</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if graph == 2 %} active {%endif%}" href="month_graph">Monthly Sale</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Weekly Sale</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Anual Sale</a>
+      </li>
+    </ul>
+  </div>
+    
+    <div class="container-fluid mt-3">
+      
+      
+        <canvas id="myChart" style="width:100%;"></canvas>
+    
+    </div>
+
+
+    <!-- <h1 class="text-center">DEVELOPEMENT MOD</h1> -->
+    <!-- <div class="container-fluid flow-chart mt-5">
+
+        <div class="tab-head">
+            <a href="" class="btn btn-outline-dark btn-sm">View more monthly reports</a>
+            <a href="" class="btn btn-outline-dark btn-sm">View more weekly reports</a>
+        </div>
+        <div class="row mb-5">
+            <div class="col-sm-5 mb-5">
+                <canvas id="barChart" height="200%"></canvas>
+            </div>
+            <div class="col-sm-7 mb-5">
+                <canvas id="lineChart" ></canvas>
+            </div>
+        </div>
+    </div> -->
+</section>    
+</section>
+
+
+
+
+ <script>
+    $('.side_nav').addClass('active');
+    $('#admin_panel').addClass('active');
+ </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+    <script>
+        
+        var xValues = {{labels|safe}};
+        var yValues = {{data|safe}};
+        // var barColors = ["#013d1c"];
+        
+        new Chart("myChart", {
+          type: {% if graph == 1 %}"line"{%elif graph == 2 %}"bar"{%endif%},
+          data: {
+            labels: xValues,
+            datasets: [{
+              pointRadius: 4,
+              lineTension: 0,
+              fill: false,
+              backgroundColor: "#013d1c",
+              borderColor: "red",
+              data: yValues
+            }]
+          },
+          options: {
+            legend: {display: false},
+            title: {
+              display: true,
+              text: {% if graph == 1 %} "This month sale" {%elif graph == 2 %} "Monthly Sales Report" {%endif%}
+            },
+          scales: {
+              yAxes: [{ticks: {min: 0}}]
+            }
+          }
+        });
+        </script>
+
+
+<script>
+// var xValues = ["August", "September", "October", "November", "December", "January", "February", "March"];
+// var yValues = [24, 27, 30, 32, 35, 34, 40, 44, 50, 60];
+var barColors = ["#013d1c"];
+
+new Chart("barChart", {
+    type: "bar",
+    data: {
+    labels: {{context.labels|safe}},
+    datasets: [{
+        backgroundColor: "#013d1c",
+        data: {{context.data|safe}}
+    }]
+    },
+    options: {
+    legend: {display: false},
+    title: {
+        display: true,
+        text: "Monthly Sales Report"
+    },
+  scales: {
+      yAxes: [{ticks: {min: 0}}]
+    //   yAxes: [{ticks: {min: 0, max:60}}]
+    }
+    }
+});
+
+var xValues = ["Chilly 100g", "Coriander 100g", "Turmeric 100g", "Kashmiri 100g",
+                 "Sambar 100g", "Chicken 100g", "Fish 100g", "Meat 100g", "Garam 50g", "Pepper 50g"];
+var yValues = [120, 73, 125, 24, 65,97,55,60,39,43];
+var barColors = [
+  "#dc3545",
+  "#00aba9",
+  "#ffc107",
+  "#e8c3b9",
+  "#28a745",
+  "#6f42c1",
+  "#007bff",
+  "#e83e8c",
+  "#fd7e14",
+  "#343a40"
+];
+
+// new Chart("pieChart", {
+//   type: "pie",
+//   data: {
+//     labels: xValues,
+//     datasets: [{
+//       backgroundColor: barColors,
+//       data: yValues
+//     }]
+//   },
+//   options: {
+//     title: {
+//       display: true,
+//       text: "Products sale in July 22"
+//     }
+//   }
+// });
+
+
+var xValues = ['Week1','Week2','Week3','Week4'];
+var yValues = [10,12,13,14];
+
+new Chart("lineChart", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{
+      fill: false,
+      lineTension: 0,
+      backgroundColor: "red",
+      borderColor: "red",
+      data: {{context.weeks|safe}},
+      label: "This Month"
+    },
+    {
+    data: {{context.weeks2|safe}},
+    borderColor: "green",
+    backgroundColor: "green",
+    text:"test",
+    fill: false,
+    label: "Prev Month"
+    },
+    {
+    data: {{context.weeks3|safe}},
+    borderColor: "blue",
+    backgroundColor: "blue",
+    fill: false,
+    label: "{{context.prev1_month|safe}}"
+    }]
+  },
+  options: {
+    legend: {display: true},
+    title: {
+        display: true,
+        text: "Weekly Sales Report"
+    },
+  }
+});
+</script>
+<script>
+var wi = $(window).width();
+console.log("width=",wi)
+if (wi <= 768) {
+        $('.side_nav').removeClass('active');
+    }
+var width;
+$(window).resize(function() {
+width = $(window).width();
+if (width <= 900) {
+        $('.side_nav').removeClass('active');
+    }
+else {
+    $('.side_nav').addClass('active');
+}
+});
+</script>
+<script src="{% static 'js/adm.js' %}"></script>
+{% endblock %}
+
+</body>
+</html>

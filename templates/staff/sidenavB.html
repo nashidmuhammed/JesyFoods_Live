@@ -1,0 +1,83 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/sidenav.css' %}">
+<section id="side_nav">
+
+    <div class="side-wrapper">
+        <!--Top menu -->
+        <div class="sidebar">
+            
+           <!--profile image & text-->
+           <div class="profile">
+                <img src="https://www.pngkey.com/png/full/115-1150152_default-profile-picture-avatar-png-green.png" alt="profile_picture">
+                <h3>{{request.user}}</h3>
+                {% if prof.position %}
+                <p>{{prof.position}}</p>
+                <span style="color: gray;">Balance: &#8377;{{prof.balance}}</span>
+                {% endif %}
+            </div>
+            <hr>
+            <!--menu item-->
+            <ul>
+                <li>
+                    <a href="home" id="home">
+                        <span class="icon"><i class="fa fa-home"></i></span>
+                        <span class="item">Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="MyAccount" id="MyAccount">
+                        <span class="icon"><i class="fa fa-desktop"></i></span>
+                        <span class="item">My Account</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="price_list" id="price">
+                        <span class="icon"><i class="fa fa-money"></i></span>
+                        <span class="item">Price List</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://jesyfoods.com/products">
+                        <span class="icon"><i class="fa fa-tasks"></i></span>
+                        <span class="item">Products</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="view_reports" id="reports">
+                        <span class="icon"><i class="fa fa-flag"></i></span>
+                        <span class="item">Reports</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon"><i class="fa fa-comments"></i></span>
+                        <span class="item">Messages</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="daybook" id="daybook">
+                        <span class="icon"><i class="fa fa-book"></i></span>
+                        <span class="item">DayBook</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="settings" id="settings">
+                        <span class="icon"><i class="fa fa-cog"></i></span>
+                        <span class="item">Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="logout">
+                        <span class="icon"><i class="fa fa-sign-out" style="color: red;"></i></span>
+                        <span class="item" style="color: red;"><b>Logout</b></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    
+    <div class="black_close"><i class="fa fa-times" aria-hidden="true"></i></div>
+</section>
+

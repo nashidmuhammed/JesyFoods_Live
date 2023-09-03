@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    {% block content %}
+<link rel="stylesheet" href="{% static 'css/adm_style.css' %}">
+<link rel="stylesheet" href="{% static 'css/switch.css' %}">
+<title>Party Statement | JesyFoods</title>
+</head>
+<body>
+
+
+
+
+    <section class="jesy_nav">
+        <nav class="navbar navbar-light ">
+            <div class="logo-back">
+                <a href="home" class="navbar-brand"><img src="{% static 'images/logo.png' %}" class="logo" alt="jesy_logo"></a>
+            </div>
+            <form class="form-inline">
+              <div class="dropdown" style="margin-left: 15px;">
+                  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     <i class="fa fa-user-circle-o"></i> {{request.user}}
+                  </a>
+
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" href="MyAccount"><i class="fa fa-user-circle-o"></i> My Account</a>
+                    <a class="dropdown-item" href="price_list"><i class="fa fa-money" aria-hidden="true"></i> Price List</a>
+                    <a class="dropdown-item" href="https://jesyfoods.com/products"><i class="fa fa-tasks" aria-hidden="true"></i> Products</a>
+                    <a class="dropdown-item" href="settings"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp; Settings</a>
+                    <a style="color: darkgreen;" class="dropdown-item" href="https://jesyfoods.com/"><i class="fa fa-globe" aria-hidden="true"></i> Jesy Foods</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item logout" href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                    </div>
+                  </div>
+                </div>
+          </form>
+          </nav>
+    </section><br>
+
+
+
+
+
+<!------------------------------------------------------->
+    <br>
+
+
+  <section class="mt-3 sale_rep">
+    <div class="container">      
+      <table class="table-head">
+        <tbody>
+            <tr>
+                <td class="pt-3"><strong><i class="fa fa-user" aria-hidden="true"></i> {{party.party_name}}</strong></td>
+                <td class="text-right pt-3"><strong style="color: darkgreen;">Balance :₹ {{party.balance}}</strong></td>
+            </tr>
+            <tr>
+                <td><a><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp; {{party.address}}</a></td>
+                <td><a  style="float: right;">GSTIN: {{party.GSTIN}}</a></td>
+            </tr>
+            <tr>
+                <td  class="pb-3"><a class="phone" href="tel:{{party.phone}}"><i class="fa fa-phone-square" aria-hidden="true"></i> {{party.phone}}</a></td>
+                <td  class="pb-3"><a style="float: right;" > | Route: {{party.route}}</a>
+                    <a style="float: right;"> Type: {{party.type}} &nbsp;</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+      <div class="container mt-3 dt_tab">
+          <form id="form" action="party_statement_filter" method="post">{% csrf_token %}
+        <input name="party" value="{{party.party_name}}" hidden>
+        <select name="filter" id="filter" class="form-control" aria-label="Default select example" >
+          {% if filter == False %}
+          <option selected>Custom</option>
+          {% elif filter != 'Today' %}
+          <option selected>{{filter|title}}</option>
+          {% endif %}
+          <option value="today">Today</option>
+          <option value="yesterday">Yesterday</option>
+          <option value="This Month" >This Month</option>
+          <option value="Prev Month">Prev Month</option>
+          <option value="This Year">This Year</option>
+          <option value="all">All</option>
+        </select>
+          </form>
+          <form id="form0" action="party_statement_date" method="post">{% csrf_token %}
+            <input name="party" value="{{party.party_name}}" hidden>
+          <div class="right">
+            <div class="input-group input-group-sm ">
+              <input name="sd" type="date" class="form-control date" style="width:45%;" value="{{sd|date:'Y-m-d'}}">
+                <strong>&nbsp;_&nbsp;</strong>
+              <input name="ed" type="date" class="form-control date"  style="width:45%;" value="{{ed|date:'Y-m-d'}}">
+            </div>
+        </div>
+    </form>
+          
+      </div>
+  </section>
+
+    <section class="container pb-5">
+      
+        
+        <table class="table mt-3" id="b_party">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Date </th>
+                <th scope="col">Txn Type </th>
+                <th scope="col">Ref. No </th>
+                <th scope="col">Total</th>
+                <th scope="col">Recieved</th>
+                <th scope="col">Payment</th>
+                <th scope="col" style="width: 15%;">Balance</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% if sale %}
+            {% for i in sale %}
+              <tr>
+                <td>{{i.date|date}}</td>
+                {% if i.t_type == 'payment' %}
+                <td style="color: darkgreen;">{{i.t_type}}                
+                  <p class="sm-p">{{i.date|date}}</p></td>
+                {% elif i.t_type == 'sale' %}
+                <td style="color: rgb(12, 109, 148);">{{i.t_type}}               
+                  <p class="sm-p">{{i.date|date}}</td>
+                {% else %}                
+                <td style="color: darkorange;">{{i.t_type}}               
+                  <p class="sm-p">{{i.date|date}}</td>
+                {% endif %}
+                <td>{{i.iid}}
+                </td>
+                <td>&#8377; {{i.total}}</td>
+                {% if i.received == 0 %}
+                <td style="color: gray;">---</td>
+                {% else %}
+                <td style="color: darkgreen;">&#8377; {{i.received}}</td>
+                {% endif %}
+                <td>{{i.p_type}}</td>
+                <td class="text-right font-weight-bold">&#8377; {{i.balance}}</td>
+              </tr>
+            {% endfor %}
+            {% else %}
+            <td>No data to found!</td>
+            {% endif %}
+
+            </tbody>
+          </table>
+          <table class="table" id="by_product" style="display: none;">
+            <thead>
+              <tr>
+                <th scope="col">Product Name </th>
+                <th scope="col">Order </th>
+                <th scope="col">Stock</th>
+                <th scope="col">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% if odr %}
+            {% for i in odr %}
+              <tr>
+                <td>{{i.o_id}}</td>
+                <td><a href="{% url 'add_order' %}?data={{i.party_name}}"> {{i.party_name}}</a></td>
+                <td>{{i.total}}</td>
+                <td>{{i.due_date}}</td>
+              </tr>
+            {% endfor %}
+            {% else %}
+            <td>No pending orders!</td>
+            {% endif %}
+
+            </tbody>
+          </table>
+    </section><br>
+  
+
+
+    
+
+ </section>
+ <section class="bott_but">
+
+    <div class="container fixed-bottom">
+        <div class="info_box" style="margin-left:0;">
+            <a type="button" class="btn btn-primary" href="add_party">
+                <p>Request Order</p>
+            </a>
+            <a type="button" class="btn btn-success" data-toggle="modal" data-target="#export">
+                <p>Pay Balance</p>
+            </a>
+  
+        </div>
+    </div>  
+</section>
+ 
+
+<!-- Modal For PDF-->
+<div class="modal fade" id="export" tabindex="-1" role="dialog" aria-labelledby="exportTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exportLongTitle">Export as PDF</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="party_statement_item_pdf" method="post">{% csrf_token %}
+                <p>
+                    Export with items (takes more time)
+                    <label class="switch" style="float: right;">
+                        <input name="check" data-id="inv_pdf_cbalance"  type="checkbox">
+                        <span class="slider round"></span>
+                      </label>
+                </p>
+                <input name="party"  type="text" value="{{party.party_name}}" hidden>
+                <input name="sd"  type="date" value="{{sd|date:'Y-m-d'}}" hidden>
+                <input name="ed" type="date"value="{{ed|date:'Y-m-d'}}" hidden>
+                <button class="btn btn-success btn-block" >Export</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+     $(document).ready(function() {
+     console.log("'Ready for battle");
+      $('.date').change(function(){
+        console.log('date chnged')        
+        $('#form0').submit()
+    }); 
+    $('#filter').change(function(){
+        console.log('date chnged')        
+        $('#form').submit()
+    });  
+    }) 
+</script>
+<script src="{% static 'js/adm.js' %}"></script>
+{% endblock %}
+
+</body>
+</html>

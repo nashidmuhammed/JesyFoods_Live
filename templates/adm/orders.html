@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    {% block content %}
+<link rel="stylesheet" href="{% static 'css/adm_style.css' %}">
+<title>Pending Orders | JesyFoods</title>
+</head>
+<body>
+
+{% include "adm/base_side_nav.html" %}
+
+
+    <section class="home_content">
+        <div class="black"><i class="fa fa-times" aria-hidden="true"></i></div>
+
+        <div class="nav_top">
+            <div class="hed">
+                <i class="fa fa-bars" id="btn_bar-2" aria-hidden="true"></i>
+                Pending Orders  
+            </div>           
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+              <a class="nav-link" href="home"><i class="fa fa-home"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fa fa-bell"></i></a>
+            </li>
+            
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i>
+                    <span class="name">{{request.user}}</span>
+               </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="MyAccount"><i class="fa fa-user-circle-o"></i> My Account</a>
+                      <a class="dropdown-item" href="price_list"><i class="fa fa-money" aria-hidden="true"></i> Price List</a>
+                      <a class="dropdown-item" href="https://jesyfoods.com/products"><i class="fa fa-tasks" aria-hidden="true"></i> Products</a>
+                      <a class="dropdown-item" href="settings"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp; Settings</a>
+                      <a style="color: darkgreen;" class="dropdown-item" href="https://jesyfoods.com/"><i class="fa fa-globe" aria-hidden="true"></i> Jesy Foods</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item logout" style="color: red;" href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                      </div>
+              </li>
+          </ul>
+    </div>
+<!------------------------------------------------------->
+
+
+  <section class="mt-5">
+      <div class="container dt_tab">
+          <a href="add_order" class="btn btn-outline-primary">Add Order</a>
+          <select id="filter" class="form-control" aria-label="Default select example">
+            <option selected>By Party</option>
+            <option value="1">By Product</option>
+          </select>
+      </div>
+  </section>
+
+    <section class="container">
+        <table class="table" id="orders">
+            <thead>
+              <tr>
+                <th scope="col">Order No </th>
+                <th scope="col">Party </th>
+                <th scope="col">Amount</th>
+                <th scope="col">Due Date</th>
+                <th scope="col" id="action">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% if odr %}
+            {% for i in odr %}
+
+              <tr>
+                <td>{{i.id_prefix}}{{i.s_id}}</td>
+                <td><a href="{% url 'add_order' %}?data={{i.id}}"> {{i.party_name}}</a>
+                    <p class="sm-p">{{i.id_prefix}}{{i.s_id}}</p>
+                </td>
+                <td>{{i.total}}</td>
+                  {% if today|date > i.date|date %}
+                    <td style="color:red;">{{i.date|date}}</td>
+
+                  {% elif  i.date|date == today|date %}
+                    <td style="color:darkorange;">{{i.date|date}}</td>
+                  {% else %}
+
+                    <td>{{i.date|date}}</td>
+                  {% endif %}
+                  <td id="Bdot"><a href="{% url 'OrderToSale' %}?data={{i.id}}" class="btn btn-primary btn-sm"><i class="fa fa-arrow-right" aria-hidden="true"></i> Sale</a>
+                    
+                     <button type="button" data-toggle="modal" data-target="#deleteOrder{{i.id}}" class="btn btn-danger btn-sm">Delete</button> </td>
+
+                  <td id="Tdot">
+                      <a class="Tdot" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                      </a>
+                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" style="color: darkgreen;" href="{% url 'OrderToSale' %}?data={{i.id}}">Convert To Sale</a>
+                        <a  class="dropdown-item" style="color: red;"  data-toggle="modal" data-target="#deleteOrder{{i.id}}" >Delete</a>
+                        <a class="dropdown-item" href="{% url 'add_order' %}?data={{i.id}}">View</a>
+                      </div>
+                  </td>
+              </tr>
+               <!-- Modal deleteOrder-->
+                <div class="modal fade" id="deleteOrder{{i.id}}" tabindex="-1" role="dialog" aria-labelledby="deleteOrderLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="deleteOrderLabel">Confirm Delete</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete this order?
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <a href="{% url 'deleteOrder' %}?iid={{i.iid}}" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {% else %}
+            <td>No pending orders!</td>
+            {% endif %}
+
+            </tbody>
+          </table>
+          <table class="table" id="by_product" style="display: none;">
+            <thead>
+              <tr>
+                <th scope="col">Product Name </th>
+                <th scope="col">Order </th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for key, value in ct.items %}
+              <tr>
+                <td>{{key}}</td>
+                  {% if value == 0 %}
+                  <td style="color:gray;">{{value}}</td>
+                  {% else %}
+                  <td style="color:darkgreen;font-weight: 600;">{{value}}</td>
+                  {% endif %}
+              </tr>
+            {% endfor %}
+
+            </tbody>
+          </table>
+        <br><br>
+    </section>
+   
+  
+    <br><br><br>
+    <section class="bott_but">
+
+<div class="container fixed-bottom">
+    <div class="info_box">
+         <div class="container ">
+  <table class="table table-info">
+      <tbody>
+        <tr>
+          <th scope="row">No of Txn</th>
+          <td> {{no}}</td>
+          <th scope="row" class="text-right">Total Amount</th>
+          <td class="text-right">&#8377; {{total}}</td>
+        </tr>
+      </tbody>
+  </table>
+</div>
+
+    </div>
+</div>
+
+</section>
+
+    <!-- <div class="plus_btn">
+        <div id="plus_btn_more">
+            <a href="add_expense" class="btn btn_round btn-4">
+                <i class="fa fa-money" aria-hidden="true"></i>
+                <span id="btn-4">Add Expense</span>
+            </a>
+            <a href="add_order" class="btn btn_round btn-3">
+                <i class="fa fa-truck" aria-hidden="true"></i>
+                <span id="btn-3">Add Order</span>
+            </a>
+            <a href="take_payment" class="btn btn_round btn-2">
+                <i class="fa fa-inr" aria-hidden="true"></i>
+                <span id="btn-2">Take Payment</span>
+            </a>
+            <a href="" class="btn btn_round btn-1">
+                <i class="fa fa-line-chart" aria-hidden="true"></i>
+                <span id="btn-1">Add Sale</span>
+            </a>
+        </div>
+        <button class="btn_round"><i class="fa fa-plus" aria-hidden="true"></i></button>
+    </div> -->
+
+
+    </section>
+</section>
+
+<script>
+$(document).ready(function(){
+    $('#filter').change(function(){
+        console.log("Worked fine filtrrrr"+$('#filter').val());
+
+        if($('#filter').val() == 1){
+            $('#orders').hide();
+            $('#by_product').show(1000);
+            console.log("W");
+        }
+        else{
+            $('#orders').show(1000);
+            $('#by_product').hide();
+        }
+    });
+    });
+</script>
+
+<script src="{% static 'js/adm.js' %}"></script>
+<script>
+    
+    function deleteOdr(iid) {
+    console.log('iid1 = '+iid)
+    var action = confirm("Are you sure you want to delete this Order?");
+    if (action != false) {
+        console.log('iid = '+iid)
+        $.ajax({
+                type: 'GET',
+                url: 'deleteOrder',
+                data: {iid:iid},
+                success: function(data) {
+                    if (data == 1){
+                        console.log('deleted ')
+                        location.reload();
+                    }
+                    else{
+                        alert('Something went wrong! ERROR DLTODR-2')
+                    }
+
+                        //$('#close').hide();
+                        //$('#toot').val( parseInt(data.price)*parseInt(data.qty));
+                    },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+      }
+    }
+</script>
+<script>
+    $('#sales').addClass('active');
+    $('#view_orders').addClass('active');
+ </script>
+{% endblock %}
+
+</body>
+</html>
