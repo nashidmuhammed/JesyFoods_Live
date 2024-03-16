@@ -17,7 +17,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect, render
 from django.http import HttpResponse, JsonResponse
 from .forms import CreateUserForm
-from django.db.models import Max, Q
+from django.db.models import Max, Q, F,Case, When, Value, IntegerField
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user_model
@@ -365,13 +365,38 @@ def admin_panel(request):
         for i in sale:
             w444 += i.total
 
+        # Top Products
+        list_sale = list(Sale.objects.filter(t_type='sale', date__date__range=[sd, ed.date()]).values_list('iid', flat=True))
+        top_selling = Sale_item.objects.filter(iid__iid__in=list_sale).values('p_name__pname').annotate(
+            total_qty=Sum(
+                Case(
+                    When(p_name__size='50g', then=F('qty') / 20),
+                    When(p_name__size='100g', then=F('qty') / 10),
+                    When(p_name__size='250g', then=F('qty') / 4),
+                    When(p_name__size='500g', then=F('qty') / 2),
+                    default=F('qty'),
+                    output_field=IntegerField()
+                )
+            ), total_amount=Sum(F('qty') * F('price'))).order_by('-total_qty')[:10]
+        
+        # Top Customers
+        top_customer = Sale.objects.filter(t_type='sale', date__date__range=[sd, ed.date()]).values('party_name__party_name').annotate(total_sales=Sum('total'),total_received=Sum('received')).order_by('-total_sales')[:10]
+
+
         context = {'labels': [m4_text, m3_text, m2_text, m1_text, m0_text],
                 'data': [m4_sale, m3_sale, m2_sale, m1_sale, m0_sale],
                 'weeks': [w1, w2, w3, w4],
                 'weeks2': [w11, w22, w33, w44],
                 'weeks3': [w111, w222, w333, w444],
-                'prev1_month': str(m2_text)}
+                'prev1_month': str(m2_text),
+                'top_selling':top_selling,
+                'top_customer':top_customer,
+                }
         print("context =", context)
+        return render(request, 'adm/admin_panel.html',
+                    {'sale': r_sale, 'count': count, 'tot_sale': tot_sale, 'coll_tot': coll_tot, 'month_tot': month_tot,
+                    'prev_tot': prev_tot, 'this_month': sd, 'month_end': ed, 'cr': cr, 'exp': exp,
+                    'td_exp': td_exp, 'context': context, 'count_msg': count_msg})
     except Exception as e:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
@@ -383,10 +408,6 @@ def admin_panel(request):
             reference = err_descrb
         )
         return render(request, 'error.html', {'code':'500', 'error':'Something went wrong!'})
-    return render(request, 'adm/admin_panel.html',
-                  {'sale': r_sale, 'count': count, 'tot_sale': tot_sale, 'coll_tot': coll_tot, 'month_tot': month_tot,
-                   'prev_tot': prev_tot, 'this_month': sd, 'month_end': ed, 'cr': cr, 'exp': exp,
-                   'td_exp': td_exp, 'context': context, 'count_msg': count_msg})
 
 
 @login_required(login_url='login')
@@ -1036,7 +1057,7 @@ def party_view(request):
 
 @login_required(login_url='login')
 def home(request):
-    try:
+    # try:
         # Sunday
         today = datetime.date.today()
         is_sunday = (today.weekday() == 6)
@@ -1070,14 +1091,14 @@ def home(request):
         if request.user.groups.filter(name="admin").exists():
             party = Party.objects.all().order_by('-updated')
             month_sale = Sale.objects.filter(t_type='sale', date__date__range=[sd, ed])
-            month_tot = 0
-            for i in month_sale:
-                month_tot += i.total
+            month_tot = month_sale.aggregate(total=Sum('total'))['total'] or 0
+            # for i in month_sale:
+            #     month_tot += i.total
             #     total = total + i.amount
             prev_sale = Sale.objects.filter(t_type='sale', date__date__range=[psd, ped])
-            prev_tot = 0
-            for i in prev_sale:
-                prev_tot += i.total
+            prev_tot = prev_sale.aggregate(total=Sum('total'))['total'] or 0
+            # for i in prev_sale:
+            #     prev_tot += i.total
 
             if credit == '1':
                 party = Party.objects.all().order_by('-balance')
@@ -1086,12 +1107,14 @@ def home(request):
                 total += i.received
             tot_sale = 0
             sale = Sale.objects.filter(t_type='sale', date__date__gte=timezone.now().date())
-            for i in sale:
-                tot_sale += i.total
+            total = sale.aggregate(total=Sum('total'))['total'] or 0
+            # for i in sale:
+            #     tot_sale += i.total
             exp = 0
             ex = Expense.objects.filter(date__date__gt=sd, date__date__lt=ed)
-            for i in ex:
-                exp += i.amount
+            exp = ex.aggregate(total=Sum('amount'))['total'] or 0
+            # for i in ex:
+            #     exp += i.amount
 
             if request.method == 'POST':
                 sr = request.POST['search']
@@ -1116,8 +1139,12 @@ def home(request):
             p = Party.objects.all()
             for i in p:
                 cr += i.balance
+            if prev_tot is 0:
+                sale_increment = 0
+            else:
+                sale_increment = ((month_tot - prev_tot) / prev_tot) * 100
             data = {'route': route, 'count': count, 'total': total, 'sr': sr, 'cr': cr, 'month_tot': month_tot,
-                    'prev_tot': prev_tot,
+                    'prev_tot': prev_tot, 'sale_increment':round(sale_increment,2),
                     'this_month': sd, 'month_end': ed, 'expense': exp, 'tot_sale': tot_sale}
 
             return render(request, 'adm/home.html',
@@ -1128,14 +1155,14 @@ def home(request):
 
             month_sale = Sale.objects.filter(Q(t_type='sale'), Q(date__date__range=[sd, ed]),
                                             Q(party_type='Retail') | Q(party_type='Wholesale') | Q(party_type='Hotel'))
-            month_tot = 0
-            for i in month_sale:
-                month_tot += i.total
+            month_tot = month_sale.aggregate(total=Sum('total'))['total'] or 0
+            # for i in month_sale:
+            #     month_tot += i.total
             prev_sale = Sale.objects.filter(Q(t_type='sale'), Q(date__date__range=[psd, ped]),
                                             Q(party_type='Retail') | Q(party_type='Wholesale') | Q(party_type='Hotel'))
-            prev_tot = 0
-            for i in prev_sale:
-                prev_tot += i.total
+            prev_tot = prev_sale.aggregate(total=Sum('total'))['total'] or 0
+            # for i in prev_sale:
+            #     prev_tot += i.total
 
             if credit == '1':
                 party = party.order_by('-balance')
@@ -1203,17 +1230,17 @@ def home(request):
             prof = Profile.objects.get(user=request.user)
             return render(request, 'staff/home.html', {'prof':prof, 'data': data, 'party': party,'party_pg':page_obj, 'party_ob': party_ob,
                                                     'sett': sett, 'notn': notn,'is_sunday':is_sunday})
-    except Exception as e:
-        exc_type, exc_obj, exc_tb = sys.exc_info()
-        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        err_descrb = str(exc_type) + '\n' + str(exc_obj) + '\n' + str(fname) + str(exc_tb.tb_lineno)
-        Log.objects.create(
-            user=request.user,
-            type='Error',
-            process='home',
-            reference = err_descrb
-        )
-        return render(request, 'error.html', {'code':'500', 'error':'Something went wrong!'})
+    # except Exception as e:
+    #     exc_type, exc_obj, exc_tb = sys.exc_info()
+    #     fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+    #     err_descrb = str(exc_type) + '\n' + str(exc_obj) + '\n' + str(fname) + str(exc_tb.tb_lineno)
+    #     Log.objects.create(
+    #         user=request.user,
+    #         type='Error',
+    #         process='home',
+    #         reference = err_descrb
+    #     )
+    #     return render(request, 'error.html', {'code':'500', 'error':'Something went wrong!'})
     
 
 # OOOOOOOOOOOOOOOOOOOrder
@@ -2261,7 +2288,9 @@ def deleteSale(request):
     try:
         with transaction.atomic():
             iid = request.GET['iid']
+            print("iid====>",iid)
             sale = Sale.objects.get(iid=iid)
+            print("sale===>",sale)
             if sale.t_type != 'order':
                 # Check staff sale
                 if request.user.groups.filter(name="staff").exists():
@@ -2269,16 +2298,19 @@ def deleteSale(request):
                     if sale.date.date() != today and sale.t_type == 'payment' or sale.t_type == 'sale':
                         data = 0
                         return HttpResponse(data)
-
+                print("Sale.objects.get(iid=iid).party_name====>",Sale.objects.get(iid=iid).party_name)
                 par = Party.objects.get(party_name=Sale.objects.get(iid=iid).party_name)
+                print("par==>",par)
                 par.balance = (par.balance + sale.received) - sale.total
                 if sale.p_type == 'Cash':
                     prof = Profile.objects.get(user=sale.user)
                     prof.balance -= sale.received
                     prof.save()
                 sale.delete()
-                lt = Sale.objects.filter(party_name=Party.objects.get(party_name=par.party_name)).latest('date')
-                par.updated = lt.date
+                if Sale.objects.filter(party_name=Party.objects.get(party_name=par.party_name)).exists():
+                    lt = Sale.objects.filter(party_name=Party.objects.get(party_name=par.party_name)).latest('date')
+                    print("lt===>",lt)
+                    par.updated = lt.date
                 par.save()
                 prfx = Prefix.objects.get(used='sale', active=True)
                 max = Sale.objects.filter(id_prefix=sale.id_prefix).aggregate(Max('s_id')).get('s_id__max')
@@ -2768,15 +2800,10 @@ def gst_report_pdf(request):
         rt_tvalue = 0
         sd = datetime.datetime.strptime(request.POST['sd'], "%Y-%m").date()
         ed = datetime.datetime.strptime(request.POST['ed'], "%Y-%m").date()
-        print("sddddddddddddddd=>",sd)
-        print("eddddddddddddddd=>",ed)
-        # ed = datetime.datetime(ed.year, ed.month + 1, 1) - datetime.timedelta(seconds=1)
-        print("edddddddddddddd2=>",ed)
         ed = (ed.replace(day=1) + datetime.timedelta(days=32)).replace(day=1) - datetime.timedelta(days=1)
-        print("edddddddddddddd3=>",ed)
         
-        sale = Sale.objects.filter(t_type='sale', date__date__range=[sd, ed]).order_by('iid')
-        rtn = Sale.objects.filter(t_type='return', date__date__range=[sd, ed]).order_by('iid')
+        sale = Sale.objects.filter(t_type='sale', date__date__range=[sd, ed]).order_by('s_id')
+        rtn = Sale.objects.filter(t_type='return', date__date__range=[sd, ed]).order_by('s_id')
         for i in sale:
             t_value += i.total
             t_tvalue += i.t_total
@@ -3580,8 +3607,8 @@ def gst_report(request):
         rt_value = 0
         rt_gst = 0
         rt_tvalue = 0
-        sale = Sale.objects.filter(t_type='sale', date__month=sd, date__year=year).order_by('iid')
-        rtn = Sale.objects.filter(t_type='return', date__month=sd, date__year=year).order_by('iid')
+        sale = Sale.objects.filter(t_type='sale', date__month=sd, date__year=year)
+        rtn = Sale.objects.filter(t_type='return', date__month=sd, date__year=year)
         sd = datetime.datetime(year, sd, 1)
         ed = sd
         if request.method == 'POST':
@@ -3594,23 +3621,23 @@ def gst_report(request):
                     year = sd.year
                     sd = sd.month
                     # year = datetime.datetime(now.year, now.month - 1, 1).year
-                    sale = Sale.objects.filter(t_type='sale', date__month=sd, date__year=year).order_by('iid')
-                    rtn = Sale.objects.filter(t_type='return', date__month=sd, date__year=year).order_by('iid')
+                    sale = Sale.objects.filter(t_type='sale', date__month=sd, date__year=year)
+                    rtn = Sale.objects.filter(t_type='return', date__month=sd, date__year=year)
                     sd = datetime.datetime(year, sd, 1)
                     ed = sd
                 elif filt == 'This Month':
                     return redirect('gst_report')
                 elif filt == 'This Year':
                     # year = datetime.datetime(now.year, now.month - 1, 1).year
-                    sale = Sale.objects.filter(t_type='sale', date__year=year).order_by('iid')
-                    rtn = Sale.objects.filter(t_type='return', date__year=year).order_by('iid')
+                    sale = Sale.objects.filter(t_type='sale', date__year=year)
+                    rtn = Sale.objects.filter(t_type='return', date__year=year)
                     sd = datetime.datetime(year, 1, 1)
                     ed = datetime.datetime(year, 12, 1)
                 elif filt == 'This Financial Year':
                     sd = datetime.datetime(year - 1, 4, 1)
                     ed = datetime.datetime(year, 3, 31)
-                    sale = Sale.objects.filter(t_type='sale', date__date__range=[sd, ed]).order_by('-iid')
-                    rtn = Sale.objects.filter(t_type='return', date__date__range=[sd, ed]).order_by('-iid')
+                    sale = Sale.objects.filter(t_type='sale', date__date__range=[sd, ed])
+                    rtn = Sale.objects.filter(t_type='return', date__date__range=[sd, ed])
 
             elif type == 'date':
                 if request.POST.get('sd') == '' or request.POST.get('ed') == '':
@@ -3618,8 +3645,8 @@ def gst_report(request):
                 sd = datetime.datetime.strptime(request.POST['sd'], "%Y-%m").date()
                 ed = datetime.datetime.strptime(request.POST['ed'], "%Y-%m").date()
                 ed = datetime.datetime(ed.year, ed.month + 1, 1) - datetime.timedelta(seconds=1)
-                sale = Sale.objects.filter(t_type='sale', date__date__range=[sd, ed]).order_by('iid')
-                rtn = Sale.objects.filter(t_type='return', date__date__range=[sd, ed]).order_by('iid')
+                sale = Sale.objects.filter(t_type='sale', date__date__range=[sd, ed])
+                rtn = Sale.objects.filter(t_type='return', date__date__range=[sd, ed])
                 filt = "Custom"
         gst_party = []
         for i in sale:
@@ -3635,8 +3662,8 @@ def gst_report(request):
         gst_party = list(dict.fromkeys(gst_party))
         total = {'t_value': t_value, 't_tvalue': t_tvalue, 't_gst': t_gst}
         rtotal = {'t_value': rt_value, 't_tvalue': rt_tvalue, 't_gst': rt_gst}
-        return render(request, 'adm/gst_report.html', {'sale': sale, 'total': total, 'sd': sd, 'ed': ed, 'filter': filt,
-                                                    'gst_party': gst_party, 'rtn': rtn, 'rtotal':rtotal})
+        return render(request, 'adm/gst_report.html', {'sale': sale.order_by('s_id'), 'total': total, 'sd': sd, 'ed': ed, 'filter': filt,
+                                                    'gst_party': gst_party, 'rtn': rtn.order_by('s_id'), 'rtotal':rtotal})
     except Exception as e:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]

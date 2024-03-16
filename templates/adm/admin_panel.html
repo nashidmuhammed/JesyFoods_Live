@@ -182,6 +182,75 @@
                     </div>
                 </div>
             </div>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="tab-head">
+                            <B>Top Selling Products of the month</B>
+                            <a href="{% url 'product_report' %}" class="btn btn-secondary btn-sm">View all</a>
+                        </div>
+                        <table class="table table-hover sc_tab">
+                            <thead>
+                              <tr>
+                                <th scope="col">Product Name </th>
+                                <th scope="col" style="text-align:right">Qty(/kg)</th>
+                                <th scope="col" style="text-align:right">Amount(&#8377;)</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            {% if context.top_selling %}
+                            {% for t in context.top_selling %}
+                              <tr >
+                                <td>{{t.p_name__pname}}</td>
+                                <td style="text-align:right">{{t.total_qty}}</td>
+                                <td style="text-align:right">{{t.total_amount}}</td>
+                                
+                              </tr>
+                            {% endfor %}
+                            {% else %}
+                            <td>No Products in this month!</td>
+                            {% endif %}
+
+                            
+                      
+                            </tbody>
+                          </table>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="tab-head">
+                            <B>Top Customer of the month</B>
+                            <a href="" class="btn btn-outline-secondary btn-sm disabled">View all</a>
+                        </div>
+                        <table class="table table-hover sc_tab">
+                            <thead>
+                              <tr>
+                                <th scope="col">Party Name </th>
+                                <th scope="col" style="text-align:right">Sale Amount(&#8377;)</th>
+                                <th scope="col" style="text-align:right">Received(&#8377;)</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            {% if context.top_customer %}
+                            {% for c in context.top_customer %} 
+                              <tr>
+                                <td>{{c.party_name__party_name}}</td> 
+                                <td style="text-align:right">{{c.total_sales}}</td>
+                                <td style="text-align:right">{{c.total_received}}</td>
+                                
+                              </tr>
+                            {% endfor %}
+                            {% else %}
+                            <td>No Cutomers this month!</td>
+                            {% endif %}
+
+                            
+                      
+                            </tbody>
+                          </table>
+                    </div>
+                </div>
+            </div>
         </section>
        
    

@@ -329,6 +329,7 @@ function tot_number() {
                     url: 'deleteSale',
                     data: {iid:iid},
                     success: function(data) {
+                        console.log("data====>",data);
                         $('#fn-load').hide();
                         if (data){
                             window.location.href = 'sale_report';

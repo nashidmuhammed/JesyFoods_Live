@@ -72,7 +72,7 @@
         <div class="col">
             <a href="sale_report">
             <div class="ibox">
-                <i class="fa fa-line-chart" aria-hidden="true"> Sales</i> 
+                <i class="fa fa-line-chart" aria-hidden="true"> Sales({{data.sale_increment}}%)</i> 
                 <h4>&#8377; {{data.month_tot|floatformat:0}}</h4>
                 <p>Prev:&#8377; {{data.prev_tot|floatformat:0}}</p>
                 <span>{{data.this_month|date:'M-d'}} <strong>-</strong> {{data.month_end|date:'M-d'}}</span><br>
