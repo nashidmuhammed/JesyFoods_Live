@@ -89,7 +89,7 @@ class Party(models.Model):
 
 
 class Prefix(models.Model):
-    prefix = models.CharField(max_length=5, null=True, unique=True)
+    prefix = models.CharField(max_length=15, null=True, unique=True)
     last_id = models.IntegerField(default=0)
     used = models.CharField(max_length=100, choices=USAGE)
     active = models.BooleanField(default=False)
